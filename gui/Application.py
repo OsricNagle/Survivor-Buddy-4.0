@@ -197,6 +197,12 @@ class Application(tk.Frame):
         self.logFile.close()
         self.quit()
 
+    def connect_to_video(self):
+        print("connecting to video")
+
+    def disconnect_to_video(self):
+        print("disconnecting from video")
+
     def connect_to_audio(self):
         self.mbac.connectAndStart()
 
@@ -235,6 +241,12 @@ class Application(tk.Frame):
         self.help_menu.add_command(label="Programmer's Reference", command=self.open_programmer_reference)
         root_menu.add_cascade(label="Help", menu=self.help_menu)
 
+        #Video Menu
+        self.video_menu = tk.Menu(root_menu, tearoff=0)
+        self.video_menu.add_command(label="Connect Video", command=self.connect_to_video)
+        self.video_menu.add_command(label="Disconnect Video", command=self.disconnect_to_video)
+        root_menu.add_cascade(label="Video", menu=self.video_menu)
+        
         #Audio Menu
         self.audio_menu = tk.Menu(root_menu, tearoff=0)
         self.audio_menu.add_command(label="Connect Audio", command=self.connect_to_audio)
