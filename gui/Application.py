@@ -43,6 +43,9 @@ class Application(tk.Frame):
         host = '192.168.42.129'
         port = 5050
 
+        self.serverString = 'rtsp://' + host + ':1935/'
+        self.video = expanduser(serverString)
+
         self.mbac = BuddyAudioClient(host, port)
         self.microphone = ""
         now = datetime.now()  # Create unique logfile for notifications and errors
@@ -196,12 +199,21 @@ class Application(tk.Frame):
 
         self.logFile.close()
         self.quit()
+    
+    def create_video_frame(self):
+        print("creating video frame")
+        # videoFrame = tk.Frame(middle_frame, height=400, width=600, bg='grey')
+        # videoFrame.pack(side='left', expand=True, pady=5)
+        player = Player(self.root, video=_video)
+        player.pack(side='right')
 
     def connect_to_video(self):
         print("connecting to video")
+        player._Play(self.video)
 
     def disconnect_to_video(self):
         print("disconnecting from video")
+        player.OnStop()
 
     def connect_to_audio(self):
         self.mbac.connectAndStart()
