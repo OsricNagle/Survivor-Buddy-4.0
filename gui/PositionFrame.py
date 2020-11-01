@@ -9,8 +9,6 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 from threading import Thread
 from datetime import datetime
-from tkvlc import Player
-from tkvlc import _Tk_Menu
 from os.path import expanduser
 import time
 import queue
@@ -408,7 +406,7 @@ class PositionFrame(tk.Frame):
         self.control_frame.pack(side="left")
         self.create_controls(self.control_frame)
         
-        self.create_video_frame()
+        # self.create_video_frame()
 
         self.yaw_queue = queue.LifoQueue()
         self.pitch_queue = queue.LifoQueue()
@@ -488,22 +486,3 @@ class PositionFrame(tk.Frame):
                 self.logFile.write(str(timestamp) + " - Position: P: " + str(newPitch) + " Y: " + str(newYaw) + " R: " + str(newRoll) + "\n")
             self.pos_render.update_render(self.frame_master, newYaw, newPitch, newRoll)
         self.master.after(50, self.process_queue)
-    
-    def create_video_frame(self):
-        # videoFrame = tk.Frame(middle_frame, height=400, width=600, bg='grey')
-        # videoFrame.pack(side='left', expand=True, pady=5)
-        serverString = 'rtsp://' + self.host_ip + ':1935/'
-        print(serverString)
-        _video = expanduser(serverString)
-        player = Player(self.root, video=_video)
-        player.pack(side='right')
-        print("player pack")
-        player._Play(_video)
-        # print("player play")
-
-
-    def play_video(self):
-        print("play video")
-
-    def stop_video(self):
-        print("stop video")

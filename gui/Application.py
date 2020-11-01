@@ -11,6 +11,7 @@ from SerialArmController import SerialArmController
 from SerialArmController import Command
 from datetime import datetime  # For log file formatting
 from BuddyMessageClient import BuddyMessageClient
+from tkvlc import Player
 import os.path
 import webbrowser
 import subprocess
@@ -44,7 +45,9 @@ class Application(tk.Frame):
         port = 5050
 
         self.serverString = 'rtsp://' + host + ':1935/'
-        self.video = expanduser(serverString)
+        self.video = expanduser(self.serverString)
+        self.player = 0
+        self.create_video_frame()
 
         self.mbac = BuddyAudioClient(host, port)
         self.microphone = ""
@@ -204,16 +207,17 @@ class Application(tk.Frame):
         print("creating video frame")
         # videoFrame = tk.Frame(middle_frame, height=400, width=600, bg='grey')
         # videoFrame.pack(side='left', expand=True, pady=5)
-        player = Player(self.root, video=_video)
-        player.pack(side='right')
+        self.player = Player(self.master, video=self.video)
+        self.player.pack(side='right')
+        self.connect_to_video()
 
     def connect_to_video(self):
         print("connecting to video")
-        player._Play(self.video)
+        self.player._Play(self.video)
 
     def disconnect_to_video(self):
         print("disconnecting from video")
-        player.OnStop()
+        self.player.OnStop()
 
     def connect_to_audio(self):
         self.mbac.connectAndStart()
@@ -335,7 +339,7 @@ def create_window():
 if __name__ == "__main__":
     root = Tk()
 
-    root.geometry("1100x900")
+    root.geometry("600x700")
     # now = datetime.now()  # Create unique logfile for notifications and errors
     # timestamp = now.strftime("%m_%d_%Y_%H_%M_%S")
     # file_name = 'LOGFILE_' + timestamp + '.txt'
@@ -375,6 +379,6 @@ if __name__ == "__main__":
     # shake_head_button = Button(button_frame, text="Shake Head").place(in_=button_frame, anchor=CENTER, relx=0.5,
     #                                                               rely=0.875)
 
-    app.master.title("Survivor Buddy 3.0")
+    app.master.title("Survivor Buddy 4.0")
     root.protocol("WM_DELETE_WINDOW", app.close_app)
     app.mainloop()
