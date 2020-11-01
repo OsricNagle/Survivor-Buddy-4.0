@@ -20,6 +20,14 @@ from functools import *
 import threading
 # import appscript  # added this
 
+# for recording
+import cv2
+import numpy as np
+import pyautogui
+
+from time import sleep
+
+
 
 class Application(tk.Frame):
     '''The main GUI class'''
@@ -308,6 +316,67 @@ def create_window():
     #app.exec_()
 
 
+# txt = tk.Text(app)
+# txt.grid()
+def print_updates(event = None):
+    print("Starting print_updates.")
+    
+    for i in range(0,5):
+        print(i, "234")
+        
+        # sleep(2)
+        
+        
+        
+        
+####### Start recording #########
+# display screen resolution, get it from your OS settings
+# SCREEN_SIZE = (1920, 1080)
+SCREEN_SIZE = pyautogui.size()
+print("Screen size:", SCREEN_SIZE)
+# define the codec
+fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+fps = 20
+# create the video write object
+out = cv2.VideoWriter("output"+str(fps)+".mp4", fourcc, fps, (SCREEN_SIZE))
+
+stopRecording = False
+
+def record_screen(event = None):
+    print("Starting screen recorder.")
+    
+    while not stopRecording:
+        # make a screenshot
+        img = pyautogui.screenshot()
+        # convert these pixels to a proper numpy array to work with OpenCV
+        frame = np.array(img)
+        # convert colors from BGR to RGB
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        # write the frame
+        out.write(frame)
+        
+        
+        
+        
+        
+    '''
+    vals = ['text1 here.',
+        'more text2 here.',
+        '1 2 3 234']
+    i = 0
+    while i < len(vals):
+        print("    "+str(i)+" in while loop")
+        # txt.delete('1.0','end')
+        # txt.insert('1.0',vals[i])
+        # txt.update_idletasks()
+        print(vals[i])
+        
+        sleep(2)
+        i=i+1
+        '''
+
+
+
 if __name__ == "__main__":
     root = Tk()
 
@@ -350,7 +419,30 @@ if __name__ == "__main__":
     #                                                               rely=0.75)
     # shake_head_button = Button(button_frame, text="Shake Head").place(in_=button_frame, anchor=CENTER, relx=0.5,
     #                                                               rely=0.875)
-
+    
+    '''
+    ######## Start recording #########
+    # display screen resolution, get it from your OS settings
+    # SCREEN_SIZE = (1920, 1080)
+    SCREEN_SIZE = pyautogui.size()
+    print("Screen size:", SCREEN_SIZE)
+    # define the codec
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    fps = 20
+    # create the video write object
+    out = cv2.VideoWriter("output"+str(fps)+".mp4", fourcc, fps, (SCREEN_SIZE))
+    '''
+    
+    app.after(10, record_screen)
+    
     app.master.title("Survivor Buddy 3.0")
     root.protocol("WM_DELETE_WINDOW", app.close_app)
     app.mainloop()
+    
+    
+    # make sure everything is closed when exited
+    stopRecording = True
+    sleep(2)
+    cv2.destroyAllWindows()
+    out.release()
+    print("all done")
