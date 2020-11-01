@@ -201,10 +201,10 @@ class Player(Tk.Frame):
 
         # first, top panel shows video
 
-        self.videopanel = ttk.Frame(self.parent)
+        self.videopanel = ttk.Frame(self.parent, borderwidth=1)
         self.canvas = Tk.Canvas(self.videopanel)
         self.canvas.pack(fill=Tk.BOTH, expand=1)
-        self.videopanel.pack(fill=Tk.BOTH, expand=1)
+        self.videopanel.pack(side="right", expand=1)
 
         # panel to hold buttons
         # self.buttons_panel = Tk.Toplevel(self.parent)
