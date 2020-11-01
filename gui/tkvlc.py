@@ -204,7 +204,8 @@ class Player(Tk.Frame):
         self.videopanel = ttk.Frame(self.parent, borderwidth=1)
         self.canvas = Tk.Canvas(self.videopanel)
         self.canvas.pack(fill=Tk.BOTH, expand=1)
-        self.videopanel.pack(side="right", expand=1)
+        self.videopanel.pack(expand=1)
+        self.videopanel.place(relx=0.6, rely=0)
 
         # panel to hold buttons
         # self.buttons_panel = Tk.Toplevel(self.parent)
@@ -421,15 +422,15 @@ class Player(Tk.Frame):
         """
         g = self.parent.geometry()
         if g != self._geometry and self.player:
-            print("resizing!")
+            # print("resizing!")
             u, v = self.player.video_get_size()  # often (0, 0)
-            print("u= " + str(u) + ", v= " + str(v))
+            # print("u= " + str(u) + ", v= " + str(v))
             if v > 0 and u > 0:
                 # get window size and position
                 g, x, y = g.split('+')
-                print("g=" + g + ", x=" + x + ", y=" + y)
+                # print("g=" + g + ", x=" + x + ", y=" + y)
                 w, h = g.split('x')
-                print("w= " + w + ", h= " + h)
+                # print("w= " + w + ", h= " + h)
                 # alternatively, use .winfo_...
                 # w = self.parent.winfo_width()
                 # h = self.parent.winfo_height()
@@ -481,8 +482,8 @@ class Player(Tk.Frame):
         # adjust window to video aspect ratio, done periodically
         # on purpose since the player.video_get_size() only
         # returns non-zero sizes after playing for a while
-        if not self._geometry:
-            self.OnResize()
+        # if not self._geometry:
+        #     self.OnResize()
 
     def OnTime(self, *unused):
         if self.player:

@@ -339,7 +339,7 @@ def create_window():
 if __name__ == "__main__":
     root = Tk()
 
-    root.geometry("600x700")
+    root.geometry("1100x1080")
     # now = datetime.now()  # Create unique logfile for notifications and errors
     # timestamp = now.strftime("%m_%d_%Y_%H_%M_%S")
     # file_name = 'LOGFILE_' + timestamp + '.txt'
