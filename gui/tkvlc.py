@@ -200,12 +200,12 @@ class Player(Tk.Frame):
         # self.muteIndex = fileMenu.index("Mute")
 
         # first, top panel shows video
-
-        self.videopanel = ttk.Frame(self.parent, borderwidth=1)
+        # u, v = self.player.video_get_size()  # often (0, 0)
+        self.videopanel = ttk.Frame(self.parent, width=200, height=400)
         self.canvas = Tk.Canvas(self.videopanel)
         self.canvas.pack(fill=Tk.BOTH, expand=1)
         self.videopanel.pack(expand=1)
-        self.videopanel.place(relx=0.6, rely=0)
+        self.videopanel.place(relx=0.324, rely=0.053)
 
         # panel to hold buttons
         # self.buttons_panel = Tk.Toplevel(self.parent)

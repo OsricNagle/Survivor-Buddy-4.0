@@ -138,7 +138,7 @@ class LabelScaleSpinbox(tk.Frame):
             self.left_button = ttk.Button(middle_frame,
                                           text="Move left", command=self.increment)
             self.left_button.pack(side="left")
-            videoFrame = tk.Frame(middle_frame, height=400, width=600, bg='grey')
+            videoFrame = tk.Frame(middle_frame, height=272, width=385)
             videoFrame.pack(side='left', expand=True, pady=5)
             
             self.right_button = ttk.Button(middle_frame,
@@ -164,14 +164,14 @@ class LabelScaleSpinbox(tk.Frame):
 
     def increment(self):
         newVal = int(self.spinbox.get())
-        self.spinbox.set(newVal+1)
+        self.spinbox.set(newVal+10)
         self.current_value = newVal
         self.send_command()
 
 
     def decrement(self):
         newVal = int(self.spinbox.get())
-        self.spinbox.set(newVal-1)
+        self.spinbox.set(newVal-10)
         self.current_value = newVal
         self.send_command()
 
