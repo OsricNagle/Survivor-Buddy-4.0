@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -9,12 +9,10 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 from threading import Thread
 from datetime import datetime
-from tkvlc import Player
-from tkvlc import _Tk_Menu
+from .tkvlc import Player
 from os.path import expanduser
 import time
 import queue
-import Application
 
 class PositionUpdater(Thread):
     '''Updates UI elements based on arm position'''
@@ -176,14 +174,14 @@ class LabelScaleSpinbox(tk.Frame):
     def increment(self):
         newVal = int(self.spinbox.get())
         self.spinbox.set(newVal+1)
-        self.current_value = newVal
+        self.current_value = newVal+1
         self.send_command()
 
 
     def decrement(self):
         newVal = int(self.spinbox.get())
         self.spinbox.set(newVal-1)
-        self.current_value = newVal
+        self.current_value = newVal-1
         self.send_command()
 
 
