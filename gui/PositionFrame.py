@@ -9,7 +9,6 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 from threading import Thread
 from datetime import datetime
-from .tkvlc import Player
 from os.path import expanduser
 import time
 import queue
@@ -83,7 +82,7 @@ class PositionUpdater(Thread):
 class LabelScaleSpinbox(tk.Frame):
     '''A custom class to combine Tk Scale and Spinbox and keep them in sync'''
 
-    def __init__(self, master, text="", from_=0, to=10, axis=0, dev=None, up=False, down=False, left=False, right=False, top_frame=None, middle_frame=None, bottom_frame=None, root=None, _host_ip=None, **kwargs):
+    def __init__(self, master, text="", from_=0, to=10, axis=0, dev=None, up=False, down=False, left=False, right=False, top_frame=None, middle_frame=None, bottom_frame=None, root=None, **kwargs):
         '''
         Constructor for LabelScaleSpinbox
         
@@ -128,7 +127,6 @@ class LabelScaleSpinbox(tk.Frame):
         self.spinbox.pack(side="left")
 
         self.root = root
-        self.host_ip = _host_ip
 
         if up:
             self.up_button = ttk.Button(top_frame,
@@ -139,17 +137,9 @@ class LabelScaleSpinbox(tk.Frame):
             self.left_button = ttk.Button(middle_frame,
                                           text="Move left", command=self.increment)
             self.left_button.pack(side="left")
-            # videoFrame = tk.Frame(middle_frame, height=400, width=600, bg='grey')
-            # videoFrame.pack(side='left', expand=True, pady=5)
-            serverString = 'rtsp://' + self.host_ip + ':1935/'
-            print(serverString)
-            _video = expanduser(serverString)
-            player = Player(self.root, video=_video)
-            player.pack(side='left', expand=True, pady=5)
-            print("player pack")
-            player._Play(_video)
-            # print("player play")
-
+            videoFrame = tk.Frame(middle_frame, height=272, width=385)
+            videoFrame.pack(side='left', expand=True, pady=5)
+            
             self.right_button = ttk.Button(middle_frame,
                                            text="Move right", command=self.decrement)
             self.right_button.pack(side="left")
@@ -416,6 +406,7 @@ class PositionFrame(tk.Frame):
         self.control_frame = tk.Frame(self)
         self.control_frame.pack(side="left")
         self.create_controls(self.control_frame)
+        
 
         self.yaw_queue = queue.LifoQueue()
         self.pitch_queue = queue.LifoQueue()
@@ -449,15 +440,15 @@ class PositionFrame(tk.Frame):
         '''
 
         self.pitch_control = LabelScaleSpinbox(
-            master, text="Pitch: ", from_=0, to=90, axis=0, dev=self.serial_arm_controller, up=True, down=True, left=False, right=False, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root, _host_ip=self.host_ip)
+            master, text="Pitch: ", from_=0, to=90, axis=0, dev=self.serial_arm_controller, up=True, down=True, left=False, right=False, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root)
         self.pitch_control.pack()
         
         self.yaw_control = LabelScaleSpinbox(
-            master, text="Yaw: ", from_=-90, to=90, axis=1, dev=self.serial_arm_controller, up=False, down=False, left=True, right = True, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root, _host_ip=self.host_ip)
+            master, text="Yaw: ", from_=-90, to=90, axis=1, dev=self.serial_arm_controller, up=False, down=False, left=True, right = True, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root)
         self.yaw_control.pack()
         
         self.roll_control = LabelScaleSpinbox(
-            master, text="Roll: ", from_=0, to=90, axis=2, dev=self.serial_arm_controller, up=False, down=False, left=False, right=False, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root, _host_ip=self.host_ip)
+            master, text="Roll: ", from_=0, to=90, axis=2, dev=self.serial_arm_controller, up=False, down=False, left=False, right=False, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root)
         self.roll_control.pack()
 
 
@@ -495,5 +486,3 @@ class PositionFrame(tk.Frame):
                 self.logFile.write(str(timestamp) + " - Position: P: " + str(newPitch) + " Y: " + str(newYaw) + " R: " + str(newRoll) + "\n")
             self.pos_render.update_render(self.frame_master, newYaw, newPitch, newRoll)
         self.master.after(50, self.process_queue)
-
-        
