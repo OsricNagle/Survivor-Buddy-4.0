@@ -10,12 +10,8 @@ from .StatusBar import StatusBar
 from .SerialArmController import SerialArmController
 from .SerialArmController import Command
 from datetime import datetime  # For log file formatting
-<<<<<<< HEAD
 from BuddyMessageClient import BuddyMessageClient
 from tkvlc import Player
-=======
-from .BuddyMessageClient import BuddyMessageClient
->>>>>>> 7454e8a25f572bbf89daa5d1bff6af3dd6071931
 import os.path
 import webbrowser
 import subprocess
