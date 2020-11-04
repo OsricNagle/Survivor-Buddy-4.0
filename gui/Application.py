@@ -10,7 +10,8 @@ from .StatusBar import StatusBar
 from .SerialArmController import SerialArmController
 from .SerialArmController import Command
 from datetime import datetime  # For log file formatting
-from .BuddyMessageClient import BuddyMessageClient
+from BuddyMessageClient import BuddyMessageClient
+from tkvlc import Player
 import os.path
 import webbrowser
 import subprocess
@@ -42,6 +43,11 @@ class Application(tk.Frame):
 
         host = '192.168.42.129'
         port = 5050
+
+        self.serverString = 'rtsp://' + host + ':1935/'
+        self.video = expanduser(self.serverString)
+        self.player = 0
+        self.create_video_frame()
 
         self.mbac = BuddyAudioClient(host, port)
         self.microphone = ""
@@ -197,6 +203,22 @@ class Application(tk.Frame):
 
         self.logFile.close()
         self.quit()
+    
+    def create_video_frame(self):
+        print("creating video frame")
+        # videoFrame = tk.Frame(middle_frame, height=400, width=600, bg='grey')
+        # videoFrame.pack(side='left', expand=True, pady=5)
+        self.player = Player(self.master, video=self.video)
+        # self.player.pack(side='right')
+        self.connect_to_video()
+
+    def connect_to_video(self):
+        print("connecting to video")
+        self.player._Play(self.video)
+
+    def disconnect_to_video(self):
+        print("disconnecting from video")
+        self.player.OnStop()
 
     def connect_to_audio(self):
         self.mbac.connectAndStart()
@@ -245,6 +267,12 @@ class Application(tk.Frame):
         self.help_menu.add_command(label="Programmer's Reference", command=self.open_programmer_reference)
         root_menu.add_cascade(label="Help", menu=self.help_menu)
 
+        #Video Menu
+        self.video_menu = tk.Menu(root_menu, tearoff=0)
+        self.video_menu.add_command(label="Connect Video", command=self.connect_to_video)
+        self.video_menu.add_command(label="Disconnect Video", command=self.disconnect_to_video)
+        root_menu.add_cascade(label="Video", menu=self.video_menu)
+        
         #Audio Menu
         self.audio_menu = tk.Menu(root_menu, tearoff=0)
         self.audio_menu.add_command(label="Connect Audio", command=self.connect_to_audio)
@@ -320,7 +348,7 @@ class Application(tk.Frame):
 if __name__ == "__main__":
     root = Tk()
 
-    root.geometry("1100x900")
+    root.geometry("1100x1080")
     # now = datetime.now()  # Create unique logfile for notifications and errors
     # timestamp = now.strftime("%m_%d_%Y_%H_%M_%S")
     # file_name = 'LOGFILE_' + timestamp + '.txt'
@@ -338,9 +366,15 @@ if __name__ == "__main__":
     # app.create_menu(menu_bar)
     # position_frame = PositionFrame(master = root,arm_controller=serial_arm_controller, _logFile=logFile)
 
+<<<<<<< HEAD
     # button = Button(root, text="Create new window",
     #                 command=create_window)
     # button.place(x=500, y=700)
+=======
+    button = Button(root, text="Open Phone Mirroring",
+                    command=create_window)
+    button.place(x=500, y=700)
+>>>>>>> c2905122afbee7d523d0d82700f2b8668e4cab5f
 
     # bottom right buttons
     # button_frame = Frame(root, height=245, width=150, highlightbackground="black", highlightthickness=1)
@@ -360,6 +394,6 @@ if __name__ == "__main__":
     # shake_head_button = Button(button_frame, text="Shake Head").place(in_=button_frame, anchor=CENTER, relx=0.5,
     #                                                               rely=0.875)
 
-    app.master.title("Survivor Buddy 3.0")
+    app.master.title("Survivor Buddy 4.0")
     root.protocol("WM_DELETE_WINDOW", app.close_app)
     app.mainloop()
