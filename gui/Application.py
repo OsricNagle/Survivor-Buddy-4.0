@@ -110,10 +110,10 @@ class Application(tk.Frame):
 
         self.control_buttons = ControlButtons(self, self.serial_arm_controller, self.notifications_frame)
         self.control_buttons.pack(fill="x")
-
+        self.status_bar.pack(fill="x")
         self.notifications_frame.pack(fill="x")
 
-        self.status_bar.pack(fill="x")
+
 
         self.master.config(menu=self.menu_bar)
 
@@ -366,15 +366,9 @@ if __name__ == "__main__":
     # app.create_menu(menu_bar)
     # position_frame = PositionFrame(master = root,arm_controller=serial_arm_controller, _logFile=logFile)
 
-<<<<<<< HEAD
     # button = Button(root, text="Create new window",
     #                 command=create_window)
     # button.place(x=500, y=700)
-=======
-    button = Button(root, text="Open Phone Mirroring",
-                    command=create_window)
-    button.place(x=500, y=700)
->>>>>>> c2905122afbee7d523d0d82700f2b8668e4cab5f
 
     # bottom right buttons
     # button_frame = Frame(root, height=245, width=150, highlightbackground="black", highlightthickness=1)
