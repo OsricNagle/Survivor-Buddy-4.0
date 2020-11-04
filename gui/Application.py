@@ -358,7 +358,7 @@ if __name__ == "__main__":
     # app.create_menu(menu_bar)
     # position_frame = PositionFrame(master = root,arm_controller=serial_arm_controller, _logFile=logFile)
 
-    button = Button(root, text="Create new window",
+    button = Button(root, text="Open Phone Mirroring",
                     command=create_window)
     button.place(x=500, y=700)
 
