@@ -310,7 +310,7 @@ class RenderDiagram(tk.Frame):
 
         self.ax.clear() #clear old data
         self.draw_axes()    #redraw axes
-        yaw = float(new_yaw) * np.pi / 180  #Convert angles to radians
+        yaw = -float(new_yaw) * np.pi / 180  #Convert angles to radians
         pitch = float(new_pitch) * np.pi / 180
         roll = float(new_roll) * np.pi / 180
         self.yawD = new_yaw
