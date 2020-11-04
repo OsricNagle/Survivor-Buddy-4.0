@@ -444,10 +444,11 @@ class TestSerialArmControllerHappy:
         self.my_sar.is_connected = False
 
         # test
+        self.my_sar.position.roll = 90
         self.my_sar.landscape()
 
         # check
-        assert self.my_sar.position.roll == 0
+        assert self.my_sar.position.roll == 90
 
     def test_landscape_is_connected_roll_not_90(self):
         """
@@ -518,7 +519,7 @@ class TestSerialArmControllerHappy:
         # check
         assert self.my_sar.position.roll == 0
         assert self.my_sar.position.yaw == 0
-        assert self.my_sar.position.pitch == 0
+        assert self.my_sar.position.pitch ==  0
 
     def test_nod_is_connected(self):
         """

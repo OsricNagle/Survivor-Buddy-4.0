@@ -35,8 +35,8 @@ class TestLabelScaleSpinboxHappy:
         self.lss.increment()
 
         #check
-        assert self.lss.spinbox.val == 1
-        assert self.lss.current_value == 1
+        assert self.lss.spinbox.val == 5
+        assert self.lss.current_value == 5
 
     def test_decrement(self):
         """
@@ -50,8 +50,8 @@ class TestLabelScaleSpinboxHappy:
         self.lss.decrement()
 
         #check
-        assert self.lss.spinbox.val == -1
-        assert self.lss.current_value == -1
+        assert self.lss.spinbox.val == -5
+        assert self.lss.current_value == -5
 
     @pytest.mark.parametrize("input_val", [0, 45, 90])
     def test_slider_update(self, input_val):

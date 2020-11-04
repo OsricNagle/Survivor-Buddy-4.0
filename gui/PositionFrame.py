@@ -173,15 +173,15 @@ class LabelScaleSpinbox(tk.Frame):
 
     def increment(self):
         newVal = int(self.spinbox.get())
-        self.spinbox.set(newVal+1)
-        self.current_value = newVal+1
+        self.spinbox.set(newVal+5)
+        self.current_value = newVal+5
         self.send_command()
 
 
     def decrement(self):
         newVal = int(self.spinbox.get())
-        self.spinbox.set(newVal-1)
-        self.current_value = newVal-1
+        self.spinbox.set(newVal-5)
+        self.current_value = newVal-5
         self.send_command()
 
 
