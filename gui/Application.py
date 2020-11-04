@@ -231,6 +231,15 @@ class Application(tk.Frame):
         self.mbac.setInputDevice(device)
         self.mbac.connectAndStart()
 
+    def phone_mirror(self):
+        # #app = QApplication([])
+        command = "scrcpy &"
+        # os.system("scrcpy &")
+        # appscript.app('Terminal').do_script(command)
+        p = subprocess.Popen(command, shell=True)
+        # p.wait()
+        # app.exec_()
+
     def create_menu(self, root_menu):
         '''
         Creates the main GUI menu
@@ -275,6 +284,12 @@ class Application(tk.Frame):
         for device in self.device_arr:
             self.audio_devices_menu.add_command(label=device, command=partial(self.change_audio, device))
         root_menu.add_cascade(label="Audio Devices", menu=self.audio_devices_menu)
+
+        #Phone Mirroring
+        self.phone_mirroring_menu = tk.Menu(root_menu, tearoff=0)
+        self.phone_mirroring_menu.add_command(label="Open Phone Mirroring", command=self.phone_mirror)
+        root_menu.add_cascade(label="Phone Mirroring", menu=self.phone_mirroring_menu)
+
 
     def refresh_devices(self):
         '''Refreshes the Devices menu'''
@@ -327,14 +342,7 @@ class Application(tk.Frame):
         self.notifications_frame.append_line("Hello from Menu")
 
 
-def create_window():
-    # #app = QApplication([])
-    command = "scrcpy &"
-    # os.system("scrcpy &")
-    # appscript.app('Terminal').do_script(command)
-    p = subprocess.Popen(command, shell=True)
-    # p.wait()
-    #app.exec_()
+
 
 
 if __name__ == "__main__":
@@ -358,9 +366,15 @@ if __name__ == "__main__":
     # app.create_menu(menu_bar)
     # position_frame = PositionFrame(master = root,arm_controller=serial_arm_controller, _logFile=logFile)
 
+<<<<<<< HEAD
+    # button = Button(root, text="Create new window",
+    #                 command=create_window)
+    # button.place(x=500, y=700)
+=======
     button = Button(root, text="Open Phone Mirroring",
                     command=create_window)
     button.place(x=500, y=700)
+>>>>>>> c2905122afbee7d523d0d82700f2b8668e4cab5f
 
     # bottom right buttons
     # button_frame = Frame(root, height=245, width=150, highlightbackground="black", highlightthickness=1)
