@@ -3,19 +3,23 @@ from tkinter import *
 import tkinter as tk
 import tkinter.ttk as ttk
 from PyQt5.QtWidgets import QApplication, QLabel
-from PositionFrame import *
-from ControlButtons import *
-from NotificationsFrame import NotificationFrame
-from StatusBar import StatusBar
-from SerialArmController import SerialArmController
-from SerialArmController import Command
+from .PositionFrame import *
+from .ControlButtons import *
+from .NotificationsFrame import NotificationFrame
+from .StatusBar import StatusBar
+from .SerialArmController import SerialArmController
+from .SerialArmController import Command
 from datetime import datetime  # For log file formatting
+<<<<<<< HEAD
 from BuddyMessageClient import BuddyMessageClient
 from tkvlc import Player
+=======
+from .BuddyMessageClient import BuddyMessageClient
+>>>>>>> 7454e8a25f572bbf89daa5d1bff6af3dd6071931
 import os.path
 import webbrowser
 import subprocess
-from BuddyAudioClient import BuddyAudioClient
+from .BuddyAudioClient import BuddyAudioClient
 from functools import *
 
 import threading
@@ -37,7 +41,7 @@ class Application(tk.Frame):
         self.theroot = master
         self.pack()
         #self.place()
-        self.taskbar_icon = tk.PhotoImage(file="SBLogo.png")
+        self.taskbar_icon = tk.PhotoImage(file="gui/SBLogo.png")
         self.master.call('wm', 'iconphoto', self.master._w, self.taskbar_icon)
         self.config(padx=16, pady=16)
 
@@ -54,7 +58,8 @@ class Application(tk.Frame):
         now = datetime.now()  # Create unique logfile for notifications and errors
         timestamp = now.strftime("%m_%d_%Y_%H_%M_%S")
         file_name = 'LOGFILE_' + timestamp + '.txt'
-        self.logFile = open(os.path.join(os.path.realpath('../logs/'), file_name), 'w+')  # Save logfile to log folder
+        #self.logFile = open(os.path.join(os.path.realpath('../logs/'), file_name), 'w+')  # Save logfile to log folder
+        self.logFile = open(os.path.join('./logs/', file_name), 'w+')
 
         # need the status bar to give to the arm controller
         self.status_bar = StatusBar(self)
