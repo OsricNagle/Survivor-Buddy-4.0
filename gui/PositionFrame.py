@@ -135,13 +135,13 @@ class LabelScaleSpinbox(tk.Frame):
 
         if left and right:
             self.left_button = ttk.Button(middle_frame,
-                                          text="Move left", command=self.increment)
+                                          text="Move left", command=self.decrement)
             self.left_button.pack(side="left")
             videoFrame = tk.Frame(middle_frame, height=272, width=385)
             videoFrame.pack(side='left', expand=True, pady=5)
             
             self.right_button = ttk.Button(middle_frame,
-                                           text="Move right", command=self.decrement)
+                                           text="Move right", command=self.increment)
             self.right_button.pack(side="left")
         if down:
             self.down_button = ttk.Button(bottom_frame,
