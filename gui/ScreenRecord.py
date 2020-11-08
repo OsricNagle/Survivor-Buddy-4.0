@@ -58,8 +58,10 @@ class ScreenRecorder:
 
 
 
-
-
+myr = ScreenRecorder()
+myr.startRecording()
+time.sleep(2)
+myr.stopRecording()
 
 
 
