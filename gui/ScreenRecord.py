@@ -55,21 +55,3 @@ class ScreenRecorder:
         Stops the ffmpeg screen recording process
         """
         self.recording_process.send_signal(signal.CTRL_C_EVENT)
-
-
-
-myr = ScreenRecorder()
-myr.startRecording()
-time.sleep(2)
-myr.stopRecording()
-
-
-
-
-
-
-
-
-
-
-
