@@ -242,6 +242,12 @@ class Application(tk.Frame):
         # p.wait()
         # app.exec_()
 
+    def start_screen_record(self):
+        self.screen_record.startRecording()
+
+    def stop_screen_record(self):
+        self.screen_record.stopRecording()
+
     def create_menu(self, root_menu):
         '''
         Creates the main GUI menu
@@ -294,8 +300,8 @@ class Application(tk.Frame):
 
         #Screen Record
         self.screen_record_menu = tk.Menu(root_menu, tearoff=0)
-        self.screen_record_menu.add_command(label="Start Screen Record", command=self.screen_record.startRecording)
-        self.screen_record_menu.add_command(label="Stop Screen Record", command=self.screen_record.stopRecording)
+        self.screen_record_menu.add_command(label="Start Screen Record", command=self.start_screen_record)
+        self.screen_record_menu.add_command(label="Stop Screen Record", command=self.stop_screen_record)
         root_menu.add_cascade(label="Screen Record", menu=self.screen_record_menu)
 
 
