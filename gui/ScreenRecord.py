@@ -1,7 +1,5 @@
 #handles the screen recording funtionality of Survivor Buddy 4.0
 
-
-
 import subprocess
 import time
 import datetime
@@ -19,6 +17,7 @@ class ScreenRecorder:
         self.process_out = subprocess.DEVNULL
         self.framerate = framerate
         self.file_extension = '.mp4'
+        self.recording_running = False
 
         if display_stdout:
             self.process_out = subprocess.STDOUT
@@ -48,6 +47,14 @@ class ScreenRecorder:
 
         cmd  = ['ffmpeg', '-f', 'gdigrab', '-framerate', str(self.framerate), '-i', 'desktop', '-pix_fmt', 'yuv420p', out_name]
         self.recording_process = subprocess.Popen(cmd, stdout=self.process_out, stderr=self.process_out)
+        self.recording_running = True
+
+    def isRecording(self):
+        """
+        Returns true if currently recording
+        """
+        return self.recording_running
+
 
 
     def stopRecording(self):
@@ -55,3 +62,5 @@ class ScreenRecorder:
         Stops the ffmpeg screen recording process
         """
         self.recording_process.send_signal(signal.CTRL_C_EVENT)
+        self.recording_running = False
+        
