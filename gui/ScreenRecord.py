@@ -66,7 +66,7 @@ class ScreenRecorder:
         self.recording_running = False
         print("Screen Record Stopped")
 
-    def tenSec(self):
+    def testFun(self):
 
         self.startRecording()
         time.sleep(5)
