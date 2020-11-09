@@ -161,7 +161,6 @@ class TestSerialArmControllerHappy:
         self.mock_serial.write(in_bytes)
         self.my_sar.update_position()
 
-
         #check
         assert self.my_sar.position.pitch == 0
         assert self.my_sar.position.yaw == 0
@@ -204,6 +203,7 @@ class TestSerialArmControllerHappy:
 
         # check
         assert self.my_sar.position.pitch == 0
+        assert out_bytes == b''
 
     @pytest.mark.parametrize("input_val", [-90, 0, 90])
     def test_set_yaw_connected(self, input_val):
@@ -239,6 +239,7 @@ class TestSerialArmControllerHappy:
         out_bytes = self.mock_serial.read(2)
         # check
         assert self.my_sar.position.yaw == 0
+        assert out_bytes == b''
 
     @pytest.mark.parametrize("input_val", [0, 45, 90])
     def test_set_roll_connected(self, input_val):
@@ -274,6 +275,8 @@ class TestSerialArmControllerHappy:
         out_bytes = self.mock_serial.read(2)
         # check
         assert self.my_sar.position.roll == 0
+        assert out_bytes == b''
+
 
     def test_close_arm_pitch_0(self):
         """
@@ -374,10 +377,12 @@ class TestSerialArmControllerHappy:
 
         # test
         self.my_sar.portrait()
+        out_bytes = self.mock_serial.read(2)
 
 
         # check
         assert self.my_sar.position.roll == 0
+        assert out_bytes == b''
 
     def test_portrait_is_connected_roll_not_0(self):
         """
@@ -406,14 +411,16 @@ class TestSerialArmControllerHappy:
 
         # setup
         self.reset_mocked_sar()
-        self.my_sar.is_connected = True
+        self.my_sar.is_connected = False
 
         # test
         self.my_sar.position.roll = 10
         self.my_sar.landscape()
+        out_bytes = self.mock_serial.read(2)
 
         # check
         assert self.my_sar.position.roll == 10
+        assert out_bytes == b''
 
     def test_landscape_is_connected_roll_90(self):
         """
@@ -443,12 +450,15 @@ class TestSerialArmControllerHappy:
         self.reset_mocked_sar()
         self.my_sar.is_connected = False
 
+
         # test
         self.my_sar.position.roll = 90
         self.my_sar.landscape()
+        out_bytes = self.mock_serial.read(2)
 
         # check
         assert self.my_sar.position.roll == 90
+        assert out_bytes == b''
 
     def test_landscape_is_connected_roll_not_90(self):
         """
@@ -477,14 +487,16 @@ class TestSerialArmControllerHappy:
 
         # setup
         self.reset_mocked_sar()
-        self.my_sar.is_connected = True
+        self.my_sar.is_connected = False
 
         # test
         self.my_sar.position.roll = 10
         self.my_sar.landscape()
+        out_bytes = self.mock_serial.read(2)
 
         # check
         assert self.my_sar.position.roll == 10
+        assert out_bytes == b''
 
     def test_tilt_is_connected(self):
         """

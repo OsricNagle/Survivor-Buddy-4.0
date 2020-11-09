@@ -9,6 +9,7 @@ from .NotificationsFrame import NotificationFrame
 from .StatusBar import StatusBar
 from .SerialArmController import SerialArmController
 from .SerialArmController import Command
+from .ScreenRecord import ScreenRecorder
 from datetime import datetime  # For log file formatting
 from .BuddyMessageClient import BuddyMessageClient
 from .tkvlc import Player
@@ -43,6 +44,7 @@ class Application(tk.Frame):
 
         host = '192.168.42.129'
         port = 5050
+        self.screen_record = ScreenRecorder()
 
         self.serverString = 'rtsp://' + host + ':1935/'
         self.video = expanduser(self.serverString)
@@ -67,6 +69,7 @@ class Application(tk.Frame):
 
         self.device_arr = self.mbac.getInputDeviceNames()
         self.create_menu(self.menu_bar)
+
 
         top_frame = Frame(self)
         top_frame.pack(fill="x")
@@ -116,7 +119,6 @@ class Application(tk.Frame):
 
 
         self.master.config(menu=self.menu_bar)
-
         # self.button = tk.Button(self, text="Create new window",
         #                         command=self.create_window)
         # self.button.pack(side="right")
@@ -289,6 +291,12 @@ class Application(tk.Frame):
         self.phone_mirroring_menu = tk.Menu(root_menu, tearoff=0)
         self.phone_mirroring_menu.add_command(label="Open Phone Mirroring", command=self.phone_mirror)
         root_menu.add_cascade(label="Phone Mirroring", menu=self.phone_mirroring_menu)
+
+        #Screen Record
+        self.screen_record_menu = tk.Menu(root_menu, tearoff=0)
+        self.screen_record_menu.add_command(label="Start Screen Record", command=self.screen_record.startRecording)
+        self.screen_record_menu.add_command(label="Stop Screen Record", command=self.screen_record.stopRecording)
+        root_menu.add_cascade(label="Screen Record", menu=self.screen_record_menu)
 
 
     def refresh_devices(self):
