@@ -65,4 +65,13 @@ class ScreenRecorder:
         self.recording_process.send_signal(signal.CTRL_C_EVENT)
         self.recording_running = False
         print("Screen Record Stopped")
+
+    def tenSec(self):
+
+        self.startRecording()
+        time.sleep(5)
+        self.stopRecording()
         
+
+myr = ScreenRecorder()
+myr.tenSec()
