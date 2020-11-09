@@ -48,6 +48,7 @@ class ScreenRecorder:
         cmd  = ['ffmpeg', '-f', 'gdigrab', '-framerate', str(self.framerate), '-i', 'desktop', '-pix_fmt', 'yuv420p', out_name]
         self.recording_process = subprocess.Popen(cmd, stdout=self.process_out, stderr=self.process_out)
         self.recording_running = True
+        print("Screen Record Started")
 
     def isRecording(self):
         """
@@ -63,4 +64,5 @@ class ScreenRecorder:
         """
         self.recording_process.send_signal(signal.CTRL_C_EVENT)
         self.recording_running = False
+        print("Screen Record Stopped")
         
