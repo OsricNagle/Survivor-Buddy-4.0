@@ -19,6 +19,7 @@ import subprocess
 from .BuddyAudioClient import BuddyAudioClient
 from functools import *
 
+
 import threading
 # import appscript  # added this
 
@@ -42,18 +43,21 @@ class Application(tk.Frame):
         self.master.call('wm', 'iconphoto', self.master._w, self.taskbar_icon)
         self.config(padx=16, pady=16)
 
-        host = '192.168.42.129'
-        port = 5050
+        #instantiating screen recorder
         self.screen_record = ScreenRecorder()
         self.screen_record.setOutputFolder('./screen_recordings/')
 
+        #instantiating things for the Audio client and the text client
+        host = '192.168.42.129'
+        port = 5050
         self.serverString = 'rtsp://' + host + ':1935/'
         self.video = expanduser(self.serverString)
         self.player = 0
         self.create_video_frame()
-
         self.mbac = BuddyAudioClient(host, port)
         self.microphone = ""
+
+        #creating stuff for the log file
         now = datetime.now()  # Create unique logfile for notifications and errors
         timestamp = now.strftime("%m_%d_%Y_%H_%M_%S")
         file_name = 'LOGFILE_' + timestamp + '.txt'
@@ -96,7 +100,8 @@ class Application(tk.Frame):
         text_frame = Frame(self)
         text_frame.pack(fill="x")
 
-
+        self.record_image = tk.PhotoImage(file="gui/recordingbutton.png")
+        self.record_label = tk.Label(text_frame, image=self.record_image)
         self.bmc = BuddyMessageClient(host, port, self.master)
         # textbox = ttk.Label(root, text="text")
         # textbox.place(x=800, y=300)
@@ -206,7 +211,7 @@ class Application(tk.Frame):
 
         self.logFile.close()
         self.quit()
-    
+
     def create_video_frame(self):
         print("creating video frame")
         # videoFrame = tk.Frame(middle_frame, height=400, width=600, bg='grey')
@@ -246,6 +251,7 @@ class Application(tk.Frame):
     def start_screen_record(self):
         if not self.screen_record.isRecording():
             self.screen_record.startRecording()
+            self.record_label.pack(side="left")
         else:
             #TODO: Add error message
             pass
@@ -253,6 +259,7 @@ class Application(tk.Frame):
     def stop_screen_record(self):
         if self.screen_record.isRecording():
             self.screen_record.stopRecording()
+            self.record_label.pack_forget()
         else:
             pass
 
@@ -288,7 +295,7 @@ class Application(tk.Frame):
         self.video_menu.add_command(label="Connect Video", command=self.connect_to_video)
         self.video_menu.add_command(label="Disconnect Video", command=self.disconnect_to_video)
         root_menu.add_cascade(label="Video", menu=self.video_menu)
-        
+
         #Audio Menu
         self.audio_menu = tk.Menu(root_menu, tearoff=0)
         self.audio_menu.add_command(label="Connect Audio", command=self.connect_to_audio)
