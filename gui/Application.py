@@ -45,6 +45,7 @@ class Application(tk.Frame):
         host = '192.168.42.129'
         port = 5050
         self.screen_record = ScreenRecorder()
+        self.screen_record.setOutputFolder('./screen_recordings/')
 
         self.serverString = 'rtsp://' + host + ':1935/'
         self.video = expanduser(self.serverString)
@@ -243,10 +244,17 @@ class Application(tk.Frame):
         # app.exec_()
 
     def start_screen_record(self):
-        self.screen_record.startRecording()
+        if not self.screen_record.isRecording():
+            self.screen_record.startRecording()
+        else:
+            #TODO: Add error message
+            pass
 
     def stop_screen_record(self):
-        self.screen_record.stopRecording()
+        if self.screen_record.isRecording():
+            self.screen_record.stopRecording()
+        else:
+            pass
 
     def create_menu(self, root_menu):
         '''

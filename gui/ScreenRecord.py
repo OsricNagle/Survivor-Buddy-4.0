@@ -9,10 +9,10 @@ class ScreenRecorder:
 
     def __init__(self, filename=None, display_stdout=False, framerate=30):
         """
-        Inits ScreenRecorder class
+        Init ScreenRecorder class
         """
         self.output_filename = filename
-        self.output_filepath = '../screen_recordings/'
+        self.output_folder = './'
         self.recording_process = None
         self.process_out = subprocess.DEVNULL
         self.framerate = framerate
@@ -22,19 +22,22 @@ class ScreenRecorder:
         if display_stdout:
             self.process_out = subprocess.STDOUT
 
-    def generateFilename(self):
+    def generateFilepath(self):
         """
         Generates a default filename based on the date and time
         """
 
         date_str = '-' + datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
-        return self.output_filepath + 'SuvivorBuddyRecoding' + date_str + self.file_extension
+        return self.output_folder + 'SuvivorBuddyRecoding' + date_str + self.file_extension
 
     def setFilename(self, name):
         """
         Sets the value of output_filename
         """
         self.output_filename = name
+
+    def setOutputFolder(self, path):
+        self.output_folder = path
 
     def startRecording(self):
         """
@@ -43,7 +46,7 @@ class ScreenRecorder:
 
         out_name = self.output_filename
         if out_name is None:
-            out_name = self.generateFilename()
+            out_name = self.generateFilepath()
 
         cmd  = ['ffmpeg', '-f', 'gdigrab', '-framerate', str(self.framerate), '-i', 'desktop', '-pix_fmt', 'yuv420p', out_name]
         self.recording_process = subprocess.Popen(cmd, stdout=self.process_out, stderr=self.process_out)
@@ -71,7 +74,9 @@ class ScreenRecorder:
         self.startRecording()
         time.sleep(5)
         self.stopRecording()
-        
 
+"""
+time.sleep(2)
 myr = ScreenRecorder()
-myr.tenSec()
+myr.testFun()
+"""
