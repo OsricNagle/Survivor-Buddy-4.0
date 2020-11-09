@@ -49,7 +49,13 @@ class ScreenRecorder:
             out_name = self.generateFilepath()
 
         cmd  = ['ffmpeg', '-f', 'gdigrab', '-framerate', str(self.framerate), '-i', 'desktop', '-pix_fmt', 'yuv420p', out_name]
-        self.recording_process = subprocess.Popen(cmd, stdout=self.process_out, stderr=self.process_out, shell=True)
+        self.recording_process = subprocess.Popen(
+            cmd, 
+            stdout=self.process_out, 
+            stderr=self.process_out, 
+            shell=True, 
+            stdin=subprocess.PIPE
+        )
         self.recording_running = True
         print("Screen Record Started")
 
@@ -65,8 +71,7 @@ class ScreenRecorder:
         """
         Stops the ffmpeg screen recording process
         """
-        self.recording_process.send_signal(signal.CTRL_C_EVENT)
-        self.recording_process.wait()
+        self.recording_process.communicate(input=b"q")
         self.recording_running = False
         print("Screen Record Stopped")
 
