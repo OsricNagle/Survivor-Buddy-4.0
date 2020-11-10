@@ -99,7 +99,8 @@ class Application(tk.Frame):
 
         text_frame = Frame(self)
         text_frame.pack(fill="x")
-
+        self.mute_image = tk.PhotoImage(file="gui/mute.png")
+        self.mute_label = tk.Label(text_frame, image=self.mute_image)
         self.record_image = tk.PhotoImage(file="gui/recordingbutton.png")
         self.record_label = tk.Label(text_frame, image=self.record_image)
         self.bmc = BuddyMessageClient(host, port, self.master)
@@ -230,9 +231,12 @@ class Application(tk.Frame):
 
     def connect_to_audio(self):
         self.mbac.connectAndStart()
+        self.mute_label.pack_forget()
 
     def disconnect_to_audio(self):
         self.mbac.disconnectAndStop()
+        self.mute_label.pack(side="left")
+
 
     def change_audio(self, device):
         self.mbac.disconnectAndStop()
