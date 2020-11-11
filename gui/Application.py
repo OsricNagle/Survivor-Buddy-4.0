@@ -278,8 +278,8 @@ class Application(tk.Frame):
         self.encryption_settings_menu.add_command(label="Turn Encryption On", command=self.turn_encryption_on)
 
     def set_password(self):
-        print(self.password)
-        self.screen_record.setPassword(self.password)
+        print(self.password.get())
+        self.screen_record.setPassword(self.password.get())
         self.popup.destroy()
 
     def popup_password(self):
