@@ -267,6 +267,32 @@ class Application(tk.Frame):
         else:
             pass
 
+    def turn_encryption_on(self):
+        self.screen_record.encrypt_bool = True
+        self.encryption_settings_menu.delete(1)
+        self.encryption_settings_menu.add_command(label="Turn Encryption Off", command=self.turn_encryption_off)
+
+    def turn_encryption_off(self):
+        self.screen_record.encrypt_bool = False
+        self.encryption_settings_menu.delete(1)
+        self.encryption_settings_menu.add_command(label="Turn Encryption On", command=self.turn_encryption_on)
+
+    def set_password(self):
+        print(self.password)
+        self.screen_record.setPassword(self.password)
+        self.popup.destroy()
+
+    def popup_password(self):
+        self.popup = tk.Toplevel()
+        self.popup.wm_title("Set Password")
+        self.password = tk.StringVar()
+        self.passwordEntered = ttk.Entry(self.popup, width=15, textvariable=self.password)
+        self.set_button = ttk.Button(self.popup, text="Set Password", command=self.set_password)
+        self.passwordEntered.pack()
+        self.set_button.pack()
+        self.popup.geometry("250x100")
+
+
     def create_menu(self, root_menu):
         '''
         Creates the main GUI menu
@@ -322,6 +348,13 @@ class Application(tk.Frame):
         self.screen_record_menu.add_command(label="Start Screen Record", command=self.start_screen_record)
         self.screen_record_menu.add_command(label="Stop Screen Record", command=self.stop_screen_record)
         root_menu.add_cascade(label="Screen Record", menu=self.screen_record_menu)
+
+        #Set Password
+        self.encryption_settings_menu = tk.Menu(root_menu, tearoff=0)
+        self.encryption_settings_menu.add_command(label="Set Password", command=self.popup_password)
+        self.encryption_settings_menu.add_command(label="Turn Encryption On", command=self.turn_encryption_on)
+        root_menu.add_cascade(label="Encryption Settings", menu=self.encryption_settings_menu)
+
 
 
     def refresh_devices(self):
