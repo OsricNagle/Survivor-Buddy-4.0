@@ -4,20 +4,25 @@ import subprocess
 import time
 import datetime
 import signal
+import pyminizip
+import os
 
 class ScreenRecorder:
 
-    def __init__(self, filename=None, display_stdout=False, framerate=30):
+    def __init__(self, filename=None, display_stdout=False, framerate=30, encrypt=False, password='default', output_folder='./', file_type='.mp4'):
         """
         Init ScreenRecorder class
         """
         self.output_filename = filename
-        self.output_folder = './'
+        self.output_folder = output_folder   #default output folder is working directory
         self.recording_process = None
         self.process_out = subprocess.DEVNULL
         self.framerate = framerate
-        self.file_extension = '.mp4'
+        self.file_extension = file_type #default file type is .mp4
         self.recording_running = False
+        self.file_password = password
+        self.current_recording_path = None
+        self.encrypt_bool = encrypt
 
         if display_stdout:
             self.process_out = subprocess.STDOUT
@@ -29,6 +34,16 @@ class ScreenRecorder:
 
         date_str = '-' + datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
         return self.output_folder + 'SuvivorBuddyRecoding' + date_str + self.file_extension
+
+    def encryptFile(self, filename):
+
+        base = os.path.basename(filename)
+        zip_name = self.output_folder + os.path.splitext(base)[0] + '.zip'
+        pyminizip.compress(filename, None, zip_name, self.file_password, 0)
+        
+
+    def setPassword(self, password):
+        self.file_password = password
 
     def setFilename(self, name):
         """
@@ -44,11 +59,22 @@ class ScreenRecorder:
         Starts ffmpeg screen recording process
         """
 
-        out_name = self.output_filename
-        if out_name is None:
-            out_name = self.generateFilepath()
+        self.current_recording_path = self.output_filename
+        if self.current_recording_path is None:
+            self.current_recording_path = self.generateFilepath()
 
-        cmd  = ['ffmpeg', '-f', 'gdigrab', '-framerate', str(self.framerate), '-i', 'desktop', '-pix_fmt', 'yuv420p', out_name]
+        cmd  = [
+            'ffmpeg', 
+            '-f', 
+            'gdigrab', 
+            '-framerate', 
+            str(self.framerate), 
+            '-i', 
+            'desktop', 
+            '-pix_fmt', 
+            'yuv420p', 
+            self.current_recording_path
+        ]
         self.recording_process = subprocess.Popen(
             cmd, 
             stdout=self.process_out, 
@@ -72,6 +98,9 @@ class ScreenRecorder:
         Stops the ffmpeg screen recording process
         """
         self.recording_process.communicate(input=b"q")
+        if(self.encrypt_bool):
+            self.encryptFile(self.current_recording_path)
+            os.remove(self.current_recording_path)
         self.recording_running = False
         print("Screen Record Stopped")
 
