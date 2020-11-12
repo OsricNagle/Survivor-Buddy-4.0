@@ -173,7 +173,6 @@ class Player(Tk.Frame):
         self.video = video
         self._resized = False
 
-        print("player init")
 
         # Menu Bar
         #   File Menu

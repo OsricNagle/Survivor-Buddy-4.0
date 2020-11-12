@@ -45,7 +45,13 @@ class Application(tk.Frame):
 
         #instantiating screen recorder
         self.screen_record = ScreenRecorder()
-        self.screen_record.setOutputFolder('./screen_recordings/')
+
+        try:
+            os.mkdir(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')+'\\'+'screen_recording\\')
+        except OSError as error:
+            print(error)
+
+        self.screen_record.setOutputFolder(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')+'\\'+'screen_recording\\')
 
         #instantiating things for the Audio client and the text client
         host = '192.168.42.129'
@@ -218,7 +224,6 @@ class Application(tk.Frame):
         self.quit()
 
     def create_video_frame(self):
-        print("creating video frame")
         # videoFrame = tk.Frame(middle_frame, height=400, width=600, bg='grey')
         # videoFrame.pack(side='left', expand=True, pady=5)
         self.player = Player(self.master, video=self.video)

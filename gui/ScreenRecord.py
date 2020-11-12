@@ -8,13 +8,12 @@ import pyminizip
 import os
 
 class ScreenRecorder:
-
     def __init__(self, filename=None, display_stdout=False, framerate=30, encrypt=False, password='default', output_folder='./', file_type='.mp4'):
         """
         Init ScreenRecorder class
         """
         self.output_filename = filename
-        self.output_folder = output_folder   #default output folder is working directory
+        self.output_folder = output_folder  #default output folder is working directory
         self.recording_process = None
         self.process_out = subprocess.DEVNULL
         self.framerate = framerate
@@ -31,7 +30,6 @@ class ScreenRecorder:
         """
         Generates a default filename based on the date and time
         """
-
         date_str = '-' + datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
         return self.output_folder + 'SuvivorBuddyRecoding' + date_str + self.file_extension
 
@@ -63,7 +61,7 @@ class ScreenRecorder:
         self.current_recording_path = self.output_filename
         if self.current_recording_path is None:
             self.current_recording_path = self.generateFilepath()
-
+        print(self.current_recording_path)
         cmd  = [
             'ffmpeg', 
             '-f', 
