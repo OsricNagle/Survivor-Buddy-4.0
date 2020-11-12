@@ -47,11 +47,11 @@ class Application(tk.Frame):
         self.screen_record = ScreenRecorder()
 
         try:
-            os.mkdir(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')+'\\'+'screen_recording\\')
+            os.mkdir(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')+'\\'+'screen_recordings\\')
         except OSError as error:
             print(error)
 
-        self.screen_record.setOutputFolder(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')+'\\'+'screen_recording\\')
+        self.screen_record.setOutputFolder(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')+'\\'+'screen_recordings\\')
 
         #instantiating things for the Audio client and the text client
         host = '192.168.42.129'

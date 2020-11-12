@@ -35,7 +35,6 @@ class ScreenRecorder:
 
     def encryptFile(self, filename):
 
-        print(self.file_password)
         base = os.path.basename(filename)
         zip_name = self.output_folder + os.path.splitext(base)[0] + '.zip'
         pyminizip.compress(filename, None, zip_name, self.file_password, 0)
