@@ -124,7 +124,7 @@ class LabelScaleSpinbox(tk.Frame):
         
         self.current_value = self.slider.get()
         self.spinbox.set(self.current_value)
-        self.spinbox.pack(side="left")
+        self.spinbox.pack(side="right")
 
         self.root = root
 

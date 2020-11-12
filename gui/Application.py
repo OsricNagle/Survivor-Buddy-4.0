@@ -47,7 +47,7 @@ class Application(tk.Frame):
         self.serverString = 'rtsp://' + host + ':1935/'
         self.video = expanduser(self.serverString)
         self.player = 0
-        self.create_video_frame()
+        # self.create_video_frame()
 
         self.mbac = BuddyAudioClient(host, port)
         self.microphone = ""
@@ -68,14 +68,17 @@ class Application(tk.Frame):
         self.device_arr = self.mbac.getInputDeviceNames()
         self.create_menu(self.menu_bar)
 
-        top_frame = Frame(self)
+        wrapper_frame = Frame(self)
+        wrapper_frame.pack(side="right")
+
+        top_frame = Frame(wrapper_frame)
         top_frame.pack(fill="x")
 
         # up_button = ttk.Button(self.top_frame,
         #                        text="Move up")
         # up_button.pack(side="top")
 
-        middle_frame = Frame(self)
+        middle_frame = Frame(wrapper_frame)
         middle_frame.pack()
 
         # left_button = ttk.Button(self.middle_frame,
@@ -86,10 +89,10 @@ class Application(tk.Frame):
         #                           text="Move right")
         # right_button.pack(side="left")
 
-        bottom_frame = Frame(self)
+        bottom_frame = Frame(wrapper_frame)
         bottom_frame.pack(fill="x")
 
-        text_frame = Frame(self)
+        text_frame = Frame(wrapper_frame)
         text_frame.pack(fill="x")
 
 
@@ -348,7 +351,7 @@ class Application(tk.Frame):
 if __name__ == "__main__":
     root = Tk()
 
-    root.geometry("1100x1080")
+    root.geometry("1250x1080")
     # now = datetime.now()  # Create unique logfile for notifications and errors
     # timestamp = now.strftime("%m_%d_%Y_%H_%M_%S")
     # file_name = 'LOGFILE_' + timestamp + '.txt'
