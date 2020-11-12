@@ -49,13 +49,15 @@ class Application(tk.Frame):
 
         #instantiating things for the Audio client and the text client
         host = '192.168.42.129'
-        port = 5050
+        self.audio_port = 5050
+        self.rtsp_port = 1935
         self.serverString = 'rtsp://' + host + ':1935/'
         self.video = expanduser(self.serverString)
         self.player = 0
         self.create_video_frame()
-        self.mbac = BuddyAudioClient(host, port)
+        self.mbac = BuddyAudioClient(host, self.audio_port)
         self.microphone = ""
+        self.keep_audio_on = False
 
         #creating stuff for the log file
         now = datetime.now()  # Create unique logfile for notifications and errors
@@ -103,7 +105,8 @@ class Application(tk.Frame):
         self.mute_label = tk.Label(text_frame, image=self.mute_image)
         self.record_image = tk.PhotoImage(file="gui/recordingbutton.png")
         self.record_label = tk.Label(text_frame, image=self.record_image)
-        self.bmc = BuddyMessageClient(host, port, self.master)
+        self.message_port = 8080
+        self.bmc = BuddyMessageClient(host, self.message_port, self.master)
         # textbox = ttk.Label(root, text="text")
         # textbox.place(x=800, y=300)
         self.name = tk.StringVar()
@@ -232,16 +235,19 @@ class Application(tk.Frame):
     def connect_to_audio(self):
         self.mbac.connectAndStart()
         self.mute_label.pack_forget()
+        self.keep_audio_on = True
 
     def disconnect_to_audio(self):
         self.mbac.disconnectAndStop()
         self.mute_label.pack(side="left")
+        self.keep_audio_on = False
 
 
     def change_audio(self, device):
         self.mbac.disconnectAndStop()
         self.mbac.setInputDevice(device)
-        self.mbac.connectAndStart()
+        if(self.keep_audio_on):
+            self.mbac.connectAndStart()
 
     def phone_mirror(self):
         # #app = QApplication([])
