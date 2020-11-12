@@ -103,6 +103,7 @@ class Application(tk.Frame):
         text_frame.pack(fill="x")
         self.mute_image = tk.PhotoImage(file="gui/mute.png")
         self.mute_label = tk.Label(text_frame, image=self.mute_image)
+        self.mute_label.pack(side="left")
         self.record_image = tk.PhotoImage(file="gui/recordingbutton.png")
         self.record_label = tk.Label(text_frame, image=self.record_image)
         self.message_port = 8080
