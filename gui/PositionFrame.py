@@ -164,7 +164,7 @@ class LabelScaleSpinbox(tk.Frame):
     def incrementUp(self):
         newVal = int(self.spinbox.get())
         if newVal >= 90:
-            self.serial_arm_controller.notifications.append_line("Error: Can't Move Up Any Further")
+            self.serial_arm_controller.notifications.append_line("Error: Can't Move Up Any Farther")
         else:
             self.spinbox.set(newVal+5)
             self.current_value = newVal+5
@@ -174,7 +174,7 @@ class LabelScaleSpinbox(tk.Frame):
     def incrementRight(self):
         newVal = int(self.spinbox.get())
         if newVal >= 90:
-            self.serial_arm_controller.notifications.append_line("Error: Can't Move Right Any Further")
+            self.serial_arm_controller.notifications.append_line("Error: Can't Move Right Any Farther")
         else:
             self.spinbox.set(newVal+5)
             self.current_value = newVal+5
@@ -185,7 +185,7 @@ class LabelScaleSpinbox(tk.Frame):
     def decrementLeft(self):
         newVal = int(self.spinbox.get())
         if newVal <= -90:
-            self.serial_arm_controller.notifications.append_line("Error: Can't Move Left Any Further")
+            self.serial_arm_controller.notifications.append_line("Error: Can't Move Left Any Farther")
         else:
             self.spinbox.set(newVal-5)
             self.current_value = newVal-5
@@ -195,7 +195,7 @@ class LabelScaleSpinbox(tk.Frame):
     def decrementDown(self):
         newVal = int(self.spinbox.get())
         if newVal <= 0:
-            self.serial_arm_controller.notifications.append_line("Error: Can't Move Down Any Further")
+            self.serial_arm_controller.notifications.append_line("Error: Can't Move Down Any Farther")
         else:
             self.spinbox.set(newVal-5)
             self.current_value = newVal-5
