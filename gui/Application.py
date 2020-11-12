@@ -9,6 +9,7 @@ from .NotificationsFrame import NotificationFrame
 from .StatusBar import StatusBar
 from .SerialArmController import SerialArmController
 from .SerialArmController import Command
+from .ScreenRecord import ScreenRecorder
 from datetime import datetime  # For log file formatting
 from .BuddyMessageClient import BuddyMessageClient
 from .tkvlc import Player
@@ -17,6 +18,7 @@ import webbrowser
 import subprocess
 from .BuddyAudioClient import BuddyAudioClient
 from functools import *
+
 
 import threading
 # import appscript  # added this
@@ -41,16 +43,23 @@ class Application(tk.Frame):
         self.master.call('wm', 'iconphoto', self.master._w, self.taskbar_icon)
         self.config(padx=16, pady=16)
 
-        host = '192.168.42.129'
-        port = 5050
+        #instantiating screen recorder
+        self.screen_record = ScreenRecorder()
+        self.screen_record.setOutputFolder('./screen_recordings/')
 
+        #instantiating things for the Audio client and the text client
+        host = '192.168.42.129'
+        self.audio_port = 5050
+        self.rtsp_port = 1935
         self.serverString = 'rtsp://' + host + ':1935/'
         self.video = expanduser(self.serverString)
         self.player = 0
         self.create_video_frame()
-
-        self.mbac = BuddyAudioClient(host, port)
+        self.mbac = BuddyAudioClient(host, self.audio_port)
         self.microphone = ""
+        self.keep_audio_on = False
+
+        #creating stuff for the log file
         now = datetime.now()  # Create unique logfile for notifications and errors
         timestamp = now.strftime("%m_%d_%Y_%H_%M_%S")
         file_name = 'LOGFILE_' + timestamp + '.txt'
@@ -67,6 +76,7 @@ class Application(tk.Frame):
 
         self.device_arr = self.mbac.getInputDeviceNames()
         self.create_menu(self.menu_bar)
+
 
         top_frame = Frame(self)
         top_frame.pack(fill="x")
@@ -91,9 +101,13 @@ class Application(tk.Frame):
 
         text_frame = Frame(self)
         text_frame.pack(fill="x")
-
-
-        self.bmc = BuddyMessageClient(host, port, self.master)
+        self.mute_image = tk.PhotoImage(file="gui/mute.png")
+        self.mute_label = tk.Label(text_frame, image=self.mute_image)
+        self.mute_label.pack(side="left")
+        self.record_image = tk.PhotoImage(file="gui/recordingbutton.png")
+        self.record_label = tk.Label(text_frame, image=self.record_image)
+        self.message_port = 8080
+        self.bmc = BuddyMessageClient(host, self.message_port, self.master)
         # textbox = ttk.Label(root, text="text")
         # textbox.place(x=800, y=300)
         self.name = tk.StringVar()
@@ -116,7 +130,6 @@ class Application(tk.Frame):
 
 
         self.master.config(menu=self.menu_bar)
-
         # self.button = tk.Button(self, text="Create new window",
         #                         command=self.create_window)
         # self.button.pack(side="right")
@@ -203,7 +216,7 @@ class Application(tk.Frame):
 
         self.logFile.close()
         self.quit()
-    
+
     def create_video_frame(self):
         print("creating video frame")
         # videoFrame = tk.Frame(middle_frame, height=400, width=600, bg='grey')
@@ -222,14 +235,20 @@ class Application(tk.Frame):
 
     def connect_to_audio(self):
         self.mbac.connectAndStart()
+        self.mute_label.pack_forget()
+        self.keep_audio_on = True
 
     def disconnect_to_audio(self):
         self.mbac.disconnectAndStop()
+        self.mute_label.pack(side="left")
+        self.keep_audio_on = False
+
 
     def change_audio(self, device):
         self.mbac.disconnectAndStop()
         self.mbac.setInputDevice(device)
-        self.mbac.connectAndStart()
+        if(self.keep_audio_on):
+            self.mbac.connectAndStart()
 
     def phone_mirror(self):
         # #app = QApplication([])
@@ -239,6 +258,47 @@ class Application(tk.Frame):
         p = subprocess.Popen(command, shell=True)
         # p.wait()
         # app.exec_()
+
+    def start_screen_record(self):
+        if not self.screen_record.isRecording():
+            self.screen_record.startRecording()
+            self.record_label.pack(side="left")
+        else:
+            #TODO: Add error message
+            pass
+
+    def stop_screen_record(self):
+        if self.screen_record.isRecording():
+            self.screen_record.stopRecording()
+            self.record_label.pack_forget()
+        else:
+            pass
+
+    def turn_encryption_on(self):
+        self.screen_record.encrypt_bool = True
+        self.encryption_settings_menu.delete(1)
+        self.encryption_settings_menu.add_command(label="Turn Encryption Off", command=self.turn_encryption_off)
+
+    def turn_encryption_off(self):
+        self.screen_record.encrypt_bool = False
+        self.encryption_settings_menu.delete(1)
+        self.encryption_settings_menu.add_command(label="Turn Encryption On", command=self.turn_encryption_on)
+
+    def set_password(self):
+        print(self.password.get())
+        self.screen_record.setPassword(self.password.get())
+        self.popup.destroy()
+
+    def popup_password(self):
+        self.popup = tk.Toplevel()
+        self.popup.wm_title("Set Password")
+        self.password = tk.StringVar()
+        self.passwordEntered = ttk.Entry(self.popup, width=15, textvariable=self.password)
+        self.set_button = ttk.Button(self.popup, text="Set Password", command=self.set_password)
+        self.passwordEntered.pack()
+        self.set_button.pack()
+        self.popup.geometry("250x100")
+
 
     def create_menu(self, root_menu):
         '''
@@ -272,12 +332,12 @@ class Application(tk.Frame):
         self.video_menu.add_command(label="Connect Video", command=self.connect_to_video)
         self.video_menu.add_command(label="Disconnect Video", command=self.disconnect_to_video)
         root_menu.add_cascade(label="Video", menu=self.video_menu)
-        
+
         #Audio Menu
         self.audio_menu = tk.Menu(root_menu, tearoff=0)
-        self.audio_menu.add_command(label="Connect Audio", command=self.connect_to_audio)
-        self.audio_menu.add_command(label="Disconnect Audio", command=self.disconnect_to_audio)
-        root_menu.add_cascade(label="Audio", menu=self.audio_menu)
+        self.audio_menu.add_command(label="Unmute", command=self.connect_to_audio)
+        self.audio_menu.add_command(label="Mute", command=self.disconnect_to_audio)
+        root_menu.add_cascade(label="Unmute/Mute", menu=self.audio_menu)
 
         #Audio Devices
         self.audio_devices_menu = tk.Menu(root_menu, tearoff=0)
@@ -289,6 +349,19 @@ class Application(tk.Frame):
         self.phone_mirroring_menu = tk.Menu(root_menu, tearoff=0)
         self.phone_mirroring_menu.add_command(label="Open Phone Mirroring", command=self.phone_mirror)
         root_menu.add_cascade(label="Phone Mirroring", menu=self.phone_mirroring_menu)
+
+        #Screen Record
+        self.screen_record_menu = tk.Menu(root_menu, tearoff=0)
+        self.screen_record_menu.add_command(label="Start Screen Record", command=self.start_screen_record)
+        self.screen_record_menu.add_command(label="Stop Screen Record", command=self.stop_screen_record)
+        root_menu.add_cascade(label="Screen Record", menu=self.screen_record_menu)
+
+        #Set Password
+        self.encryption_settings_menu = tk.Menu(root_menu, tearoff=0)
+        self.encryption_settings_menu.add_command(label="Set Password", command=self.popup_password)
+        self.encryption_settings_menu.add_command(label="Turn Encryption On", command=self.turn_encryption_on)
+        root_menu.add_cascade(label="Encryption Settings", menu=self.encryption_settings_menu)
+
 
 
     def refresh_devices(self):
