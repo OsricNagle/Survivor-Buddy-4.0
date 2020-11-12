@@ -90,13 +90,16 @@ class BuddyAudioClient:
 
     def stream_loop(self):
         audio_data = self.audio_stream.read(self.chunk_size)
-        print(audio_data)
         if(self.client_socket is None):
             self.continue_stream = False
         elif(self.client_socket._closed):
             self.continue_stream = False
         else:
             self.client_socket.sendall(audio_data)
+
+    def setPortNum(self, new_port):
+        self.port_num = new_port
+        self.server_addr = (self.server_ip, self.port_num)
     
 
     def getInputDeviceNames(self):

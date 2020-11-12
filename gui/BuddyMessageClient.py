@@ -22,6 +22,10 @@ class BuddyMessageClient:
             label = Label(newWindow, text= error_msg)
             label.pack()
 
+    def setPortNum(self, new_port):
+        self.port_num = new_port
+        self.full_addr = (self.server_ip, self.port_num)
+
     def connect(self, text="DEFAULT_MESSAGE"):
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
