@@ -130,22 +130,22 @@ class LabelScaleSpinbox(tk.Frame):
 
         if up:
             self.up_button = ttk.Button(top_frame,
-                                   text="Move up", command=self.increment)
+                                   text="Move up", command=self.incrementUp)
             self.up_button.pack(side="top")
 
         if left and right:
             self.left_button = ttk.Button(middle_frame,
-                                          text="Move left", command=self.decrement)
+                                          text="Move left", command=self.decrementLeft)
             self.left_button.pack(side="left")
             videoFrame = tk.Frame(middle_frame, height=272, width=385)
             videoFrame.pack(side='left', expand=True, pady=5)
             
             self.right_button = ttk.Button(middle_frame,
-                                           text="Move right", command=self.increment)
+                                           text="Move right", command=self.incrementRight)
             self.right_button.pack(side="left")
         if down:
             self.down_button = ttk.Button(bottom_frame,
-                                        text="Move down", command=self.decrement)
+                                        text="Move down", command=self.decrementDown)
             self.down_button.pack(side="top")
 
 
@@ -161,18 +161,46 @@ class LabelScaleSpinbox(tk.Frame):
         self.current_value = newVal
         self.send_command()
 
-    def increment(self):
+    def incrementUp(self):
         newVal = int(self.spinbox.get())
-        self.spinbox.set(newVal+5)
-        self.current_value = newVal+5
-        self.send_command()
+        if newVal >= 90:
+            self.serial_arm_controller.notifications.append_line("Error: Can't Move Up Any Farther")
+        else:
+            self.spinbox.set(newVal+5)
+            self.current_value = newVal+5
+            self.set_slider()
+            self.send_command()
+
+    def incrementRight(self):
+        newVal = int(self.spinbox.get())
+        if newVal >= 90:
+            self.serial_arm_controller.notifications.append_line("Error: Can't Move Right Any Farther")
+        else:
+            self.spinbox.set(newVal+5)
+            self.current_value = newVal+5
+            self.set_slider()
+            self.send_command()
 
 
-    def decrement(self):
+    def decrementLeft(self):
         newVal = int(self.spinbox.get())
-        self.spinbox.set(newVal-5)
-        self.current_value = newVal-5
-        self.send_command()
+        if newVal <= -90:
+            self.serial_arm_controller.notifications.append_line("Error: Can't Move Left Any Farther")
+        else:
+            self.spinbox.set(newVal-5)
+            self.current_value = newVal-5
+            self.set_slider()
+            self.send_command()
+
+    def decrementDown(self):
+        newVal = int(self.spinbox.get())
+        if newVal <= 0:
+            self.serial_arm_controller.notifications.append_line("Error: Can't Move Down Any Farther")
+        else:
+            self.spinbox.set(newVal-5)
+            self.current_value = newVal-5
+            self.set_slider()
+            self.send_command()
 
 
     def validate_spinbox(self, val):
