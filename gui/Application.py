@@ -228,7 +228,7 @@ class Application(tk.Frame):
         # videoFrame.pack(side='left', expand=True, pady=5)
         self.player = Player(self.master, video=self.video)
         # self.player.pack(side='right')
-        self.connect_to_video()
+        #self.connect_to_video()
 
     def connect_to_video(self):
         print("connecting to video")
