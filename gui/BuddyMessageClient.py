@@ -29,15 +29,21 @@ class BuddyMessageClient:
     def connect(self, text="DEFAULT_MESSAGE"):
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
+            print(self.full_addr)
             self.client_socket.connect(self.full_addr)
             return True
 
         except ConnectionRefusedError:
+            #if ip/port is wrong or
             self.show_error("Error Message: Connection Refused")
             return False
 
         except TimeoutError:
             self.show_error("Error Message: Connection TimedOut")
+            return False
+
+        except TypeError:
+            print("Invalid port")
             return False
 
         return None

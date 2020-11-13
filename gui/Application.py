@@ -306,6 +306,7 @@ class Application(tk.Frame):
     def set_video_port(self, port):
         self.rtsp_port = port
         self.serverString = f"rtsp://{self.host}:{self.rtsp_port}/"
+        self.video = self.serverString
         print(self.serverString)
         self.popup_port.destroy()
 
@@ -317,12 +318,17 @@ class Application(tk.Frame):
 
     def set_port(self, device_type, port):
         if device_type == 'audio':
-            self.mbac.setPortNum(port.get())
+            port_num = int(port.get())
+            self.mbac.setPortNum(port_num)
+            self.audio_port = port_num
             print(self.mbac.port_num)
         elif device_type == 'video':
-            self.set_video_port(port.get())
+            port_num = int(port.get())
+            self.set_video_port(port_num)
         elif device_type == 'message':
-            self.bmc.setPortNum(port.get())
+            port_num = int(port.get())
+            self.bmc.setPortNum(port_num)
+            self.message_port = port_num
             print(self.bmc.port_num)
         self.popup_port.destroy()
 
@@ -332,6 +338,7 @@ class Application(tk.Frame):
         self.popup_ip.wm_title("Set ip")
         ip = tk.StringVar()
         ip_entered = ttk.Entry(self.popup_ip, width=15, textvariable=ip)
+        ip_entered.insert(END, self.host)
         set_button = ttk.Button(self.popup_ip, text="Set ip", command=partial(self.set_ip, ip))
         ip_entered.pack()
         set_button.pack()
@@ -342,6 +349,18 @@ class Application(tk.Frame):
         self.popup_port.wm_title("Set " + device_type + " port")
         port = tk.StringVar()
         port_entered = ttk.Entry(self.popup_port, width=15, textvariable=port)
+
+        if(device_type == 'audio'):
+            port_entered.insert(END, self.audio_port)
+        elif(device_type == 'video'):
+            port_entered.insert(END, self.rtsp_port)
+        elif(device_type == 'message'):
+            port_entered.insert(END, self.message_port)
+        else:
+            print("ERROR")
+
+
+
         set_button = ttk.Button(self.popup_port, text="Set " + device_type + " port", command=partial(self.set_port, device_type, port))
         port_entered.pack()
         set_button.pack()
