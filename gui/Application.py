@@ -65,6 +65,10 @@ class Application(tk.Frame):
         self.microphone = ""
         self.keep_audio_on = False
 
+        self.message_port = 8080
+        self.bmc = BuddyMessageClient(
+            self.host, self.message_port, self.master)
+
         #creating stuff for the log file
         now = datetime.now()  # Create unique logfile for notifications and errors
         timestamp = now.strftime("%m_%d_%Y_%H_%M_%S")
@@ -112,8 +116,7 @@ class Application(tk.Frame):
         self.mute_label.pack(side="left")
         self.record_image = tk.PhotoImage(file="gui/recordingbutton.png")
         self.record_label = tk.Label(text_frame, image=self.record_image)
-        self.message_port = 8080
-        self.bmc = BuddyMessageClient(self.host, self.message_port, self.master)
+        
         # textbox = ttk.Label(root, text="text")
         # textbox.place(x=800, y=300)
         self.name = tk.StringVar()
@@ -308,12 +311,14 @@ class Application(tk.Frame):
         self.serverString = f"rtsp://{self.host}:{self.rtsp_port}/"
         self.video = self.serverString
         print(self.serverString)
+        self.set_ip_port_menu.entryconfigure(2, label=f"Set Video Port: {self.rtsp_port}")
         self.popup_port.destroy()
 
     def set_ip(self, ip):
         self.host = ip.get()
         self.serverString = f"rtsp://{self.host}:{self.rtsp_port}/"
         print(self.serverString)
+        self.set_ip_port_menu.entryconfigure(3, label=f"Set Phone IP: {self.host}")
         self.popup_ip.destroy()
 
     def set_port(self, device_type, port):
@@ -322,6 +327,8 @@ class Application(tk.Frame):
             self.mbac.setPortNum(port_num)
             self.audio_port = port_num
             print(self.mbac.port_num)
+            self.set_ip_port_menu.entryconfigure(0, label=f"Set Audio Port: {self.audio_port}")
+
         elif device_type == 'video':
             port_num = int(port.get())
             self.set_video_port(port_num)
@@ -329,6 +336,7 @@ class Application(tk.Frame):
             port_num = int(port.get())
             self.bmc.setPortNum(port_num)
             self.message_port = port_num
+            self.set_ip_port_menu.entryconfigure(1, label=f"Set Message Port: {self.message_port}")
             print(self.bmc.port_num)
         self.popup_port.destroy()
 
@@ -430,10 +438,10 @@ class Application(tk.Frame):
 
         #Set IP/Port
         self.set_ip_port_menu = tk.Menu(root_menu, tearoff=0)
-        self.set_ip_port_menu.add_command(label="Set Audio Port", command=partial(self.popup_port, 'audio'))
-        self.set_ip_port_menu.add_command(label="Set Message Port", command=partial(self.popup_port, 'message'))
-        self.set_ip_port_menu.add_command(label="Set Video Port", command=partial(self.popup_port, 'video'))
-        self.set_ip_port_menu.add_command(label="Set Phone IP", command=self.popup_ip)
+        self.set_ip_port_menu.add_command(label=f"Set Audio Port: {self.audio_port}", command=partial(self.popup_port, 'audio'))
+        self.set_ip_port_menu.add_command(label=f"Set Message Port: {self.message_port}", command=partial(self.popup_port, 'message'))
+        self.set_ip_port_menu.add_command(label=f"Set Video Port: {self.rtsp_port}", command=partial(self.popup_port, 'video'))
+        self.set_ip_port_menu.add_command(label=f"Set Phone IP: {self.host}", command=self.popup_ip)
         root_menu.add_cascade(label="Set IP/Port", menu=self.set_ip_port_menu)
 
 
