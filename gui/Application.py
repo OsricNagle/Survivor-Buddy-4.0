@@ -259,7 +259,10 @@ class Application(Tk.Frame):
         dismiss_button = Tk.Button(popup, text='Dismiss', command=popup.destroy)
         dismiss_button.pack()
 
-        popup.geometry("800x100")
+        w = self.theroot.winfo_x() + 100
+        h = self.theroot.winfo_y() + 100
+
+        popup.geometry(f"+{w}+{h}")
 
 
 
