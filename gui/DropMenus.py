@@ -101,7 +101,7 @@ class VideoMenu(Tk.Menu):
         print(f"updateMenu: {self.__class__}")
 
     def connectVideo(self):
-        self.app_frame.player._Play(self.app_frame.video)
+        self.app_frame.player._Play(self.app_frame.video_url)
 
 
     def disconnectVideo(self):

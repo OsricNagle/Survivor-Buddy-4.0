@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import tkinter as Tk
 
-from .PositionFrame import *
-from .ControlButtons import *
+from .PositionFrame import PositionFrame, RenderDiagram, LabelScaleSpinbox, PositionUpdater
+from .ControlButtons import ControlButtons
 from .NotificationsFrame import NotificationFrame
 from .StatusBar import StatusBar
 from .SerialArmController import SerialArmController
@@ -15,7 +15,7 @@ import os.path
 import webbrowser
 import subprocess
 from .BuddyAudioClient import BuddyAudioClient
-from functools import *
+from functools import partial
 
 
 from .DropMenus import *
@@ -55,27 +55,33 @@ class Application(Tk.Frame):
 
         self.screen_record.setOutputFolder(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')+'\\'+'screen_recordings\\')
 
-        #instantiating things for the Audio client and the text client
+        #default ip and port of the servers running on the phone
         self.host = '192.168.42.129'
         self.audio_port = 5050
         self.rtsp_port = 1935
-        self.serverString = f"rtsp://{self.host}:{self.rtsp_port}/"
-        self.video = expanduser(self.serverString)
-        self.player = Player(self.master, video=self.video)
+        self.message_port = 8080
 
+
+        #init video objects
+        self.video_url = f"rtsp://{self.host}:{self.rtsp_port}/"
+        self.player = Player(self.master, video=self.video_url)
+
+        #init PC->Phone Audio objs
         self.mbac = BuddyAudioClient(self.host, self.audio_port)
         self.microphone = ""
         self.keep_audio_on = False
 
-        self.message_port = 8080
+        #init PC->Phone text message objs
         self.bmc = BuddyMessageClient(
-            self.host, self.message_port, self.master)
+            self.host, 
+            self.message_port, 
+            self.master
+        )
 
         #creating stuff for the log file
         now = datetime.now()  # Create unique logfile for notifications and errors
         timestamp = now.strftime("%m_%d_%Y_%H_%M_%S")
         file_name = 'LOGFILE_' + timestamp + '.txt'
-        #self.logFile = open(os.path.join(os.path.realpath('../logs/'), file_name), 'w+')  # Save logfile to log folder
         self.logFile = open(os.path.join('./logs/', file_name), 'w+')
 
         # need the status bar to give to the arm controller
@@ -170,17 +176,13 @@ class Application(Tk.Frame):
 
     def set_video_port(self, port):
         self.rtsp_port = port
-        self.serverString = f"rtsp://{self.host}:{self.rtsp_port}/"
-        self.video = self.serverString
-        print(self.serverString)
-        #self.set_ip_port_menu.entryconfigure(2, label=f"Set Video Port: {self.rtsp_port}")
+        self.video_url = f"rtsp://{self.host}:{self.rtsp_port}/"
         self.popup_port.destroy()
 
     def set_ip(self, ip):
         self.host = ip.get()
-        self.serverString = f"rtsp://{self.host}:{self.rtsp_port}/"
-        print(self.serverString)
-        #self.set_ip_port_menu.entryconfigure(3, label=f"Set Phone IP: {self.host}")
+        self.video_url = f"rtsp://{self.host}:{self.rtsp_port}/"
+        print(self.video_url)
         self.popup_ip.destroy()
 
     def set_port(self, device_type, port):
@@ -189,7 +191,6 @@ class Application(Tk.Frame):
             self.mbac.setPortNum(port_num)
             self.audio_port = port_num
             print(self.mbac.port_num)
-            #self.set_ip_port_menu.entryconfigure(0, label=f"Set Audio Port: {self.audio_port}")
 
         elif device_type == 'video':
             port_num = int(port.get())
@@ -198,8 +199,6 @@ class Application(Tk.Frame):
             port_num = int(port.get())
             self.bmc.setPortNum(port_num)
             self.message_port = port_num
-            #self.set_ip_port_menu.entryconfigure(1, label=f"Set Message Port: {self.message_port}")
-            print(self.bmc.port_num)
         self.popup_port.destroy()
 
 
