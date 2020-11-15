@@ -428,7 +428,7 @@ class Application(tk.Frame):
         self.device_menu.add_command(label="Refresh Devices", command=self.refresh_devices)
         self.device_menu.add_separator()
         '''
-        self.device_menu = DeviceMenu(root_menu, tearoff=False)
+        self.device_menu = DeviceMenu(root_menu, tearoff=False, frame=self)
 
         root_menu.add_cascade(label="Device", menu=self.device_menu)
 

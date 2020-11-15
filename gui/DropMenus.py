@@ -18,19 +18,48 @@ class FileMenu(Tk.Menu):
         print(f"updateMenu: {self.__class__}")
 
     def quit(self):
-        self.app_frame.logFile.close()
-        self.app_frame.quit()
+        self.app_frame.close_app()
 
 
 class DeviceMenu(Tk.Menu):
     def __init__(self, parent, tearoff=False, frame=None):
         Tk.Menu.__init__(self, parent, tearoff=tearoff)
-        self.add_command(label="Refresh Devices")
+        self.add_command(label="Refresh Devices", command=self.refreshDevices)
         self.app_frame = frame
         self.open = False
 
     def updateMenu(self):
         print(f"updateMenu: {self.__class__}")
+
+    def refreshDevices(self):
+        self.app_frame.device_menu.delete(2, Tk.END)
+        self.app_frame.serial_arm_controller.update_devs()
+        if not self.app_frame.serial_arm_controller.devs:
+            self.add_command(label="No devices", state=Tk.DISABLED)
+        else:
+            for dev in self.app_frame.serial_arm_controller.devs:
+                self.add_command(
+                    label="{}: {}".format(dev[0], dev[1]),
+                    command=lambda: self.connect(dev)
+                )
+
+    def connect(self, dev):
+        '''
+        Connects to the given device
+        :param dev: The serial device to connect to
+        '''
+
+        self.app_frame.serial_arm_controller.connect(dev[0])
+        self.add_command(
+            label="Close Connection",
+            command=self.close
+        )
+
+    def close(self):
+        '''Closes the active serial connection'''
+
+        self.delete(2 + len(self.app_frame.serial_arm_controller.devs))
+        self.app_frame.serial_arm_controller.close()
 
 
 class HelpMenu(Tk.Menu):
