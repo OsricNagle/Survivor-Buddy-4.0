@@ -3,6 +3,7 @@
 import tkinter as Tk
 from functools import partial
 import subprocess
+import webbrowser
 #import tkinter.tkk as tkk
 #from PyQt5.QtWidgets import QApplication, QLabel
 
@@ -65,10 +66,23 @@ class DeviceMenu(Tk.Menu):
 class HelpMenu(Tk.Menu):
     def __init__(self, parent, tearoff=False):
         Tk.Menu.__init__(self, parent, tearoff=tearoff)
-        self.add_command(label="About Survivor Buddy 3.0")
-        self.add_command(label="User Manual")
-        self.add_command(label="Programmer's Reference")
+        self.add_command(label="About Survivor Buddy 3.0", command=self.openSurvivorBuddyPage)
+        self.add_command(label="User Manual", command=self.openUserManual)
+        self.add_command(label="Programmer's Reference", command=self.openProgrammerRef)
         self.open = False
+
+    def openSurvivorBuddyPage(self):
+        webbrowser.open("http://survivorbuddy.cse.tamu.edu/")
+
+    def openUserManual(self):
+        webbrowser.open(
+            "https://docs.google.com/document/d/1V6gmVehsxrlFoc5FzThtdTNSovUbyU03AUEBfnAclKA/edit?usp=sharing"
+        )
+
+    def openProgrammerRef(self):
+        webbrowser.open(
+            "https://drive.google.com/a/tamu.edu/file/d/1pMKci4BTCTu7H6GREmmWEmBEgZ4klQWn/view?usp=sharing"
+        )
 
     def updateMenu(self):
         print(f"updateMenu: {self.__class__}")
