@@ -67,10 +67,19 @@ class VideoMenu(Tk.Menu):
 class AudioMenu(Tk.Menu):
     def __init__(self, parent, tearoff=False, frame=None, audioClient=None):
         Tk.Menu.__init__(self, parent, tearoff=tearoff)
-        self.add_command(label="Connect Audio", command=self.connectAudio)
-        self.add_command(label="Disconnect Audio", command=self.disconnectAudio)
-        self.add_command(label="Mute", command=self.mute)
-        self.add_command(label="Unmute", command=self.unmute)
+        self.add_command(
+            label='Status: Disconnected', 
+            foreground='white',
+            background='grey',
+            activeforeground='white',
+            activebackground='grey',
+            hidemargin=True,
+            font='bold'
+        )
+        self.add_separator()
+
+        self.add_command(label="Connect Audio", command=self.toggleConnect)
+        self.add_command(label="Mute", command=self.toggleMute)
         self.app_frame = frame
         self.audioClient = audioClient
         self.muted = False
@@ -78,8 +87,39 @@ class AudioMenu(Tk.Menu):
 
 
     def updateMenu(self):
-        pass
+        
+        if(self.audioClient.is_connected):
+            self.entryconfigure(
+                0,
+                label='Status: Connected',
+                foreground='black',
+                background='green',
+                activeforeground='black',
+                activebackground='green',
+            )
+        else:
+            self.entryconfigure(
+                0,
+                label='Status: Disconnected',
+                foreground='white',
+                background='grey',
+                activeforeground='white',
+                activebackground='grey',
+            )
+
+
         #print(f"updateMenu: {self.__class__}")
+
+    def toggleConnect(self):
+        
+        if(not self.audioClient.is_connected):
+            self.connectAudio()
+            self.entryconfigure(2, label='Disconnect Audio')
+
+        else:
+            self.disconnectAudio()
+            self.entryconfigure(2, label='Connect Audio')
+
 
     def connectAudio(self):
         self.audioClient.connect()
@@ -90,6 +130,14 @@ class AudioMenu(Tk.Menu):
         if(self.audioClient.isStreaming()):
             self.audioClient.stopStream()
         self.audioClient.disconnect()
+
+    def toggleMute(self):
+        if(self.muted):
+            self.unmute()
+            self.entryconfigure(3, label='Mute')
+        else:
+            self.mute()
+            self.entryconfigure(3, label='Unmute')
 
     def mute(self):
         self.muted = True
@@ -208,6 +256,7 @@ class ScreenRecordMenu(Tk.Menu):
         )
 
     def chooseOuputFolder(self):
+        #TODO:
         pass
 
     def setPassword(self):

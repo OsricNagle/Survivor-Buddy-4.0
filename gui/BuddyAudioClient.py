@@ -29,6 +29,7 @@ class BuddyAudioClient:
         #self.input_device_info = self.audio_handler.get_default_input_device_info()
         #self.input_device_index = self.audio_handler.get_default_input_device_info()['index']
         self.current_device_dict = self.audio_handler.get_default_input_device_info()
+        self.input_device_index = self.current_device_dict['index']
 
         self.sampling_rate = self.default_sampling_rate
         self.width = self.default_width
