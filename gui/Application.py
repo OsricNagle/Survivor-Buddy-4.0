@@ -239,6 +239,12 @@ class Application(tk.Frame):
     def displayMuteIcon(self):
         self.mute_label.pack(side='left')
 
+    def displayRecordIcon(self):
+        self.record_label.pack(side='left')
+
+    def hideRecordIcon(self):
+        self.record_label.pack_forget()
+
     def create_video_frame(self):
         # videoFrame = tk.Frame(middle_frame, height=400, width=600, bg='grey')
         # videoFrame.pack(side='left', expand=True, pady=5)
@@ -295,11 +301,7 @@ class Application(tk.Frame):
         else:
             pass
 
-    def displayRecordIcon(self):
-        self.record_label.pack(side="left")
     
-    def hideRecordIcon(self):
-        self.record_label.pack_forget()
 
     def set_password(self, password):
         self.screen_record.setPassword(password.get())

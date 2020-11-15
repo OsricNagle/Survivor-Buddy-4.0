@@ -287,11 +287,11 @@ class ScreenRecordMenu(Tk.Menu):
 
     def toggleRecord(self):
         if(self.recorder.isRecording()):
-            self.recorder.stopRecording()
-            self.entryconfigure(0, label="Start Recording Screen")
+            self.stopRecording()
+            #self.entryconfigure(0, label="Start Recording Screen")
         else:
-            self.recorder.startRecording()
-            self.entryconfigure(0, label="Stop Recording Screen")
+            self.startRecording()
+            #self.entryconfigure(0, label="Stop Recording Screen")
 
 
     def toggleEncrypt(self):
