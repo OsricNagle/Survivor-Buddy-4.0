@@ -324,14 +324,14 @@ class Application(tk.Frame):
         self.serverString = f"rtsp://{self.host}:{self.rtsp_port}/"
         self.video = self.serverString
         print(self.serverString)
-        self.set_ip_port_menu.entryconfigure(2, label=f"Set Video Port: {self.rtsp_port}")
+        #self.set_ip_port_menu.entryconfigure(2, label=f"Set Video Port: {self.rtsp_port}")
         self.popup_port.destroy()
 
     def set_ip(self, ip):
         self.host = ip.get()
         self.serverString = f"rtsp://{self.host}:{self.rtsp_port}/"
         print(self.serverString)
-        self.set_ip_port_menu.entryconfigure(3, label=f"Set Phone IP: {self.host}")
+        #self.set_ip_port_menu.entryconfigure(3, label=f"Set Phone IP: {self.host}")
         self.popup_ip.destroy()
 
     def set_port(self, device_type, port):
@@ -340,7 +340,7 @@ class Application(tk.Frame):
             self.mbac.setPortNum(port_num)
             self.audio_port = port_num
             print(self.mbac.port_num)
-            self.set_ip_port_menu.entryconfigure(0, label=f"Set Audio Port: {self.audio_port}")
+            #self.set_ip_port_menu.entryconfigure(0, label=f"Set Audio Port: {self.audio_port}")
 
         elif device_type == 'video':
             port_num = int(port.get())
@@ -349,7 +349,7 @@ class Application(tk.Frame):
             port_num = int(port.get())
             self.bmc.setPortNum(port_num)
             self.message_port = port_num
-            self.set_ip_port_menu.entryconfigure(1, label=f"Set Message Port: {self.message_port}")
+            #self.set_ip_port_menu.entryconfigure(1, label=f"Set Message Port: {self.message_port}")
             print(self.bmc.port_num)
         self.popup_port.destroy()
 
@@ -513,14 +513,14 @@ class Application(tk.Frame):
         #root_menu.add_cascade(label="Encryption Settings", menu=self.encryption_settings_menu)
 
         #Set IP/Port
-        '''
-        self.set_ip_port_menu = tk.Menu(root_menu, tearoff=0)
-        self.set_ip_port_menu.add_command(label=f"Set Audio Port: {self.audio_port}", command=partial(self.popup_port, 'audio'))
-        self.set_ip_port_menu.add_command(label=f"Set Message Port: {self.message_port}", command=partial(self.popup_port, 'message'))
-        self.set_ip_port_menu.add_command(label=f"Set Video Port: {self.rtsp_port}", command=partial(self.popup_port, 'video'))
-        self.set_ip_port_menu.add_command(label=f"Set Phone IP: {self.host}", command=self.popup_ip)
-        '''
-        self.set_ip_port_menu = IpPortMenu(root_menu, tearoff=False)
+        
+        #self.set_ip_port_menu = tk.Menu(root_menu, tearoff=0)
+        #self.set_ip_port_menu.add_command(label=f"Set Audio Port: {self.audio_port}", command=partial(self.popup_port, 'audio'))
+        #self.set_ip_port_menu.add_command(label=f"Set Message Port: {self.message_port}", command=partial(self.popup_port, 'message'))
+        #self.set_ip_port_menu.add_command(label=f"Set Video Port: {self.rtsp_port}", command=partial(self.popup_port, 'video'))
+        #self.set_ip_port_menu.add_command(label=f"Set Phone IP: {self.host}", command=self.popup_ip)
+
+        self.set_ip_port_menu = IpPortMenu(root_menu, tearoff=False, frame=self)
 
         root_menu.add_cascade(label="Set IP/Port", menu=self.set_ip_port_menu)
 

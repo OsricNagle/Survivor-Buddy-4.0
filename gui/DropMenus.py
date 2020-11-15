@@ -215,9 +215,43 @@ class ScreenRecordMenu(Tk.Menu):
 
 
 class IpPortMenu(Tk.Menu):
-    def __init__(self, parent, tearoff=False):
+    def __init__(self, parent, tearoff=False, frame=None):
         Tk.Menu.__init__(self, parent, tearoff=tearoff)
-        #TODO: Different
+        
+        self.app_frame = frame
+        self.add_command(
+            label=f"Set Audio Port: {self.app_frame.audio_port}", 
+            command=partial(self.app_frame.popup_port, 'audio')
+        )
+        self.add_command(
+            label=f"Set Message Port: {self.app_frame.message_port}", 
+            command=partial(self.app_frame.popup_port, 'message')
+        )
+        self.add_command(
+            label=f"Set Video Port: {self.app_frame.rtsp_port}", 
+            command=partial(self.app_frame.popup_port, 'video')
+        )
+        self.add_command(
+            label=f"Set Phone IP: {self.app_frame.host}", 
+            command=self.app_frame.popup_ip
+        )
 
     def updateMenu(self):
         print(f"updateMenu: {self.__class__}")
+
+        self.entryconfigure(
+            0, 
+            label=f"Set Audio Port: {self.app_frame.audio_port}"
+        )
+        self.entryconfigure(
+            1,
+            label=f"Set Audio Port: {self.app_frame.message_port}"
+        )
+        self.entryconfigure(
+            2,
+            label=f"Set Audio Port: {self.app_frame.rtsp_port}"
+        )
+        self.entryconfigure(
+            3,
+            label=f"Set Audio Port: {self.app_frame.host}"
+        )
