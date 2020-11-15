@@ -20,6 +20,10 @@ from .BuddyAudioClient import BuddyAudioClient
 from functools import *
 
 
+from .DropMenus import AudioMenu
+
+
+
 import threading
 # import appscript  # added this
 
@@ -410,9 +414,12 @@ class Application(tk.Frame):
         root_menu.add_cascade(label="Video", menu=self.video_menu)
 
         #Audio Menu
-        self.audio_menu = tk.Menu(root_menu, tearoff=0)
-        self.audio_menu.add_command(label="Unmute", command=self.connect_to_audio)
-        self.audio_menu.add_command(label="Mute", command=self.disconnect_to_audio)
+        #self.audio_menu = tk.Menu(root_menu, tearoff=0)
+        #self.audio_menu.add_command(label="Unmute", command=self.connect_to_audio)
+        #self.audio_menu.add_command(label="Mute", command=self.disconnect_to_audio)
+
+        self.audio_menu = AudioMenu(root_menu, tearoff=0)
+
         root_menu.add_cascade(label="Unmute/Mute", menu=self.audio_menu)
 
         #Audio Devices
