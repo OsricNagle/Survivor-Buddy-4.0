@@ -45,19 +45,29 @@ class Application(tk.Frame):
 
         #instantiating screen recorder
         self.screen_record = ScreenRecorder()
-        self.screen_record.setOutputFolder('./screen_recordings/')
+
+        try:
+            os.mkdir(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')+'\\'+'screen_recordings\\')
+        except OSError as error:
+            print(error)
+
+        self.screen_record.setOutputFolder(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')+'\\'+'screen_recordings\\')
 
         #instantiating things for the Audio client and the text client
-        host = '192.168.42.129'
+        self.host = '192.168.42.129'
         self.audio_port = 5050
         self.rtsp_port = 1935
-        self.serverString = 'rtsp://' + host + ':1935/'
+        self.serverString = f"rtsp://{self.host}:{self.rtsp_port}/"
         self.video = expanduser(self.serverString)
         self.player = 0
         self.create_video_frame()
-        self.mbac = BuddyAudioClient(host, self.audio_port)
+        self.mbac = BuddyAudioClient(self.host, self.audio_port)
         self.microphone = ""
         self.keep_audio_on = False
+
+        self.message_port = 8080
+        self.bmc = BuddyMessageClient(
+            self.host, self.message_port, self.master)
 
         #creating stuff for the log file
         now = datetime.now()  # Create unique logfile for notifications and errors
@@ -108,8 +118,7 @@ class Application(tk.Frame):
         self.mute_label.pack(side="left")
         self.record_image = tk.PhotoImage(file="gui/recordingbutton.png")
         self.record_label = tk.Label(text_frame, image=self.record_image)
-        self.message_port = 8080
-        self.bmc = BuddyMessageClient(host, self.message_port, self.master)
+        
         # textbox = ttk.Label(root, text="text")
         # textbox.place(x=800, y=300)
         self.name = tk.StringVar()
@@ -121,7 +130,7 @@ class Application(tk.Frame):
         #                          text="Move down")
         # down_button.pack(side="top")
 
-        self.position_frame = PositionFrame(self, self.serial_arm_controller, self.logFile, top_frame, middle_frame, bottom_frame, self.theroot, host)
+        self.position_frame = PositionFrame(self, self.serial_arm_controller, self.logFile, top_frame, middle_frame, bottom_frame, self.theroot, self.host)
         self.position_frame.pack(fill="x")
 
         self.control_buttons = ControlButtons(self, self.serial_arm_controller, self.notifications_frame)
@@ -220,12 +229,11 @@ class Application(tk.Frame):
         self.quit()
 
     def create_video_frame(self):
-        print("creating video frame")
         # videoFrame = tk.Frame(middle_frame, height=400, width=600, bg='grey')
         # videoFrame.pack(side='left', expand=True, pady=5)
         self.player = Player(self.master, video=self.video)
         # self.player.pack(side='right')
-        self.connect_to_video()
+        #self.connect_to_video()
 
     def connect_to_video(self):
         print("connecting to video")
@@ -286,21 +294,87 @@ class Application(tk.Frame):
         self.encryption_settings_menu.delete(1)
         self.encryption_settings_menu.add_command(label="Turn Encryption On", command=self.turn_encryption_on)
 
-    def set_password(self):
-        print(self.password.get())
-        self.screen_record.setPassword(self.password.get())
+    def set_password(self, password):
+        self.screen_record.setPassword(password.get())
         self.popup.destroy()
 
     def popup_password(self):
         self.popup = tk.Toplevel()
         self.popup.wm_title("Set Password")
-        self.password = tk.StringVar()
-        self.passwordEntered = ttk.Entry(self.popup, width=15, textvariable=self.password)
-        self.set_button = ttk.Button(self.popup, text="Set Password", command=self.set_password)
-        self.passwordEntered.pack()
-        self.set_button.pack()
+        password = tk.StringVar()
+        password_entered = ttk.Entry(self.popup, width=15, textvariable=password)
+        set_button = ttk.Button(self.popup, text="Set Password", command=partial(self.set_password, password))
+        password_entered.pack()
+        set_button.pack()
         self.popup.geometry("250x100")
 
+    def set_video_port(self, port):
+        self.rtsp_port = port
+        self.serverString = f"rtsp://{self.host}:{self.rtsp_port}/"
+        self.video = self.serverString
+        print(self.serverString)
+        self.set_ip_port_menu.entryconfigure(2, label=f"Set Video Port: {self.rtsp_port}")
+        self.popup_port.destroy()
+
+    def set_ip(self, ip):
+        self.host = ip.get()
+        self.serverString = f"rtsp://{self.host}:{self.rtsp_port}/"
+        print(self.serverString)
+        self.set_ip_port_menu.entryconfigure(3, label=f"Set Phone IP: {self.host}")
+        self.popup_ip.destroy()
+
+    def set_port(self, device_type, port):
+        if device_type == 'audio':
+            port_num = int(port.get())
+            self.mbac.setPortNum(port_num)
+            self.audio_port = port_num
+            print(self.mbac.port_num)
+            self.set_ip_port_menu.entryconfigure(0, label=f"Set Audio Port: {self.audio_port}")
+
+        elif device_type == 'video':
+            port_num = int(port.get())
+            self.set_video_port(port_num)
+        elif device_type == 'message':
+            port_num = int(port.get())
+            self.bmc.setPortNum(port_num)
+            self.message_port = port_num
+            self.set_ip_port_menu.entryconfigure(1, label=f"Set Message Port: {self.message_port}")
+            print(self.bmc.port_num)
+        self.popup_port.destroy()
+
+
+    def popup_ip(self):
+        self.popup_ip = tk.Toplevel()
+        self.popup_ip.wm_title("Set ip")
+        ip = tk.StringVar()
+        ip_entered = ttk.Entry(self.popup_ip, width=15, textvariable=ip)
+        ip_entered.insert(END, self.host)
+        set_button = ttk.Button(self.popup_ip, text="Set ip", command=partial(self.set_ip, ip))
+        ip_entered.pack()
+        set_button.pack()
+        self.popup_ip.geometry("250x100")
+
+    def popup_port(self, device_type):
+        self.popup_port = tk.Toplevel()
+        self.popup_port.wm_title("Set " + device_type + " port")
+        port = tk.StringVar()
+        port_entered = ttk.Entry(self.popup_port, width=15, textvariable=port)
+
+        if(device_type == 'audio'):
+            port_entered.insert(END, self.audio_port)
+        elif(device_type == 'video'):
+            port_entered.insert(END, self.rtsp_port)
+        elif(device_type == 'message'):
+            port_entered.insert(END, self.message_port)
+        else:
+            print("ERROR")
+
+
+
+        set_button = ttk.Button(self.popup_port, text="Set " + device_type + " port", command=partial(self.set_port, device_type, port))
+        port_entered.pack()
+        set_button.pack()
+        self.popup_port.geometry("250x100")
 
     def create_menu(self, root_menu):
         '''
@@ -364,6 +438,13 @@ class Application(tk.Frame):
         self.encryption_settings_menu.add_command(label="Turn Encryption On", command=self.turn_encryption_on)
         root_menu.add_cascade(label="Encryption Settings", menu=self.encryption_settings_menu)
 
+        #Set IP/Port
+        self.set_ip_port_menu = tk.Menu(root_menu, tearoff=0)
+        self.set_ip_port_menu.add_command(label=f"Set Audio Port: {self.audio_port}", command=partial(self.popup_port, 'audio'))
+        self.set_ip_port_menu.add_command(label=f"Set Message Port: {self.message_port}", command=partial(self.popup_port, 'message'))
+        self.set_ip_port_menu.add_command(label=f"Set Video Port: {self.rtsp_port}", command=partial(self.popup_port, 'video'))
+        self.set_ip_port_menu.add_command(label=f"Set Phone IP: {self.host}", command=self.popup_ip)
+        root_menu.add_cascade(label="Set IP/Port", menu=self.set_ip_port_menu)
 
 
     def refresh_devices(self):

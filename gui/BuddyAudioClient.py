@@ -47,6 +47,9 @@ class BuddyAudioClient:
         except TimeoutError:
             print("Error: Timeout")
             return False
+        except TypeError:
+            print("Invalid port")
+            return False
 
         self.client_socket.sendall(str(self.chunk_size).encode('utf-8'))
         

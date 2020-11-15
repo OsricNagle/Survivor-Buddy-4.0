@@ -173,7 +173,6 @@ class Player(Tk.Frame):
         self.video = video
         self._resized = False
 
-        print("player init")
 
         # Menu Bar
         #   File Menu
@@ -242,9 +241,7 @@ class Player(Tk.Frame):
 
 
         # VLC player
-        args = []
-        if _isLinux:
-            args.append('--no-xlib')
+        args = ["--reset-plugins-cache"]
         self.Instance = vlc.Instance(args)
         self.player = self.Instance.media_player_new()
 
