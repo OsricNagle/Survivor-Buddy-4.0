@@ -278,10 +278,12 @@ class ScreenRecordMenu(Tk.Menu):
     def startRecording(self):
         self.recorder.startRecording()
         self.entryconfigure(0, label="Stop Recording Screen")
+        self.app_frame.displayRecordIcon()
 
     def stopRecording(self):
         self.recorder.stopRecording()
         self.entryconfigure(0, label="Start Recording Screen")
+        self.app_frame.hideRecordIcon()
 
     def toggleRecord(self):
         if(self.recorder.isRecording()):

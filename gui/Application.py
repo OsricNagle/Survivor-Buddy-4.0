@@ -295,15 +295,11 @@ class Application(tk.Frame):
         else:
             pass
 
-    def turn_encryption_on(self):
-        self.screen_record.encrypt_bool = True
-        self.encryption_settings_menu.delete(1)
-        self.encryption_settings_menu.add_command(label="Turn Encryption Off", command=self.turn_encryption_off)
-
-    def turn_encryption_off(self):
-        self.screen_record.encrypt_bool = False
-        self.encryption_settings_menu.delete(1)
-        self.encryption_settings_menu.add_command(label="Turn Encryption On", command=self.turn_encryption_on)
+    def displayRecordIcon(self):
+        self.record_label.pack(side="left")
+    
+    def hideRecordIcon(self):
+        self.record_label.pack_forget()
 
     def set_password(self, password):
         self.screen_record.setPassword(password.get())
@@ -389,6 +385,9 @@ class Application(tk.Frame):
 
 
     def updateMenuOptions(self, event):
+        '''
+        Callback function to update the drop down menus
+        '''
 
         activeMenuIndex = self.theroot.call(event.widget, 'index', 'active')
 
@@ -404,8 +403,6 @@ class Application(tk.Frame):
                 menuWidget.open = False
 
 
-
-
     def create_menu(self, root_menu):
         '''
         Creates the main GUI menu
@@ -413,51 +410,22 @@ class Application(tk.Frame):
         '''
 
         # File Menu
-        '''
-        self.file_menu = tk.Menu(root_menu, tearoff=0)
-        # self.file_menu.add_command(label="Preferences", command=self.hello)
-        self.file_menu.add_command(label="Quit", command=self.close_app)
-        '''
         self.file_menu = FileMenu(root_menu, tearoff=False, frame=self)
         root_menu.add_cascade(label="File", menu=self.file_menu)
 
         # Device Menu
-        '''
-        self.device_menu = tk.Menu(root_menu, tearoff=0)
-
-        self.device_menu.add_command(label="Refresh Devices", command=self.refresh_devices)
-        self.device_menu.add_separator()
-        '''
         self.device_menu = DeviceMenu(root_menu, tearoff=False, frame=self)
-
         root_menu.add_cascade(label="Device", menu=self.device_menu)
 
         # Help Menu
-        '''
-        self.help_menu = tk.Menu(root_menu, tearoff=0)
-        self.help_menu.add_command(label="About Survivor Buddy 3.0", command=self.open_survivor_buddy_page)
-        self.help_menu.add_command(label="User Manual", command=self.open_user_manual)
-        self.help_menu.add_command(label="Programmer's Reference", command=self.open_programmer_reference)
-        '''
         self.help_menu = HelpMenu(root_menu, tearoff=False)
         root_menu.add_cascade(label="Help", menu=self.help_menu)
 
         #Video Menu
-        '''
-        self.video_menu = tk.Menu(root_menu, tearoff=0)
-        self.video_menu.add_command(label="Connect Video", command=self.connect_to_video)
-        self.video_menu.add_command(label="Disconnect Video", command=self.disconnect_to_video)
-        '''
         self.video_menu = VideoMenu(root_menu, tearoff=0, frame=self)
         root_menu.add_cascade(label="Video", menu=self.video_menu)
 
         #Audio Menu
-        '''
-        self.audio_menu = tk.Menu(root_menu, tearoff=0)
-        self.audio_menu.add_command(label="Unmute", command=self.connect_to_audio)
-        self.audio_menu.add_command(label="Mute", command=self.disconnect_to_audio)
-        '''
-
         self.audio_menu = AudioMenu(
             root_menu, 
             tearoff=0, 
@@ -468,11 +436,6 @@ class Application(tk.Frame):
         root_menu.add_cascade(label="Unmute/Mute", menu=self.audio_menu)
 
         #Audio Devices
-        '''
-        self.audio_devices_menu = tk.Menu(root_menu, tearoff=0)
-        for device in self.device_arr:
-            self.audio_devices_menu.add_command(label=device, command=partial(self.change_audio, device))
-        '''
         self.audio_devices_menu = AudioDeviceMenu(
             root_menu, 
             tearoff=False, 
@@ -482,19 +445,10 @@ class Application(tk.Frame):
         root_menu.add_cascade(label="Audio Devices", menu=self.audio_devices_menu)
 
         #Phone Mirroring
-        '''
-        self.phone_mirroring_menu = tk.Menu(root_menu, tearoff=0)
-        self.phone_mirroring_menu.add_command(label="Open Phone Mirroring", command=self.phone_mirror)
-        '''
         self.phone_mirroring_menu = PhoneMirrorMenu(root_menu, tearoff=False)
         root_menu.add_cascade(label="Phone Mirroring", menu=self.phone_mirroring_menu)
 
         #Screen Record
-        '''
-        self.screen_record_menu = tk.Menu(root_menu, tearoff=0)
-        self.screen_record_menu.add_command(label="Start Screen Record", command=self.start_screen_record)
-        self.screen_record_menu.add_command(label="Stop Screen Record", command=self.stop_screen_record)
-        '''
         self.screen_record_menu = ScreenRecordMenu(
             root_menu, 
             tearoff=False, 
@@ -503,82 +457,11 @@ class Application(tk.Frame):
         )
         root_menu.add_cascade(label="Screen Record", menu=self.screen_record_menu)
 
-        #Set Password
-        '''
-        self.encryption_settings_menu = tk.Menu(root_menu, tearoff=0)
-        self.encryption_settings_menu.add_command(label="Set Password", command=self.popup_password)
-        self.encryption_settings_menu.add_command(label="Turn Encryption On", command=self.turn_encryption_on)
-        '''
-        #self.encryption_settings_menu = EncryptionMenu(root_menu, tearoff=False)
-        #root_menu.add_cascade(label="Encryption Settings", menu=self.encryption_settings_menu)
-
-        #Set IP/Port
-        
-        #self.set_ip_port_menu = tk.Menu(root_menu, tearoff=0)
-        #self.set_ip_port_menu.add_command(label=f"Set Audio Port: {self.audio_port}", command=partial(self.popup_port, 'audio'))
-        #self.set_ip_port_menu.add_command(label=f"Set Message Port: {self.message_port}", command=partial(self.popup_port, 'message'))
-        #self.set_ip_port_menu.add_command(label=f"Set Video Port: {self.rtsp_port}", command=partial(self.popup_port, 'video'))
-        #self.set_ip_port_menu.add_command(label=f"Set Phone IP: {self.host}", command=self.popup_ip)
-
+        #Set IP and Ports
         self.set_ip_port_menu = IpPortMenu(root_menu, tearoff=False, frame=self)
-
         root_menu.add_cascade(label="Set IP/Port", menu=self.set_ip_port_menu)
 
         root_menu.bind("<<MenuSelect>>", self.updateMenuOptions)
-
-
-    def refresh_devices(self):
-        '''Refreshes the Devices menu'''
-
-        self.device_menu.delete(2, 100)
-        self.serial_arm_controller.update_devs()
-        if not self.serial_arm_controller.devs:
-            self.device_menu.add_command(label="No devices", state=tk.DISABLED)
-        else:
-            for dev in self.serial_arm_controller.devs:
-                self.device_menu.add_command(
-                    label="{}: {}".format(dev[0], dev[1]),
-                    command=lambda: self.connect(dev)
-                )
-
-    def connect(self, dev):
-        '''
-        Connects to the given device
-        :param dev: The serial device to connect to
-        '''
-
-        self.serial_arm_controller.connect(dev[0])
-        self.device_menu.add_command(
-            label="Close Connection",
-            command=self.close
-        )
-
-    def close(self):
-        '''Closes the active serial connection'''
-
-        self.device_menu.delete(2 + len(self.serial_arm_controller.devs))
-        self.serial_arm_controller.close()
-
-    def open_survivor_buddy_page(self):
-        webbrowser.open("http://survivorbuddy.cse.tamu.edu/")
-
-    def open_user_manual(self):
-        webbrowser.open(
-            "https://docs.google.com/document/d/1V6gmVehsxrlFoc5FzThtdTNSovUbyU03AUEBfnAclKA/edit?usp=sharing")
-
-    def open_programmer_reference(self):
-        webbrowser.open("https://drive.google.com/a/tamu.edu/file/d/1pMKci4BTCTu7H6GREmmWEmBEgZ4klQWn/view?usp=sharing")
-
-    def hello(self):
-        '''
-        A test function
-        Simply prints "Hello from Menu" to the console and the NotificationsFrame
-        '''
-        print("Hello from Menu")
-        self.notifications_frame.append_line("Hello from Menu")
-
-
-
 
 
 if __name__ == "__main__":
