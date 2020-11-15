@@ -145,6 +145,12 @@ class Application(Tk.Frame):
         '''Closes the GUI application'''
 
         self.logFile.close()
+
+        if(self.mbac.isStreaming()):
+            self.mbac.stopStream()
+            self.mbac.disconnect()
+
+
         self.quit()
 
 
@@ -177,13 +183,13 @@ class Application(Tk.Frame):
     def set_video_port(self, port):
         self.rtsp_port = port
         self.video_url = f"rtsp://{self.host}:{self.rtsp_port}/"
-        self.popup_port.destroy()
+        self.port_popup.destroy()
 
     def set_ip(self, ip):
         self.host = ip.get()
         self.video_url = f"rtsp://{self.host}:{self.rtsp_port}/"
         print(self.video_url)
-        self.popup_ip.destroy()
+        self.ip_popup.destroy()
 
     def set_port(self, device_type, port):
         if device_type == 'audio':
@@ -199,25 +205,25 @@ class Application(Tk.Frame):
             port_num = int(port.get())
             self.bmc.setPortNum(port_num)
             self.message_port = port_num
-        self.popup_port.destroy()
+        self.port_popup.destroy()
 
 
     def popup_ip(self):
-        self.popup_ip = Tk.Toplevel()
-        self.popup_ip.wm_title("Set ip")
+        self.ip_popup = Tk.Toplevel()
+        self.ip_popup.wm_title("Set ip")
         ip = Tk.StringVar()
-        ip_entered = Tk.ttk.Entry(self.popup_ip, width=15, textvariable=ip)
+        ip_entered = Tk.ttk.Entry(self.ip_popup, width=15, textvariable=ip)
         ip_entered.insert(Tk.END, self.host)
-        set_button = Tk.ttk.Button(self.popup_ip, text="Set ip", command=partial(self.set_ip, ip))
+        set_button = Tk.ttk.Button(self.ip_popup, text="Set ip", command=partial(self.set_ip, ip))
         ip_entered.pack()
         set_button.pack()
-        self.popup_ip.geometry("250x100")
+        self.ip_popup.geometry("250x100")
 
     def popup_port(self, device_type):
-        self.popup_port = Tk.Toplevel()
-        self.popup_port.wm_title("Set " + device_type + " port")
+        self.port_popup = Tk.Toplevel()
+        self.port_popup.wm_title("Set " + device_type + " port")
         port = Tk.StringVar()
-        port_entered = Tk.ttk.Entry(self.popup_port, width=15, textvariable=port)
+        port_entered = Tk.ttk.Entry(self.port_popup, width=15, textvariable=port)
 
         if(device_type == 'audio'):
             port_entered.insert(Tk.END, self.audio_port)
@@ -230,10 +236,10 @@ class Application(Tk.Frame):
 
 
 
-        set_button = Tk.ttk.Button(self.popup_port, text="Set " + device_type + " port", command=partial(self.set_port, device_type, port))
+        set_button = Tk.ttk.Button(self.port_popup, text="Set " + device_type + " port", command=partial(self.set_port, device_type, port))
         port_entered.pack()
         set_button.pack()
-        self.popup_port.geometry("250x100")
+        self.port_popup.geometry("250x100")
 
 
     def updateMenuOptions(self, event):
