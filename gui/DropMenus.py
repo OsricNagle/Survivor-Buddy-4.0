@@ -2,6 +2,7 @@
 
 import tkinter as Tk
 from functools import partial
+import subprocess
 #import tkinter.tkk as tkk
 #from PyQt5.QtWidgets import QApplication, QLabel
 
@@ -109,8 +110,6 @@ class AudioDeviceMenu(Tk.Menu):
         Tk.Menu.__init__(self, parent, tearoff=tearoff)
         self.audioClient = audioClient
         self.app_frame = frame
-
-
         self.add_command(label='Refresh Devices', command=self.refreshDeviceList)
         self.add_separator()
         #add all devices
@@ -118,8 +117,6 @@ class AudioDeviceMenu(Tk.Menu):
             self.add_command(label=device, command=partial(self.setDevice, device))
 
         self.setMenuSelection(self.audioClient.getCurrentDeviceName())
-
-
 
     def updateMenu(self):
         print(f"updateMenu: {self.__class__}")
@@ -136,10 +133,6 @@ class AudioDeviceMenu(Tk.Menu):
             self.add_command(label=device, command=partial(self.setDevice, device))
 
         self.setMenuSelection(self.audioClient.getCurrentDeviceName())
-
-        
-
-
 
     def setDevice(self, device_name):
         
@@ -161,11 +154,15 @@ class AudioDeviceMenu(Tk.Menu):
 class PhoneMirrorMenu(Tk.Menu):
     def __init__(self, parent, tearoff=False):
         Tk.Menu.__init__(self, parent, tearoff=tearoff)
-        self.add_command(label="Open Phone Mirroring")
+        self.add_command(label="Open Phone Mirroring", command=self.startMirror)
         self.open = False
 
     def updateMenu(self):
         print(f"updateMenu: {self.__class__}")
+
+    def startMirror(self):
+
+        subprocess.Popen(['scrcpy', '&'], shell=True)
 
 
 class ScreenRecordMenu(Tk.Menu):
