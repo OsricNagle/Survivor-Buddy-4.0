@@ -26,6 +26,7 @@ class DeviceMenu(Tk.Menu):
     def __init__(self, parent, tearoff=False, frame=None):
         Tk.Menu.__init__(self, parent, tearoff=tearoff)
         self.add_command(label="Refresh Devices", command=self.refreshDevices)
+        self.add_separator()
         self.app_frame = frame
         self.open = False
 
