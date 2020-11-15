@@ -268,6 +268,7 @@ class ScreenRecordMenu(Tk.Menu):
             command=self.toggleEncrypt
         )
         self.add_command(label="Set File Password", command=self.setPassword)
+        self.add_command(label='Change Ouput Folder', command=self.changeOuputFolder)
         
         self.open = False
 
@@ -287,10 +288,8 @@ class ScreenRecordMenu(Tk.Menu):
     def toggleRecord(self):
         if(self.recorder.isRecording()):
             self.stopRecording()
-            #self.entryconfigure(0, label="Start Recording Screen")
         else:
             self.startRecording()
-            #self.entryconfigure(0, label="Stop Recording Screen")
 
 
     def toggleEncrypt(self):
@@ -300,9 +299,11 @@ class ScreenRecordMenu(Tk.Menu):
             label=f"Require File Password: {self.recorder.encrypt_bool}"
         )
 
-    def chooseOuputFolder(self):
+    def changeOuputFolder(self):
         #TODO:
-        pass
+        folder_path = self.app_frame.displayFileDialog()
+        print(f"FP: {folder_path}")
+        self.recorder.setOutputFolder(folder_path)
 
     def setPassword(self):
         self.app_frame.popup_password()

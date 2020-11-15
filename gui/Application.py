@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import tkinter as Tk
+from tkinter import filedialog
 
 from .PositionFrame import PositionFrame, RenderDiagram, LabelScaleSpinbox, PositionUpdater
 from .ControlButtons import ControlButtons
@@ -240,6 +241,9 @@ class Application(Tk.Frame):
         port_entered.pack()
         set_button.pack()
         self.port_popup.geometry("250x100")
+
+    def displayFileDialog(self):
+        return filedialog.askdirectory()
 
 
     def updateMenuOptions(self, event):
