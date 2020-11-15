@@ -473,7 +473,12 @@ class Application(tk.Frame):
         for device in self.device_arr:
             self.audio_devices_menu.add_command(label=device, command=partial(self.change_audio, device))
         '''
-        self.audio_devices_menu = AudioDeviceMenu(root_menu, tearoff=False)
+        self.audio_devices_menu = AudioDeviceMenu(
+            root_menu, 
+            tearoff=False, 
+            frame=self,
+            audioClient=self.mbac
+        )
         root_menu.add_cascade(label="Audio Devices", menu=self.audio_devices_menu)
 
         #Phone Mirroring

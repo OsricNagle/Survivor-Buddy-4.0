@@ -1,6 +1,7 @@
 #this file contains all code for the drop down menus used by application.py
 
 import tkinter as Tk
+from functools import partial
 #import tkinter.tkk as tkk
 #from PyQt5.QtWidgets import QApplication, QLabel
 
@@ -104,15 +105,53 @@ class AudioMenu(Tk.Menu):
 
 
 class AudioDeviceMenu(Tk.Menu):
-    def __init__(self, parent, tearoff=False):
+    def __init__(self, parent, tearoff=False, frame=None, audioClient=None):
         Tk.Menu.__init__(self, parent, tearoff=tearoff)
-        #TODO: Needs different things
+        self.audioClient = audioClient
+        self.app_frame = frame
+
+        #add all devices
+        for device in self.audioClient.getInputDeviceNames():
+            self.add_command(label=device, command=partial(self.setDevice, device))
+
+        self.setMenuSelection(self.audioClient.getCurrentDeviceName())
+
+
 
     def updateMenu(self):
         print(f"updateMenu: {self.__class__}")
 
     def refreshDeviceList(self):
-        pass
+
+        self.delete(0, Tk.END)
+        with self.audioClient.refreshHandler():
+            device_list = self.audioClient.getInputDeviceNames()
+
+        for device in device_list:    
+            self.add_command(label=device, command=partial(self.setDevice, device))
+
+        self.setMenuSelection(self.audioClient.getCurrentDeviceName())
+
+        
+
+
+
+    def setDevice(self, device_name):
+        
+        with self.audioClient.refreshHandler():
+            self.audioClient.setInputDevice(device_name)
+
+        self.setMenuSelection(self.audioClient.getCurrentDeviceName())
+
+    def setMenuSelection(self, name):
+        print("set selection")
+        menuLen = self.index(Tk.END)
+        for i in range(0, menuLen+1):
+            self.entryconfigure(i, background='SystemButtonFace')
+            if(self.entrycget(i, 'label') == name):
+                self.entryconfigure(i, background='red')
+
+
 
 class PhoneMirrorMenu(Tk.Menu):
     def __init__(self, parent, tearoff=False):

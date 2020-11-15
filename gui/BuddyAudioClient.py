@@ -3,6 +3,7 @@ import socket
 import threading
 import copy
 import time
+from contextlib import contextmanager
 
 class BuddyAudioClient:
 
@@ -27,6 +28,7 @@ class BuddyAudioClient:
         #self.device_api_info = self.audio_handler.get_default_host_api_info()
         #self.input_device_info = self.audio_handler.get_default_input_device_info()
         self.input_device_index = self.audio_handler.get_default_input_device_info()['index']
+        self.current_device_dict = self.audio_handler.get_default_input_device_info()
 
         self.sampling_rate = self.default_sampling_rate
         self.width = self.default_width
@@ -72,12 +74,12 @@ class BuddyAudioClient:
 
     def connect(self):
         if(not self.is_connected):
+            self.disconnect()
             self.connect_thread = threading.Thread(target=self._connect)
             self.connect_thread.start()
 
     def startStream(self, waitForConnect=False):
         if(self.is_connected or waitForConnect):
-            print("starting Thread")
             self.stream_thread = threading.Thread(
                 target=self._startStream, 
                 kwargs={'waitForConnect':waitForConnect}
@@ -92,7 +94,6 @@ class BuddyAudioClient:
 
             self.continue_stream = False
             if(self.audio_stream.is_active()):
-                print("close stream")
                 self.audio_stream.close()
             
 
@@ -138,8 +139,9 @@ class BuddyAudioClient:
 
         
         if(waitForConnect):
-            print("Waiting")
             self.connect_thread.join()
+            if(not self.is_connected):
+                return
         
         self.initAudioHandler()
         
@@ -155,21 +157,27 @@ class BuddyAudioClient:
         self.continue_stream = True
         while self.continue_stream:
             self.streamLoop()
-        print("END start")
 
 
     def streamLoop(self):
         try:
             audio_data = self.audio_stream.read(self.chunk_size)
         except IOError:
-            print("closed stream pyaudio")
             self.continue_stream = False
         if(self.client_socket is None):
             self.continue_stream = False
         elif(self.client_socket._closed):
             self.continue_stream = False
         else:
-            self.client_socket.sendall(audio_data)
+            try:
+                self.client_socket.sendall(audio_data)
+            except ConnectionResetError:
+                self.continue_stream = False
+                self.is_connected = False
+            except ConnectionAbortedError:
+                self.continue_stream = False
+                self.is_connected = False
+
 
 
 
@@ -213,9 +221,33 @@ class BuddyAudioClient:
         for d in device_dicts:
             if(d['name'] == device_name):
                 chosen_dict = d
+                self.current_device_dict = copy.deepcopy(d)
                 break
 
         if(chosen_dict == None):
             print("ERROR: Device not found")
         else:
             self.input_device_index = chosen_dict['index']
+
+    def getCurrentDeviceName(self):
+
+        return self.current_device_dict['name']
+
+
+    @contextmanager
+    def refreshHandler(self):
+
+        
+        try:
+            was_streaming = False
+            if(self.isStreaming()):
+                was_streaming = True
+                self.stopStream()
+                self.audio_handler.terminate()
+                self.audio_handler = pyaudio.PyAudio()
+            yield
+        finally:
+            if(was_streaming):
+                self.startStream()
+            
+        
