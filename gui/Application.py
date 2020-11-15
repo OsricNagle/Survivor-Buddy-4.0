@@ -495,7 +495,7 @@ class Application(tk.Frame):
         self.screen_record_menu.add_command(label="Start Screen Record", command=self.start_screen_record)
         self.screen_record_menu.add_command(label="Stop Screen Record", command=self.stop_screen_record)
         '''
-        self.screen_record_menu = ScreenRecordMenu(root_menu, tearoff=False)
+        self.screen_record_menu = ScreenRecordMenu(root_menu, tearoff=False, recorder=self.screen_record)
         root_menu.add_cascade(label="Screen Record", menu=self.screen_record_menu)
 
         #Set Password

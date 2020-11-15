@@ -166,14 +166,24 @@ class PhoneMirrorMenu(Tk.Menu):
 
 
 class ScreenRecordMenu(Tk.Menu):
-    def __init__(self, parent, tearoff=False):
+    def __init__(self, parent, tearoff=False, frame=None, recorder=None):
         Tk.Menu.__init__(self, parent, tearoff=tearoff)
-        self.add_command(label="Start Screen Record")
-        self.add_command(label="Stop Screen Record")
+        self.add_command(label="Start Screen Record", command=self.startRecording)
+        self.add_command(label="Stop Screen Record", command=self.stopRecording)
+        self.recorder = recorder
         self.open = False
 
     def updateMenu(self):
         print(f"updateMenu: {self.__class__}")
+
+    def startRecording(self):
+        self.recorder.startRecording()
+
+    def stopRecording(self):
+        self.recorder.stopRecording()
+
+    def chooseOuputFolder(self):
+        pass
 
 
 class EncryptionMenu(Tk.Menu):
