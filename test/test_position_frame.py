@@ -23,6 +23,7 @@ class TestLabelScaleSpinboxHappy:
         self.lss.slider = MockSlider()
         self.lss.spinbox = MockSpinBox()
 
+    '''
     def test_increment(self):
         """
         Tests increment() method of LabelScaleSpinBox
@@ -53,6 +54,8 @@ class TestLabelScaleSpinboxHappy:
         assert self.lss.spinbox.val == -5
         assert self.lss.current_value == -5
 
+    '''
+    
     @pytest.mark.parametrize("input_val", [0, 45, 90])
     def test_slider_update(self, input_val):
         """
