@@ -119,7 +119,7 @@ class Application(tk.Frame):
         text_frame.pack(fill="x")
         self.mute_image = tk.PhotoImage(file="gui/mute.png")
         self.mute_label = tk.Label(text_frame, image=self.mute_image)
-        self.mute_label.pack(side="left")
+        #self.mute_label.pack(side="left")
         self.record_image = tk.PhotoImage(file="gui/recordingbutton.png")
         self.record_label = tk.Label(text_frame, image=self.record_image)
         
@@ -231,6 +231,13 @@ class Application(tk.Frame):
 
         self.logFile.close()
         self.quit()
+
+
+    def hideMuteIcon(self):
+        self.mute_label.pack_forget()
+
+    def displayMuteIcon(self):
+        self.mute_label.pack(side='left')
 
     def create_video_frame(self):
         # videoFrame = tk.Frame(middle_frame, height=400, width=600, bg='grey')
@@ -411,7 +418,7 @@ class Application(tk.Frame):
         # self.file_menu.add_command(label="Preferences", command=self.hello)
         self.file_menu.add_command(label="Quit", command=self.close_app)
         '''
-        self.file_menu = FileMenu(root_menu, tearoff=False)
+        self.file_menu = FileMenu(root_menu, tearoff=False, frame=self)
         root_menu.add_cascade(label="File", menu=self.file_menu)
 
         # Device Menu
@@ -441,7 +448,7 @@ class Application(tk.Frame):
         self.video_menu.add_command(label="Connect Video", command=self.connect_to_video)
         self.video_menu.add_command(label="Disconnect Video", command=self.disconnect_to_video)
         '''
-        self.video_menu = VideoMenu(root_menu, tearoff=0)
+        self.video_menu = VideoMenu(root_menu, tearoff=0, frame=self)
         root_menu.add_cascade(label="Video", menu=self.video_menu)
 
         #Audio Menu
@@ -451,7 +458,12 @@ class Application(tk.Frame):
         self.audio_menu.add_command(label="Mute", command=self.disconnect_to_audio)
         '''
 
-        self.audio_menu = AudioMenu(root_menu, tearoff=0)
+        self.audio_menu = AudioMenu(
+            root_menu, 
+            tearoff=0, 
+            frame=self, 
+            audioClient=self.mbac
+        )
 
         root_menu.add_cascade(label="Unmute/Mute", menu=self.audio_menu)
 

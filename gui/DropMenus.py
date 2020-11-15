@@ -6,19 +6,25 @@ import tkinter as Tk
 
 
 class FileMenu(Tk.Menu):
-    def __init__(self, parent, tearoff=False):
+    def __init__(self, parent, tearoff=False, frame=None):
         Tk.Menu.__init__(self, parent, tearoff=tearoff)
-        self.add_command(label="Quit")
+        self.add_command(label="Quit", command=self.quit)
+        self.app_frame = frame
         self.open = False
 
     def updateMenu(self):
         print(f"updateMenu: {self.__class__}")
 
+    def quit(self):
+        self.app_frame.logFile.close()
+        self.app_frame.quit()
+
 
 class DeviceMenu(Tk.Menu):
-    def __init__(self, parent, tearoff=False):
+    def __init__(self, parent, tearoff=False, frame=None):
         Tk.Menu.__init__(self, parent, tearoff=tearoff)
         self.add_command(label="Refresh Devices")
+        self.app_frame = frame
         self.open = False
 
     def updateMenu(self):
@@ -38,26 +44,62 @@ class HelpMenu(Tk.Menu):
 
 
 class VideoMenu(Tk.Menu):
-    def __init__(self, parent, tearoff=False):
+    def __init__(self, parent, tearoff=False, frame=None):
         Tk.Menu.__init__(self, parent, tearoff=tearoff)
-        self.add_command(label="Connect Video")
-        self.add_command(label="Disconnect Video")
+        self.add_command(label="Connect Video", command=self.connectVideo)
+        self.add_command(label="Disconnect Video", command=self.disconnectVideo)
+        self.app_frame = frame
         self.open = False
 
     def updateMenu(self):
         print(f"updateMenu: {self.__class__}")
+
+    def connectVideo(self):
+        self.app_frame.player._Play(self.app_frame.video)
+
+
+    def disconnectVideo(self):
+        self.app_frame.player.OnStop()
 
 
 class AudioMenu(Tk.Menu):
-    def __init__(self, parent, tearoff=False):
+    def __init__(self, parent, tearoff=False, frame=None, audioClient=None):
         Tk.Menu.__init__(self, parent, tearoff=tearoff)
-        self.add_command(label="Audio Option 1")
-        self.add_command(label="Audio Option 2")
+        self.add_command(label="Connect Audio", command=self.connectAudio)
+        self.add_command(label="Disconnect Audio", command=self.disconnectAudio)
+        self.add_command(label="Mute", command=self.mute)
+        self.add_command(label="Unmute", command=self.unmute)
+        self.app_frame = frame
+        self.audioClient = audioClient
+        self.muted = False
         self.open = False
 
 
     def updateMenu(self):
-        print(f"updateMenu: {self.__class__}")
+        pass
+        #print(f"updateMenu: {self.__class__}")
+
+    def connectAudio(self):
+        self.audioClient.connect()
+        if(not self.muted):
+            self.audioClient.startStream(waitForConnect=True)
+    
+    def disconnectAudio(self):
+        if(self.audioClient.isStreaming()):
+            self.audioClient.stopStream()
+        self.audioClient.disconnect()
+
+    def mute(self):
+        self.muted = True
+        self.app_frame.displayMuteIcon()
+        if(self.audioClient.isStreaming()):
+            self.audioClient.stopStream()
+
+    def unmute(self):
+        self.muted = False
+        self.app_frame.hideMuteIcon()
+        if(not self.audioClient.isStreaming()):
+            self.audioClient.startStream()
 
 
 
