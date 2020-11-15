@@ -27,7 +27,7 @@ class BuddyAudioClient:
         self.audio_handler = pyaudio.PyAudio()
         #self.device_api_info = self.audio_handler.get_default_host_api_info()
         #self.input_device_info = self.audio_handler.get_default_input_device_info()
-        self.input_device_index = self.audio_handler.get_default_input_device_info()['index']
+        #self.input_device_index = self.audio_handler.get_default_input_device_info()['index']
         self.current_device_dict = self.audio_handler.get_default_input_device_info()
 
         self.sampling_rate = self.default_sampling_rate
@@ -230,8 +230,11 @@ class BuddyAudioClient:
             self.input_device_index = chosen_dict['index']
 
     def getCurrentDeviceName(self):
-
+        print(f"DEV: {self.current_device_dict['name']}")
         return self.current_device_dict['name']
+
+    def setDeviceDictToDefault(self):
+        self.current_device_dict = self.audio_handler.get_default_input_device_info()
 
 
     @contextmanager
@@ -243,8 +246,9 @@ class BuddyAudioClient:
             if(self.isStreaming()):
                 was_streaming = True
                 self.stopStream()
+            if(self.audio_handler is not None):
                 self.audio_handler.terminate()
-                self.audio_handler = pyaudio.PyAudio()
+            self.audio_handler = pyaudio.PyAudio()
             yield
         finally:
             if(was_streaming):

@@ -110,6 +110,9 @@ class AudioDeviceMenu(Tk.Menu):
         self.audioClient = audioClient
         self.app_frame = frame
 
+
+        self.add_command(label='Refresh Devices', command=self.refreshDeviceList)
+        self.add_separator()
         #add all devices
         for device in self.audioClient.getInputDeviceNames():
             self.add_command(label=device, command=partial(self.setDevice, device))
@@ -123,9 +126,11 @@ class AudioDeviceMenu(Tk.Menu):
 
     def refreshDeviceList(self):
 
-        self.delete(0, Tk.END)
+        self.delete(2, Tk.END)
         with self.audioClient.refreshHandler():
             device_list = self.audioClient.getInputDeviceNames()
+            if(self.audioClient.getCurrentDeviceName() not in device_list):
+                self.audioClient.setDeviceDictToDefault()
 
         for device in device_list:    
             self.add_command(label=device, command=partial(self.setDevice, device))
@@ -146,7 +151,7 @@ class AudioDeviceMenu(Tk.Menu):
     def setMenuSelection(self, name):
         print("set selection")
         menuLen = self.index(Tk.END)
-        for i in range(0, menuLen+1):
+        for i in range(2, menuLen+1):
             self.entryconfigure(i, background='SystemButtonFace')
             if(self.entrycget(i, 'label') == name):
                 self.entryconfigure(i, background='red')
