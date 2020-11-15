@@ -245,6 +245,23 @@ class Application(Tk.Frame):
     def displayFileDialog(self):
         return filedialog.askdirectory()
 
+    def showPopupMessage(self, title="Suvivor Buddy 4.0", msg_text="CONTENT"):
+        popup = Tk.Toplevel()
+        popup.wm_title(title)
+        
+        msg = Tk.Message(
+            popup, 
+            text=msg_text,
+            aspect=3000
+        )
+        msg.pack()
+
+        dismiss_button = Tk.Button(popup, text='Dismiss', command=popup.destroy)
+        dismiss_button.pack()
+
+        popup.geometry("800x100")
+
+
 
     def updateMenuOptions(self, event):
         '''

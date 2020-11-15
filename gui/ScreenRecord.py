@@ -22,6 +22,7 @@ class ScreenRecorder:
         self.file_password = password
         self.current_recording_path = None
         self.encrypt_bool = encrypt
+        self.zip_path = None
 
         if display_stdout:
             self.process_out = subprocess.STDOUT
@@ -37,11 +38,9 @@ class ScreenRecorder:
 
     def encryptFile(self, filename):
 
-        print(f"EF: {filename}")
         base = os.path.basename(filename)
-        zip_name = os.path.join(self.output_folder, os.path.splitext(base)[0] + '.zip')
-        print(f"zip_name: {zip_name}")
-        pyminizip.compress(filename, None, zip_name, self.file_password, 0)
+        self.zip_path = os.path.join(self.output_folder, os.path.splitext(base)[0] + '.zip')
+        pyminizip.compress(filename, None, self.zip_path, self.file_password, 0)
         
 
     def setPassword(self, password):

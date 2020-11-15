@@ -188,6 +188,7 @@ class AudioMenu(Tk.Menu):
         if(self.audioClient.isStreaming()):
             self.audioClient.stopStream()
 
+
     def unmute(self):
         self.muted = False
         self.app_frame.hideMuteIcon()
@@ -284,6 +285,16 @@ class ScreenRecordMenu(Tk.Menu):
         self.recorder.stopRecording()
         self.entryconfigure(0, label="Start Recording Screen")
         self.app_frame.hideRecordIcon()
+        msg = "Screen Recording Stopped:\n"
+        if(self.recorder.encrypt_bool):
+            msg += f"File saved to: {self.recorder.zip_path}\n"
+            msg += f"With Password: {self.recorder.file_password}\n"
+            msg += f"Reminder: This is the only time the password will be shown"
+        else:
+            msg += f"File saved to: {self.recorder.current_recording_path}"
+        self.app_frame.showPopupMessage(
+            msg_text=msg
+        )
 
     def toggleRecord(self):
         if(self.recorder.isRecording()):
