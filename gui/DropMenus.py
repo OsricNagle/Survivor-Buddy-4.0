@@ -168,9 +168,16 @@ class PhoneMirrorMenu(Tk.Menu):
 class ScreenRecordMenu(Tk.Menu):
     def __init__(self, parent, tearoff=False, frame=None, recorder=None):
         Tk.Menu.__init__(self, parent, tearoff=tearoff)
-        self.add_command(label="Start Screen Record", command=self.startRecording)
-        self.add_command(label="Stop Screen Record", command=self.stopRecording)
+
         self.recorder = recorder
+        self.app_frame = frame
+        self.add_command(label="Start Screen Record", command=self.toggleRecord)
+        self.add_command(
+            label=f"Require File Password: {self.recorder.encrypt_bool}",
+            command=self.toggleEncrypt
+        )
+        self.add_command(label="Set File Password", command=self.setPassword)
+        
         self.open = False
 
     def updateMenu(self):
@@ -178,23 +185,33 @@ class ScreenRecordMenu(Tk.Menu):
 
     def startRecording(self):
         self.recorder.startRecording()
+        self.entryconfigure(0, label="Stop Recording Screen")
 
     def stopRecording(self):
         self.recorder.stopRecording()
+        self.entryconfigure(0, label="Start Recording Screen")
+
+    def toggleRecord(self):
+        if(self.recorder.isRecording()):
+            self.recorder.stopRecording()
+            self.entryconfigure(0, label="Start Recording Screen")
+        else:
+            self.recorder.startRecording()
+            self.entryconfigure(0, label="Stop Recording Screen")
+
+
+    def toggleEncrypt(self):
+        self.recorder.encrypt_bool = not self.recorder.encrypt_bool
+        self.entryconfigure(
+            1,
+            label=f"Require File Password: {self.recorder.encrypt_bool}"
+        )
 
     def chooseOuputFolder(self):
         pass
 
-
-class EncryptionMenu(Tk.Menu):
-    def __init__(self, parent, tearoff=False):
-        Tk.Menu.__init__(self, parent, tearoff=tearoff)
-        self.add_command(label="Set Password")
-        self.add_command(label="Turn Encryption On")
-        self.open = False
-
-    def updateMenu(self):
-        print(f"updateMenu: {self.__class__}")
+    def setPassword(self):
+        self.app_frame.popup_password()
 
 
 class IpPortMenu(Tk.Menu):

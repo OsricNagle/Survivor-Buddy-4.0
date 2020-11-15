@@ -495,7 +495,12 @@ class Application(tk.Frame):
         self.screen_record_menu.add_command(label="Start Screen Record", command=self.start_screen_record)
         self.screen_record_menu.add_command(label="Stop Screen Record", command=self.stop_screen_record)
         '''
-        self.screen_record_menu = ScreenRecordMenu(root_menu, tearoff=False, recorder=self.screen_record)
+        self.screen_record_menu = ScreenRecordMenu(
+            root_menu, 
+            tearoff=False, 
+            frame=self,
+            recorder=self.screen_record
+        )
         root_menu.add_cascade(label="Screen Record", menu=self.screen_record_menu)
 
         #Set Password
@@ -504,8 +509,8 @@ class Application(tk.Frame):
         self.encryption_settings_menu.add_command(label="Set Password", command=self.popup_password)
         self.encryption_settings_menu.add_command(label="Turn Encryption On", command=self.turn_encryption_on)
         '''
-        self.encryption_settings_menu = EncryptionMenu(root_menu, tearoff=False)
-        root_menu.add_cascade(label="Encryption Settings", menu=self.encryption_settings_menu)
+        #self.encryption_settings_menu = EncryptionMenu(root_menu, tearoff=False)
+        #root_menu.add_cascade(label="Encryption Settings", menu=self.encryption_settings_menu)
 
         #Set IP/Port
         '''
