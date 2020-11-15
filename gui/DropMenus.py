@@ -141,6 +141,7 @@ class AudioMenu(Tk.Menu):
                 activeforeground='black',
                 activebackground='green',
             )
+            self.entryconfigure(2, label='Disconnect Audio')
         else:
             self.entryconfigure(
                 0,
@@ -150,9 +151,7 @@ class AudioMenu(Tk.Menu):
                 activeforeground='white',
                 activebackground='grey',
             )
-
-
-        #print(f"updateMenu: {self.__class__}")
+            self.entryconfigure(2, label='Connect Audio')
 
     def toggleConnect(self):
         
