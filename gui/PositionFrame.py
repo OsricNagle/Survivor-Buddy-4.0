@@ -13,6 +13,7 @@ from os.path import expanduser
 import time
 import queue
 from .tkvlc import Player
+from .ControlButtons import ControlButtons
 
 class PositionUpdater(Thread):
     '''Updates UI elements based on arm position'''
@@ -296,7 +297,7 @@ class RenderDiagram(tk.Frame):
         mpl.rcParams['toolbar'] = 'None'
 
         # Set up 3d plot, define size
-        self.fig = plt.figure(figsize=(3,3))
+        self.fig = plt.figure(figsize=(4,4))
         self.ax = self.fig.gca(projection='3d')
 
         self.draw_axes() #Split into separate function, as axes must be redrawn each frame
@@ -426,7 +427,7 @@ class RenderDiagram(tk.Frame):
 class PositionFrame(tk.Frame):
     '''Creates the Render and Control Sliders in the GUI'''
 
-    def __init__(self, master, arm_controller, _logFile, top_frame, middle_frame, bottom_frame, root, host_ip, video_url, **kwargs):
+    def __init__(self, master, arm_controller, _logFile, top_frame, middle_frame, bottom_frame, root, host_ip, video_url, notifications_frame, **kwargs):
         '''
         Constructor for PositionFrame
         
@@ -437,7 +438,8 @@ class PositionFrame(tk.Frame):
 
         super().__init__(master, **kwargs)
         self._master = master
-        
+        self.notifications_frame = notifications_frame
+
         self.serial_arm_controller = arm_controller
         self.video_url = video_url
         self.logFile = _logFile
@@ -449,11 +451,12 @@ class PositionFrame(tk.Frame):
         self.host_ip = host_ip
 
         self.render_frame = tk.Frame(self)
-        self.render_frame.pack(side="left")
+        self.render_frame.pack(side="top")
         self.create_render(self.render_frame)
-        
+        self._master.control_buttons =ControlButtons(self, self.serial_arm_controller, self.notifications_frame)
+        self._master.control_buttons.pack(side="top", pady=20)
         self.control_frame = tk.Frame(self)
-        self.control_frame.pack(side="left")
+        self.control_frame.pack(side="top")
         self.create_controls(self.control_frame, self._master)
         
 

@@ -24,7 +24,7 @@ class NotificationFrame(tk.Frame):
         self.scrollbar = ttk.Scrollbar(self)
         self.scrollbar.pack(fill="x", expand=1)
         
-        self.text = tk.Text(self.scrollbar, height=4)
+        self.text = tk.Text(self.scrollbar, height=8)
         self.text.config(state=tk.DISABLED)
         self.text.pack()
     

@@ -137,13 +137,13 @@ class Application(Tk.Frame):
         # down_button = Tk.ttk.Button(self.bottom_frame,
         #                          text="Move down")
         # down_button.pack(side="top")
-
-        self.position_frame = PositionFrame(self, self.serial_arm_controller, self.logFile, top_frame, middle_frame, bottom_frame, self.theroot, self.host, self.video_url)
+        self.control_buttons = None
+        self.position_frame = PositionFrame(self, self.serial_arm_controller, self.logFile, top_frame, middle_frame, bottom_frame, self.theroot, self.host, self.video_url, self.notifications_frame)
         self.position_frame.pack(fill="x")
         self.create_menu(self.menu_bar)
 
-        self.control_buttons = ControlButtons(self, self.serial_arm_controller, self.notifications_frame)
-        self.control_buttons.pack(fill="x")
+
+        # self.control_buttons.pack(fill="x")
         self.status_bar.pack(fill="x")
         self.notifications_frame.pack(fill="x")
         
@@ -398,7 +398,7 @@ class Application(Tk.Frame):
 if __name__ == "__main__":
     root = Tk.Tk()
 
-    root.geometry("1250x1080")
+    root.geometry("1300x1080")
     app = Application(master=root)
 
     app.master.title("Survivor Buddy 4.0")
