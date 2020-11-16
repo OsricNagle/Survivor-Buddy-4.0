@@ -15,7 +15,7 @@ class BuddyMessageClient:
         self.app_frame = frame
 
     def show_error(self, error_msg):
-        pass
+        self.app_frame.showPopupMessage(msg_text=error_msg)
 
     def setPortNum(self, new_port):
         self.port_num = new_port
@@ -32,18 +32,16 @@ class BuddyMessageClient:
         except ConnectionRefusedError:
             #if ip/port is wrong or
             error_msg += (
-                "Message Connection Error:"
-                "check that the IP and port settings match "
-                "those in the Survivor Buddy Android Application."
+                "Message not sent. Check that the messages screen is showing in the Survivor Buddy Android app\n"
+                "and that the IP and port settings match those in the Survivor Buddy Android app."
             )
             self.show_error(error_msg)
             return False
 
         except TimeoutError:
             error_msg += (
-                "Connection timed out,"
-                "check that the IP and port settings match"
-                " those in the Survivor Buddy Android Application."
+                "Message not sent. Check that the messages screen is showing in the Survivor Buddy Android app\n"
+                "and that the IP and port settings match those in the Survivor Buddy Android app."
             )
             self.show_error(error_msg)
             return False

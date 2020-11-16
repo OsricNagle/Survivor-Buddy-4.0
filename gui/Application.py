@@ -65,8 +65,8 @@ class Application(Tk.Frame):
 
         #init video objects
         self.video_url = f"rtsp://{self.host}:{self.rtsp_port}/"
-        self.player = Player(self.master, video=self.video_url)
-
+        #self.player = Player(self.master, video=self.video_url)
+        
         #init PC->Phone Audio objs
         self.mbac = BuddyAudioClient(self.host, self.audio_port, frame=self)
         self.microphone = ""
@@ -76,7 +76,7 @@ class Application(Tk.Frame):
         self.bmc = BuddyMessageClient(
             self.host, 
             self.message_port, 
-            self.master
+            frame=self
         )
 
         #creating stuff for the log file
@@ -105,6 +105,10 @@ class Application(Tk.Frame):
 
         middle_frame = Tk.Frame(wrapper_frame)
         middle_frame.pack()
+        self.player = Player(middle_frame, video=self.video_url)
+
+
+
 
 
         bottom_frame = Tk.Frame(wrapper_frame)
@@ -136,6 +140,7 @@ class Application(Tk.Frame):
         self.control_buttons.pack(fill="x")
         self.status_bar.pack(fill="x")
         self.notifications_frame.pack(fill="x")
+        
 
         self.master.config(menu=self.menu_bar)
 
@@ -235,10 +240,6 @@ class Application(Tk.Frame):
                     "Port must be a whole number in range [1-65535]"
                 )
             )
-            
-
-        
-        
            
         self.port_popup.destroy()
 
@@ -257,9 +258,6 @@ class Application(Tk.Frame):
         h = self.theroot.winfo_y() + 100
 
         self.ip_popup.geometry(f"200x100+{w}+{h}")
-
-
-        #self.ip_popup.geometry("250x100")
 
     def popup_port(self, device_type):
         self.port_popup = Tk.Toplevel()
@@ -286,10 +284,6 @@ class Application(Tk.Frame):
         h = self.theroot.winfo_y() + 100
 
         self.port_popup.geometry(f"200x100+{w}+{h}")
-
-
-
-        #self.port_popup.geometry("250x100")
 
     def displayFileDialog(self):
         return filedialog.askdirectory()

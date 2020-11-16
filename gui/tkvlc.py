@@ -200,10 +200,28 @@ class Player(Tk.Frame):
 
         # first, top panel shows video
         # u, v = self.player.video_get_size()  # often (0, 0)
-        self.videopanel = ttk.Frame(self.parent, width=200, height=400)
-        self.canvas = Tk.Canvas(self.videopanel)
+        frameStyle = ttk.Style()
+        frameStyle.configure(
+            'my.TFrame',
+            background='red',
+            foreground='red'
+        )
+
+        self.videopanel = ttk.Frame(
+            self.parent, 
+            width=200, 
+            height=400,
+            style='my.TFrame'
+        )
+        self.canvas = Tk.Canvas(
+            self.videopanel,
+            background='grey',
+            width=400,
+            height=800
+        )
         self.canvas.pack(fill=Tk.BOTH, expand=1)
         self.videopanel.pack(expand=1)
+        #self.videopanel.place(relx=0.324, rely=0.053)
         self.videopanel.place(relx=0.324, rely=0.053)
 
         # panel to hold buttons
