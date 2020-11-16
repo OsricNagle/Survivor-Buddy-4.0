@@ -99,7 +99,7 @@ class LabelScaleSpinbox(tk.Frame):
         middle_frame=None, 
         bottom_frame=None, 
         root=None, 
-        video_frame=None,
+        app_master=None,
         **kwargs
     ):
         '''
@@ -115,7 +115,7 @@ class LabelScaleSpinbox(tk.Frame):
 
         super().__init__(master, **kwargs)
         
-        self.app_frame = master
+        self.app_frame = app_master
 
         self.min = from_
         self.max = to
@@ -426,7 +426,7 @@ class RenderDiagram(tk.Frame):
 class PositionFrame(tk.Frame):
     '''Creates the Render and Control Sliders in the GUI'''
 
-    def __init__(self, master, arm_controller, _logFile, top_frame, middle_frame, bottom_frame, root, host_ip, **kwargs):
+    def __init__(self, master, arm_controller, _logFile, top_frame, middle_frame, bottom_frame, root, host_ip, video_url, **kwargs):
         '''
         Constructor for PositionFrame
         
@@ -439,7 +439,7 @@ class PositionFrame(tk.Frame):
         self._master = master
         
         self.serial_arm_controller = arm_controller
-        
+        self.video_url = video_url
         self.logFile = _logFile
         self.top_frame = top_frame
         self.middle_frame = middle_frame
@@ -454,7 +454,7 @@ class PositionFrame(tk.Frame):
         
         self.control_frame = tk.Frame(self)
         self.control_frame.pack(side="left")
-        self.create_controls(self.control_frame)
+        self.create_controls(self.control_frame, self._master)
         
 
         self.yaw_queue = queue.LifoQueue()
@@ -481,7 +481,7 @@ class PositionFrame(tk.Frame):
         self.pos_render.pack()
     
 
-    def create_controls(self, master):
+    def create_controls(self, master, app_master):
         '''
         Creates LabelScaleSpinbox controls
         
@@ -489,15 +489,15 @@ class PositionFrame(tk.Frame):
         '''
 
         self.pitch_control = LabelScaleSpinbox(
-            master, text="Pitch: ", from_=0, to=90, axis=0, dev=self.serial_arm_controller, up=True, down=True, left=False, right=False, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root)
+            master, text="Pitch: ", from_=0, to=90, axis=0, dev=self.serial_arm_controller, up=True, down=True, left=False, right=False, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root, app_master=app_master)
         self.pitch_control.pack()
         
         self.yaw_control = LabelScaleSpinbox(
-            master, text="Yaw: ", from_=-90, to=90, axis=1, dev=self.serial_arm_controller, up=False, down=False, left=True, right = True, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root)
+            master, text="Yaw: ", from_=-90, to=90, axis=1, dev=self.serial_arm_controller, up=False, down=False, left=True, right = True, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root, app_master=app_master)
         self.yaw_control.pack()
         
         self.roll_control = LabelScaleSpinbox(
-            master, text="Roll: ", from_=0, to=90, axis=2, dev=self.serial_arm_controller, up=False, down=False, left=False, right=False, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root)
+            master, text="Roll: ", from_=0, to=90, axis=2, dev=self.serial_arm_controller, up=False, down=False, left=False, right=False, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root, app_master=app_master)
         self.roll_control.pack()
 
 

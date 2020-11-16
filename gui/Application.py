@@ -94,7 +94,7 @@ class Application(Tk.Frame):
         self.menu_bar = Tk.Menu(self)
 
         self.device_arr = self.mbac.getInputDeviceNames()
-        self.create_menu(self.menu_bar)
+
 
         wrapper_frame = Tk.Frame(self)
         wrapper_frame.pack(side="left")
@@ -138,8 +138,9 @@ class Application(Tk.Frame):
         #                          text="Move down")
         # down_button.pack(side="top")
 
-        self.position_frame = PositionFrame(self, self.serial_arm_controller, self.logFile, top_frame, middle_frame, bottom_frame, self.theroot, self.host)
+        self.position_frame = PositionFrame(self, self.serial_arm_controller, self.logFile, top_frame, middle_frame, bottom_frame, self.theroot, self.host, self.video_url)
         self.position_frame.pack(fill="x")
+        self.create_menu(self.menu_bar)
 
         self.control_buttons = ControlButtons(self, self.serial_arm_controller, self.notifications_frame)
         self.control_buttons.pack(fill="x")
