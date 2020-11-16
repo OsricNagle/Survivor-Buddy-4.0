@@ -179,7 +179,11 @@ class Application(Tk.Frame):
         set_button = Tk.ttk.Button(self.popup, text="Set Password", command=partial(self.set_password, password))
         password_entered.pack()
         set_button.pack()
-        self.popup.geometry("250x100")
+
+        w = self.theroot.winfo_x() + 100
+        h = self.theroot.winfo_y() + 100
+
+        self.popup.geometry(f"250x100+{w}+{h}")
 
     def set_video_port(self, port):
         self.rtsp_port = port
@@ -223,7 +227,14 @@ class Application(Tk.Frame):
         set_button = Tk.ttk.Button(self.ip_popup, text="Set ip", command=partial(self.set_ip, ip))
         ip_entered.pack()
         set_button.pack()
-        self.ip_popup.geometry("250x100")
+
+        w = self.theroot.winfo_x() + 100
+        h = self.theroot.winfo_y() + 100
+
+        self.ip_popup.geometry(f"200x100+{w}+{h}")
+
+
+        #self.ip_popup.geometry("250x100")
 
     def popup_port(self, device_type):
         self.port_popup = Tk.Toplevel()
@@ -245,7 +256,15 @@ class Application(Tk.Frame):
         set_button = Tk.ttk.Button(self.port_popup, text="Set " + device_type + " port", command=partial(self.set_port, device_type, port))
         port_entered.pack()
         set_button.pack()
-        self.port_popup.geometry("250x100")
+
+        w = self.theroot.winfo_x() + 100
+        h = self.theroot.winfo_y() + 100
+
+        self.port_popup.geometry(f"200x100+{w}+{h}")
+
+
+
+        #self.port_popup.geometry("250x100")
 
     def displayFileDialog(self):
         return filedialog.askdirectory()
