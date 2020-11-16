@@ -269,7 +269,7 @@ class ScreenRecordMenu(Tk.Menu):
             command=self.toggleEncrypt
         )
         self.add_command(label="Set File Password", command=self.setPassword)
-        self.add_command(label='Change Ouput Folder', command=self.changeOuputFolder)
+        self.add_command(label='Change Output Folder', command=self.changeOuputFolder)
         
         self.open = False
 
