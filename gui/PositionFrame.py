@@ -139,10 +139,17 @@ class LabelScaleSpinbox(tk.Frame):
         
         spinbox_vcmd = self.register(self.validate_spinbox)
         spinbox_ivcmd = self.register(self.invalid_spinbox)
-        self.spinbox = ttk.Spinbox(self, from_=from_, to=to, width=4, 
-            command=self.set_slider, validate="focusout", 
+        self.spinbox = ttk.Spinbox(
+            self,
+            from_=from_,
+            to=to,
+            width=4, 
+            command=self.set_slider,
+            validate="focusout", 
             validatecommand=(spinbox_vcmd, "%P"),
-            invalidcommand=(spinbox_ivcmd,))
+            invalidcommand=(spinbox_ivcmd,),
+            state=tk.DISABLED
+        )
         
         self.current_value = self.slider.get()
         self.spinbox.set(self.current_value)
