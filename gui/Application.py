@@ -99,11 +99,11 @@ class Application(Tk.Frame):
         wrapper_frame = Tk.Frame(self)
         wrapper_frame.pack(side="left")
 
-        top_frame = Tk.Frame(wrapper_frame, background='yellow')
+        top_frame = Tk.Frame(wrapper_frame)
         top_frame.pack(fill="x")
 
 
-        middle_frame = Tk.Frame(wrapper_frame, background='red')
+        middle_frame = Tk.Frame(wrapper_frame)
         middle_frame.pack()
          #Player(middle_frame, video=self.video_url)
         #self.player.config(
@@ -116,10 +116,10 @@ class Application(Tk.Frame):
 
 
 
-        bottom_frame = Tk.Frame(wrapper_frame, background='blue')
+        bottom_frame = Tk.Frame(wrapper_frame)
         bottom_frame.pack(fill="x")
 
-        text_frame = Tk.Frame(wrapper_frame)
+        text_frame = Tk.Frame(wrapper_frame, height=55)
         text_frame.pack(fill="x")
         self.mute_image = Tk.PhotoImage(file="gui/mute.png")
         self.mute_label = Tk.Label(text_frame, image=self.mute_image)
@@ -130,10 +130,9 @@ class Application(Tk.Frame):
         # textbox = Tk.ttk.Label(root, text="text")
         # textbox.place(x=800, y=300)
         self.name = Tk.StringVar()
-        self.nameEntered = Tk.ttk.Entry(text_frame, width=15, textvariable=self.name)
-        self.send_button = Tk.ttk.Button(text_frame, text="send text", command=self.send_text)
-        self.send_button.pack(side='right')
-        self.nameEntered.pack(side='right')
+        self.text_box = Tk.Text(self, width=73, height=5)
+        self.send_button = Tk.Button(self, text="Send Text", height=5, width=7, command=self.send_text)
+
         # down_button = Tk.ttk.Button(self.bottom_frame,
         #                          text="Move down")
         # down_button.pack(side="top")
@@ -146,12 +145,15 @@ class Application(Tk.Frame):
         # self.control_buttons.pack(fill="x")
         self.status_bar.pack(fill="x")
         self.notifications_frame.pack(fill="x")
-        
+        self.send_button.pack(side='right', pady=20)
+        self.text_box.pack(side='right', pady=20)
 
         self.master.config(menu=self.menu_bar)
 
     def send_text(self):
-        self.bmc.sendMsg(self.name.get())
+        input = self.text_box.get("1.0", Tk.END)
+        print(input)
+        self.bmc.sendMsg(input)
 
     def close_app(self):  # Had to make new quit function to close file
         '''Closes the GUI application'''
@@ -364,7 +366,7 @@ class Application(Tk.Frame):
             audioClient=self.mbac
         )
 
-        root_menu.add_cascade(label="Unmute/Mute", menu=self.audio_menu)
+        root_menu.add_cascade(label="Audio", menu=self.audio_menu)
 
         #Audio Devices
         self.audio_devices_menu = AudioDeviceMenu(

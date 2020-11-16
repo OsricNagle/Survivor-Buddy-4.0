@@ -297,7 +297,7 @@ class RenderDiagram(tk.Frame):
         mpl.rcParams['toolbar'] = 'None'
 
         # Set up 3d plot, define size
-        self.fig = plt.figure(figsize=(4,4))
+        self.fig = plt.figure(figsize=(4.5,4.5))
         self.ax = self.fig.gca(projection='3d')
 
         self.draw_axes() #Split into separate function, as axes must be redrawn each frame
@@ -439,7 +439,6 @@ class PositionFrame(tk.Frame):
         super().__init__(master, **kwargs)
         self._master = master
         self.notifications_frame = notifications_frame
-
         self.serial_arm_controller = arm_controller
         self.video_url = video_url
         self.logFile = _logFile
@@ -458,6 +457,13 @@ class PositionFrame(tk.Frame):
         self.control_frame = tk.Frame(self)
         self.control_frame.pack(side="top")
         self.create_controls(self.control_frame, self._master)
+
+        # self._master.text_box = tk.Text(self.control_frame, width=20, height=5)
+        # self._master.send_button = tk.Button(self.control_frame, text="Send Text", height=5, command=self._master.send_text)
+        # self.notifications_frame.pack(side="bottom")
+        # self._master.send_button.pack(side="right")
+
+
         
 
         self.yaw_queue = queue.LifoQueue()
