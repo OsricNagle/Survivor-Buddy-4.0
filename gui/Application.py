@@ -169,21 +169,33 @@ class Application(Tk.Frame):
 
     def set_password(self, password):
         self.screen_record.setPassword(password.get())
-        self.popup.destroy()
+        self.popup_password.destroy()
 
-    def popup_password(self):
-        self.popup = Tk.Toplevel()
-        self.popup.wm_title("Set Password")
+    def password_popup(self):
+        self.popup_password = Tk.Toplevel()
+        self.popup_password.wm_title("Set Password")
         password = Tk.StringVar()
-        password_entered = Tk.ttk.Entry(self.popup, width=15, textvariable=password)
-        set_button = Tk.ttk.Button(self.popup, text="Set Password", command=partial(self.set_password, password))
+        password_entered = Tk.ttk.Entry(self.popup_password, width=15, textvariable=password)
+        set_button = Tk.ttk.Button(self.popup_password, text="Set Password", command=partial(self.set_password, password))
         password_entered.pack()
         set_button.pack()
 
         w = self.theroot.winfo_x() + 100
         h = self.theroot.winfo_y() + 100
 
-        self.popup.geometry(f"250x100+{w}+{h}")
+        self.popup_password.geometry(f"250x100+{w}+{h}")
+
+    def validatePort(self, portNum):
+        '''
+        Validates that the given portNum is a valid port number
+        '''
+        try:
+            port = int(portNum)
+        except ValueError:
+            return False
+        
+        return (port in range(1, 65535+1))
+
 
     def set_video_port(self, port):
         self.rtsp_port = port
@@ -197,24 +209,37 @@ class Application(Tk.Frame):
         self.ip_popup.destroy()
 
     def set_port(self, device_type, port):
-        try:
+
+        if(self.validatePort(port.get())):
+            port_num = int(port.get())
+
             if device_type == 'audio':
-                port_num = int(port.get())
                 self.mbac.setPortNum(port_num)
                 self.audio_port = port_num
-                print(self.mbac.port_num)
 
             elif device_type == 'video':
-                port_num = int(port.get())
-                self.set_video_port(port_num)
+                self.video_url = f"rtsp://{self.host}:{port_num}/"
+                #self.set_video_port(port_num)
+
             elif device_type == 'message':
-                port_num = int(port.get())
                 self.bmc.setPortNum(port_num)
                 self.message_port = port_num
-        except ValueError:
+            else:
+                print("ERROR: set_port invalid device_type")
+
+        else:
             self.showPopupMessage(
-                msg_text=f'Invalid {device_type.capitalize()} Port Entry: {device_type.capitalize()} Port must be a number.'
+                msg_text=(
+                    f"Invalid {device_type.capitalize()} " 
+                    f"Port Number: {device_type.capitalize()} "
+                    "Port must be a whole number in range [1-65535]"
+                )
             )
+            
+
+        
+        
+           
         self.port_popup.destroy()
 
 

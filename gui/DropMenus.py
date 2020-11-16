@@ -317,7 +317,7 @@ class ScreenRecordMenu(Tk.Menu):
         self.recorder.setOutputFolder(folder_path)
 
     def setPassword(self):
-        self.app_frame.popup_password()
+        self.app_frame.password_popup()
 
 
 class IpPortMenu(Tk.Menu):

@@ -54,7 +54,7 @@ class BuddyAudioClient:
             self.client_socket.connect(self.server_addr)
         except ConnectionRefusedError:
             error_msg += (
-                "Connection timed out, "
+                "Connection Refused, "
                 "check that the IP and port settings match "
                 "those in the Survivor Buddy Android Application."
             )
@@ -65,8 +65,8 @@ class BuddyAudioClient:
         except TimeoutError:
             error_msg += (
                 "Connection timed out,"
-                "check that the IP and ports match"
-                " those in the android app's settings."
+                "check that the IP and port settings match"
+                " those in the Survivor Buddy Android Application."
             )
             self.showError(error_msg)
             print(error_msg)
