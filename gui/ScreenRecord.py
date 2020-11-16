@@ -8,7 +8,7 @@ import pyminizip
 import os
 
 class ScreenRecorder:
-    def __init__(self, filename=None, display_stdout=False, framerate=30, encrypt=False, password='default', output_folder='./', file_type='.mp4'):
+    def __init__(self, filename=None, display_stdout=False, framerate=30, encrypt=False, password='default', output_folder='./screen_recordings', file_type='.mp4'):
         """
         Init ScreenRecorder class
         """
@@ -22,6 +22,7 @@ class ScreenRecorder:
         self.file_password = password
         self.current_recording_path = None
         self.encrypt_bool = encrypt
+        self.zip_path = None
 
         if display_stdout:
             self.process_out = subprocess.STDOUT
@@ -31,13 +32,15 @@ class ScreenRecorder:
         Generates a default filename based on the date and time
         """
         date_str = '-' + datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
-        return self.output_folder + 'SuvivorBuddyRecoding' + date_str + self.file_extension
+        file_name = 'SuvivorBuddyRecoding' + date_str + self.file_extension
+        return os.path.join(self.output_folder, file_name)
+        #return self.output_folder + 'SuvivorBuddyRecoding' + date_str + self.file_extension
 
     def encryptFile(self, filename):
 
         base = os.path.basename(filename)
-        zip_name = self.output_folder + os.path.splitext(base)[0] + '.zip'
-        pyminizip.compress(filename, None, zip_name, self.file_password, 0)
+        self.zip_path = os.path.join(self.output_folder, os.path.splitext(base)[0] + '.zip')
+        pyminizip.compress(filename, None, self.zip_path, self.file_password, 0)
         
 
     def setPassword(self, password):
@@ -97,6 +100,7 @@ class ScreenRecorder:
         """
         self.recording_process.communicate(input=b"q")
         if(self.encrypt_bool):
+            print("Encrypting")
             self.encryptFile(self.current_recording_path)
             os.remove(self.current_recording_path)
         self.recording_running = False

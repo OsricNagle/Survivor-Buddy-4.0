@@ -5,28 +5,24 @@ from tkinter.ttk import *
 
 class BuddyMessageClient:
 
-    def __init__(self, server_ip, port_num, master, str_format='utf-8'):
+    def __init__(self, server_ip, port_num, frame=None, str_format='utf-8'):
 
         self.server_ip = server_ip
         self.port_num = port_num
         self.full_addr = (self.server_ip, self.port_num)
         self.str_format = str_format
         self.client_socket = None
-        self.master = master
+        self.app_frame = frame
 
     def show_error(self, error_msg):
-        if(self.master is not None):
-            newWindow = Toplevel(self.master)
-            newWindow.geometry("600x50")
-            newWindow.title("Error Message")
-            label = Label(newWindow, text= error_msg)
-            label.pack()
+        self.app_frame.showPopupMessage(msg_text=error_msg)
 
     def setPortNum(self, new_port):
         self.port_num = new_port
         self.full_addr = (self.server_ip, self.port_num)
 
     def connect(self, text="DEFAULT_MESSAGE"):
+        error_msg = "Message Connection Error:\n"
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             print(self.full_addr)
@@ -35,15 +31,25 @@ class BuddyMessageClient:
 
         except ConnectionRefusedError:
             #if ip/port is wrong or
-            self.show_error("Error Message: Connection Refused")
+            error_msg += (
+                "Message not sent. Check that the messages screen is showing in the Survivor Buddy Android app\n"
+                "and that the IP and port settings match those in the Survivor Buddy Android app."
+            )
+            self.show_error(error_msg)
             return False
 
         except TimeoutError:
-            self.show_error("Error Message: Connection TimedOut")
+            error_msg += (
+                "Message not sent. Check that the messages screen is showing in the Survivor Buddy Android app\n"
+                "and that the IP and port settings match those in the Survivor Buddy Android app."
+            )
+            self.show_error(error_msg)
             return False
 
         except TypeError:
             print("Invalid port")
+            error_msg += f'Message port number "{self.port_num}" is and invalid port\n'
+            error_msg += "Please change the message port in the IP/Port Menu"
             return False
 
         return None

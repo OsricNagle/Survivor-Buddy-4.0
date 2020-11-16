@@ -92,7 +92,7 @@ class TestBuddyAudioClientHappy:
         mock_socket = mocker.patch('socket.socket', autospec=True)
 
         #run
-        return_connect = bac.connect()
+        return_connect = bac._connect()
 
         #check
         mock_socket.return_value.connect.assert_called_with(
@@ -122,7 +122,7 @@ class TestBuddyAudioClientHappy:
         bac.continue_stream = True
 
         #run
-        bac.stream_loop()
+        bac.streamLoop()
 
         #check
         mock_pyaudio_stream.return_value.read.assert_called_with(BuddyAudioClient.default_chunk_size)
@@ -141,8 +141,8 @@ class TestBuddyAudioClientHappy:
         mock_pyaudio.get_device_info_by_host_api_device_index.return_value = input_val
 
         bac.audio_handler = mock_pyaudio
-        bac.device_api_info['deviceCount'] = 1
-        bac.device_api_info['index'] = 0
+        bac.current_device_dict['deviceCount'] = 1
+        bac.audio_handler.get_default_host_api_info()['index'] = 0
 
         #run
         rdict = bac.getInputDeviceDicts()
@@ -164,8 +164,8 @@ class TestBuddyAudioClientHappy:
         mock_pyaudio.get_device_info_by_host_api_device_index.return_value = input_val
 
         bac.audio_handler = mock_pyaudio
-        bac.device_api_info['deviceCount'] = 1
-        bac.device_api_info['index'] = 0
+        bac.current_device_dict['deviceCount'] = 1
+        bac.audio_handler.get_default_host_api_info()['index'] = 0
 
         #run
         rdict = bac.getInputDeviceDicts()
@@ -232,7 +232,7 @@ class TestBuddyAudioClientHappy:
         #check
         assert bac.input_device_index == getIndexFromName(ValueHolder.input_dicts, input_vals)
 
-    def test_handle_connect_and_start_connection_success(self, mocker):
+    def test_handle_connect_connection_success(self, mocker):
         '''
         Test that the handleConnectAndStart() method calls start_strem when connection is successful
         '''
@@ -240,15 +240,14 @@ class TestBuddyAudioClientHappy:
         #setup
         bac = BuddyAudioClient(DefaultValues.ip, DefaultValues.port)
         mocker.patch('socket.socket', autospec=True)
-        mock_start_stream = mocker.patch.object(BuddyAudioClient, 'start_stream')
-        mock_connect = mocker.patch.object(BuddyAudioClient, 'connect')
+        mock_connect = mocker.patch.object(BuddyAudioClient, '_connect')
         mock_connect.return_value = True
 
         #run
-        bac.handleConnectAndStart()
+        bac.connect()
 
         #check
-        mock_start_stream.assert_called()
+        mock_connect.assert_called()
 
     def test_handle_connect_and_start_connection_failed(self, mocker):
         '''
@@ -258,18 +257,16 @@ class TestBuddyAudioClientHappy:
         #setup
         bac = BuddyAudioClient(DefaultValues.ip, DefaultValues.port)
         mocker.patch('socket.socket', autospec=True)
-        mock_start_stream = mocker.patch.object(
-            BuddyAudioClient, 'start_stream')
-        mock_connect = mocker.patch.object(BuddyAudioClient, 'connect')
+        mock_connect = mocker.patch.object(BuddyAudioClient, '_connect')
         mock_connect.return_value = False
 
         #run
-        bac.handleConnectAndStart()
+        bac.connect()
 
         #check
-        mock_start_stream.assert_not_called()
+        mock_connect.assert_called()
 
-    def test_disconnect_and_stop(self, mocker):
+    def test_disconnect(self, mocker):
         '''
         Tests disconnectAndStop() method if called when connected
         '''
@@ -282,11 +279,11 @@ class TestBuddyAudioClientHappy:
         bac.continue_stream = True
 
         #run
-        bac.disconnectAndStop()
+        bac.disconnect()
 
         #check
-        assert bac.continue_stream == False
         assert bac.client_socket is None
+        assert bac.is_connected == False
         mock_socket.close.assert_called()
 
 
@@ -304,7 +301,7 @@ class TestBuddyAudioClientNegative:
         mock_socket.return_value.connect.side_effect = TimeoutError
 
         #run
-        return_connect = bac.connect()
+        return_connect = bac._connect()
 
         #check
         assert return_connect == False
@@ -321,7 +318,7 @@ class TestBuddyAudioClientNegative:
         mock_socket.return_value.connect.side_effect = ConnectionRefusedError
 
         #run
-        return_connect = bac.connect()
+        return_connect = bac._connect()
 
         #check
         assert return_connect == False
@@ -363,7 +360,7 @@ class TestBuddyAudioClientNegative:
         #check
         assert bac.input_device_index == None
 
-    def test_disconnect_and_stop(self, mocker):
+    def test_disconnect(self, mocker):
         '''
         Tests disconnectAndStop() method if called when NOT connected
         '''
@@ -375,10 +372,9 @@ class TestBuddyAudioClientNegative:
         bac.client_socket = None
 
         #run
-        bac.disconnectAndStop()
+        bac.disconnect()
 
         #check
-        assert bac.continue_stream == False
         assert bac.client_socket is None
         mock_socket.close.assert_not_called()
     

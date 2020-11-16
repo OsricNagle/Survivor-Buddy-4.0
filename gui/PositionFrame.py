@@ -12,6 +12,8 @@ from datetime import datetime
 from os.path import expanduser
 import time
 import queue
+from .tkvlc import Player
+from .ControlButtons import ControlButtons
 
 class PositionUpdater(Thread):
     '''Updates UI elements based on arm position'''
@@ -82,7 +84,25 @@ class PositionUpdater(Thread):
 class LabelScaleSpinbox(tk.Frame):
     '''A custom class to combine Tk Scale and Spinbox and keep them in sync'''
 
-    def __init__(self, master, text="", from_=0, to=10, axis=0, dev=None, up=False, down=False, left=False, right=False, top_frame=None, middle_frame=None, bottom_frame=None, root=None, **kwargs):
+    def __init__(
+        self, 
+        master, 
+        text="", 
+        from_=0, 
+        to=10, 
+        axis=0, 
+        dev=None, 
+        up=False, 
+        down=False, 
+        left=False, 
+        right=False, 
+        top_frame=None, 
+        middle_frame=None, 
+        bottom_frame=None, 
+        root=None, 
+        app_master=None,
+        **kwargs
+    ):
         '''
         Constructor for LabelScaleSpinbox
         
@@ -96,6 +116,8 @@ class LabelScaleSpinbox(tk.Frame):
 
         super().__init__(master, **kwargs)
         
+        self.app_frame = app_master
+
         self.min = from_
         self.max = to
         self.axis = axis
@@ -137,8 +159,8 @@ class LabelScaleSpinbox(tk.Frame):
             self.left_button = ttk.Button(middle_frame,
                                           text="Move left", command=self.decrementLeft)
             self.left_button.pack(side="left")
-            videoFrame = tk.Frame(middle_frame, height=272, width=385)
-            videoFrame.pack(side='left', expand=True, pady=5)
+            self.app_frame.player = Player(middle_frame, self.app_frame.video_url)#tk.Frame(middle_frame, height=800, width=400, background='cyan')
+            self.app_frame.player.pack(side='left', expand=True, pady=5)
             
             self.right_button = ttk.Button(middle_frame,
                                            text="Move right", command=self.incrementRight)
@@ -275,7 +297,7 @@ class RenderDiagram(tk.Frame):
         mpl.rcParams['toolbar'] = 'None'
 
         # Set up 3d plot, define size
-        self.fig = plt.figure(figsize=(3,3))
+        self.fig = plt.figure(figsize=(4.5,4.5))
         self.ax = self.fig.gca(projection='3d')
 
         self.draw_axes() #Split into separate function, as axes must be redrawn each frame
@@ -405,7 +427,7 @@ class RenderDiagram(tk.Frame):
 class PositionFrame(tk.Frame):
     '''Creates the Render and Control Sliders in the GUI'''
 
-    def __init__(self, master, arm_controller, _logFile, top_frame, middle_frame, bottom_frame, root, host_ip, **kwargs):
+    def __init__(self, master, arm_controller, _logFile, top_frame, middle_frame, bottom_frame, root, host_ip, video_url, notifications_frame, **kwargs):
         '''
         Constructor for PositionFrame
         
@@ -416,9 +438,9 @@ class PositionFrame(tk.Frame):
 
         super().__init__(master, **kwargs)
         self._master = master
-        
+        self.notifications_frame = notifications_frame
         self.serial_arm_controller = arm_controller
-        
+        self.video_url = video_url
         self.logFile = _logFile
         self.top_frame = top_frame
         self.middle_frame = middle_frame
@@ -428,12 +450,20 @@ class PositionFrame(tk.Frame):
         self.host_ip = host_ip
 
         self.render_frame = tk.Frame(self)
-        self.render_frame.pack(side="left")
+        self.render_frame.pack(side="top")
         self.create_render(self.render_frame)
-        
+        self._master.control_buttons =ControlButtons(self, self.serial_arm_controller, self.notifications_frame)
+        self._master.control_buttons.pack(side="top", pady=20)
         self.control_frame = tk.Frame(self)
-        self.control_frame.pack(side="left")
-        self.create_controls(self.control_frame)
+        self.control_frame.pack(side="top")
+        self.create_controls(self.control_frame, self._master)
+
+        # self._master.text_box = tk.Text(self.control_frame, width=20, height=5)
+        # self._master.send_button = tk.Button(self.control_frame, text="Send Text", height=5, command=self._master.send_text)
+        # self.notifications_frame.pack(side="bottom")
+        # self._master.send_button.pack(side="right")
+
+
         
 
         self.yaw_queue = queue.LifoQueue()
@@ -460,7 +490,7 @@ class PositionFrame(tk.Frame):
         self.pos_render.pack()
     
 
-    def create_controls(self, master):
+    def create_controls(self, master, app_master):
         '''
         Creates LabelScaleSpinbox controls
         
@@ -468,15 +498,15 @@ class PositionFrame(tk.Frame):
         '''
 
         self.pitch_control = LabelScaleSpinbox(
-            master, text="Pitch: ", from_=0, to=90, axis=0, dev=self.serial_arm_controller, up=True, down=True, left=False, right=False, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root)
+            master, text="Pitch: ", from_=0, to=90, axis=0, dev=self.serial_arm_controller, up=True, down=True, left=False, right=False, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root, app_master=app_master)
         self.pitch_control.pack()
         
         self.yaw_control = LabelScaleSpinbox(
-            master, text="Yaw: ", from_=-90, to=90, axis=1, dev=self.serial_arm_controller, up=False, down=False, left=True, right = True, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root)
+            master, text="Yaw: ", from_=-90, to=90, axis=1, dev=self.serial_arm_controller, up=False, down=False, left=True, right = True, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root, app_master=app_master)
         self.yaw_control.pack()
         
         self.roll_control = LabelScaleSpinbox(
-            master, text="Roll: ", from_=0, to=90, axis=2, dev=self.serial_arm_controller, up=False, down=False, left=False, right=False, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root)
+            master, text="Roll: ", from_=0, to=90, axis=2, dev=self.serial_arm_controller, up=False, down=False, left=False, right=False, top_frame=self.top_frame, middle_frame=self.middle_frame, bottom_frame=self.bottom_frame, root=self.root, app_master=app_master)
         self.roll_control.pack()
 
 
