@@ -68,7 +68,7 @@ class Application(Tk.Frame):
         self.player = Player(self.master, video=self.video_url)
 
         #init PC->Phone Audio objs
-        self.mbac = BuddyAudioClient(self.host, self.audio_port)
+        self.mbac = BuddyAudioClient(self.host, self.audio_port, frame=self)
         self.microphone = ""
         self.keep_audio_on = False
 
@@ -193,19 +193,24 @@ class Application(Tk.Frame):
         self.ip_popup.destroy()
 
     def set_port(self, device_type, port):
-        if device_type == 'audio':
-            port_num = int(port.get())
-            self.mbac.setPortNum(port_num)
-            self.audio_port = port_num
-            print(self.mbac.port_num)
+        try:
+            if device_type == 'audio':
+                port_num = int(port.get())
+                self.mbac.setPortNum(port_num)
+                self.audio_port = port_num
+                print(self.mbac.port_num)
 
-        elif device_type == 'video':
-            port_num = int(port.get())
-            self.set_video_port(port_num)
-        elif device_type == 'message':
-            port_num = int(port.get())
-            self.bmc.setPortNum(port_num)
-            self.message_port = port_num
+            elif device_type == 'video':
+                port_num = int(port.get())
+                self.set_video_port(port_num)
+            elif device_type == 'message':
+                port_num = int(port.get())
+                self.bmc.setPortNum(port_num)
+                self.message_port = port_num
+        except ValueError:
+            self.showPopupMessage(
+                msg_text=f'Invalid {device_type.capitalize()} Port Entry: {device_type.capitalize()} Port must be a number.'
+            )
         self.port_popup.destroy()
 
 

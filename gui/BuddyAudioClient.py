@@ -12,7 +12,7 @@ class BuddyAudioClient:
     default_num_input_channels = 1
     default_chunk_size = 1024
 
-    def __init__(self, ip_addr, port):
+    def __init__(self, ip_addr, port, frame=None):
 
         self.server_ip = ip_addr
         self.port_num = port
@@ -38,25 +38,46 @@ class BuddyAudioClient:
 
         self.audio_stream = None
 
+        self.app_frame = frame
+
 
         self.input_device_list = None
 
+    def showError(self, errorText):
+        self.app_frame.showPopupMessage(msg_text=errorText)
 
     def _connect(self):
+        error_msg = "Audio Connection Error:\n"
         if(self.client_socket == None):
             self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             self.client_socket.connect(self.server_addr)
         except ConnectionRefusedError:
-            print("Error: ConnRefused")
+            error_msg += (
+                "Connection timed out, "
+                "check that the IP and port settings match "
+                "those in the Survivor Buddy Android Application."
+            )
+            self.showError(error_msg)
+            print(error_msg)
             self.is_connected = False
             return self.is_connected
         except TimeoutError:
-            print("Error: Timeout")
+            error_msg += (
+                "Connection timed out,"
+                "check that the IP and ports match"
+                " those in the android app's settings."
+            )
+            self.showError(error_msg)
+            print(error_msg)
+
             self.is_connected = False
             return self.is_connected
         except TypeError:
-            print("Invalid port")
+            error_msg += f'Audio port number "{self.port_num}" is and invalid port\n'
+            error_msg += "Please change the audio port in the IP/Port Menu" 
+            self.showError(error_msg)
+            print(error_msg)
             self.is_connected = False
             return self.is_connected
 
