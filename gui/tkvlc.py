@@ -165,7 +165,7 @@ class Player(Tk.Frame):
     _stopped  = None
 
     def __init__(self, parent, video=''):
-        Tk.Frame.__init__(self, parent)
+        Tk.Frame.__init__(self, parent, height=800, width=400)
 
         self.parent = parent  # == root
         # self.parent.title(title or "tkVLCplayer")
@@ -199,30 +199,23 @@ class Player(Tk.Frame):
         # self.muteIndex = fileMenu.index("Mute")
 
         # first, top panel shows video
-        # u, v = self.player.video_get_size()  # often (0, 0)
-        frameStyle = ttk.Style()
-        frameStyle.configure(
-            'my.TFrame',
-            background='red',
-            foreground='red'
-        )
+        # u, v = self.player.video_get_size()  # often (0, 0
 
         self.videopanel = ttk.Frame(
-            self.parent, 
-            width=200, 
-            height=400,
-            style='my.TFrame'
+            self,
+            width=400,
+            height=800
         )
         self.canvas = Tk.Canvas(
             self.videopanel,
             background='grey',
-            width=400,
-            height=800
+            width=500,
+            height=900
         )
         self.canvas.pack(fill=Tk.BOTH, expand=1)
         self.videopanel.pack(expand=1)
         #self.videopanel.place(relx=0.324, rely=0.053)
-        self.videopanel.place(relx=0.324, rely=0.053)
+        self.videopanel.place(relx=0, rely=0)
 
         # panel to hold buttons
         # self.buttons_panel = Tk.Toplevel(self.parent)

@@ -65,7 +65,7 @@ class Application(Tk.Frame):
 
         #init video objects
         self.video_url = f"rtsp://{self.host}:{self.rtsp_port}/"
-        #self.player = Player(self.master, video=self.video_url)
+        self.player = None #Player(self.master, video=self.video_url)
         
         #init PC->Phone Audio objs
         self.mbac = BuddyAudioClient(self.host, self.audio_port, frame=self)
@@ -99,19 +99,24 @@ class Application(Tk.Frame):
         wrapper_frame = Tk.Frame(self)
         wrapper_frame.pack(side="left")
 
-        top_frame = Tk.Frame(wrapper_frame)
+        top_frame = Tk.Frame(wrapper_frame, background='yellow')
         top_frame.pack(fill="x")
 
 
-        middle_frame = Tk.Frame(wrapper_frame)
+        middle_frame = Tk.Frame(wrapper_frame, background='red')
         middle_frame.pack()
-        self.player = Player(middle_frame, video=self.video_url)
+         #Player(middle_frame, video=self.video_url)
+        #self.player.config(
+        #    background='purple'
+        #)
+        #self.player.pack()
+        #self.player.pack()
 
 
 
 
 
-        bottom_frame = Tk.Frame(wrapper_frame)
+        bottom_frame = Tk.Frame(wrapper_frame, background='blue')
         bottom_frame.pack(fill="x")
 
         text_frame = Tk.Frame(wrapper_frame)

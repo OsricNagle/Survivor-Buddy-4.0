@@ -12,6 +12,7 @@ from datetime import datetime
 from os.path import expanduser
 import time
 import queue
+from .tkvlc import Player
 
 class PositionUpdater(Thread):
     '''Updates UI elements based on arm position'''
@@ -82,7 +83,25 @@ class PositionUpdater(Thread):
 class LabelScaleSpinbox(tk.Frame):
     '''A custom class to combine Tk Scale and Spinbox and keep them in sync'''
 
-    def __init__(self, master, text="", from_=0, to=10, axis=0, dev=None, up=False, down=False, left=False, right=False, top_frame=None, middle_frame=None, bottom_frame=None, root=None, **kwargs):
+    def __init__(
+        self, 
+        master, 
+        text="", 
+        from_=0, 
+        to=10, 
+        axis=0, 
+        dev=None, 
+        up=False, 
+        down=False, 
+        left=False, 
+        right=False, 
+        top_frame=None, 
+        middle_frame=None, 
+        bottom_frame=None, 
+        root=None, 
+        video_frame=None,
+        **kwargs
+    ):
         '''
         Constructor for LabelScaleSpinbox
         
@@ -96,6 +115,8 @@ class LabelScaleSpinbox(tk.Frame):
 
         super().__init__(master, **kwargs)
         
+        self.app_frame = master
+
         self.min = from_
         self.max = to
         self.axis = axis
@@ -137,8 +158,8 @@ class LabelScaleSpinbox(tk.Frame):
             self.left_button = ttk.Button(middle_frame,
                                           text="Move left", command=self.decrementLeft)
             self.left_button.pack(side="left")
-            videoFrame = tk.Frame(middle_frame, height=272, width=385)
-            videoFrame.pack(side='left', expand=True, pady=5)
+            self.app_frame.player = Player(middle_frame, self.app_frame.video_url)#tk.Frame(middle_frame, height=800, width=400, background='cyan')
+            self.app_frame.player.pack(side='left', expand=True, pady=5)
             
             self.right_button = ttk.Button(middle_frame,
                                            text="Move right", command=self.incrementRight)
