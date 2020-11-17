@@ -1,4 +1,4 @@
-#include <VarSpeedServo.h>
+#include "C:\Users\Connor\Documents\GitHub\Survivor-Buddy-4.0\arduino\motorMovement\VarSpeedServo.h"
 
 //Control and Feedback Pins
 //regular 180 servos
@@ -18,12 +18,12 @@ int phoneMountFeedback = A4;
 int ledPin = 2;
 
 // Position constants
-const int RIGHT_BASE_DOWN = 55;
-const int RIGHT_BASE_UP = 138;
+const int RIGHT_BASE_DOWN = 70; // was 55
+const int RIGHT_BASE_UP = 150; // was 138
 const int LEFT_BASE_DOWN = 150;
 const int LEFT_BASE_UP = 65;
-const int PHONEMOUNT_LANDSCAPE = 7;
-const int PHONEMOUNT_PORTRAIT = 115;
+const int PHONEMOUNT_LANDSCAPE = 25; // was 7
+const int PHONEMOUNT_PORTRAIT = 110; // was 115
 const int PHONEMOUNT_TILT = 60;
 
 // Feedback constants
@@ -33,7 +33,7 @@ const int LEFT_BASE_FB_DOWN = 415;
 const int LEFT_BASE_FB_UP = 235;
 const int PHONEMOUNT_FB_PORTRAIT = 0;
 const int PHONEMOUNT_FB_LANDSCAPE = 0;
-const int TABLETOP_FRONT = 120;
+const int TABLETOP_FRONT = 135; // was 120
 const int TABLETOP_LEFT = 205;
 const int TABLETOP_RIGHT = 25;
 
