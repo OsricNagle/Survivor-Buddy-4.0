@@ -1,3 +1,7 @@
+"""
+Handles streaming of microphone audio from PC to Mobile Application
+"""
+
 import pyaudio
 import socket
 import threading

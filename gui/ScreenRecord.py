@@ -1,4 +1,6 @@
-#handles the screen recording funtionality of Survivor Buddy 4.0
+"""
+Handles the recording of the desktop screen
+"""
 
 import subprocess
 import time

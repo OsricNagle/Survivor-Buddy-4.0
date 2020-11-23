@@ -1,3 +1,7 @@
+"""
+Handles sending of messages from pc to mobile app
+"""
+
 import socket
 import threading
 

@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+Contains elements which control the arduino/arm hardware. Also contains the graphical representation of the arm
+"""
 
 import tkinter as tk
 import tkinter.ttk as ttk

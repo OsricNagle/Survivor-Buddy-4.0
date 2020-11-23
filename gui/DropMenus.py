@@ -1,4 +1,6 @@
-#this file contains all code for the drop down menus used by application.py
+"""
+Contains all the drop down menus in the top bar for GUI
+"""
 
 import tkinter as Tk
 from functools import partial

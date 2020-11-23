@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Feb 27 14:17:02 2020
-
-@author: shill
+Handles display of connection status for arduino/arm hardware
 """
 
 import tkinter as tk

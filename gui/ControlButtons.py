@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+"""
+Handles GUI buttons which control SerialArmController and NotificationFrame
+"""
 
 import tkinter as tk
 import tkinter.ttk as ttk

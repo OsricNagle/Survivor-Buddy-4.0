@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+Contains interface to send commands to and receive position updates from the arduino
+"""
+
 
 from serial.tools import list_ports
 import serial

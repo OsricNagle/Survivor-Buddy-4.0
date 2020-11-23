@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+"""
+Contains implementation of NotificationFrame which displays notifications from the Arduino
+"""
 
 import tkinter as tk
 import tkinter.ttk as ttk

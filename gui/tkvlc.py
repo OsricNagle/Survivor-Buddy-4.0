@@ -18,10 +18,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
 #
-"""A simple example for VLC python bindings using tkinter.
-Requires Python 3.4 or later.
-Author: Patrick Fay
-Date: 23-09-2015
+"""
+Handles processing of incoming rtsp stream. Utilizes VLC
 """
 #https://github.com/oaubert/python-vlc/blob/master/examples/tkvlc.py
 # Tested with Python 3.7.4, tkinter/Tk 8.6.9 on macOS 10.13.6 only.

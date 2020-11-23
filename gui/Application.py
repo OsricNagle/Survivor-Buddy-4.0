@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+"""
+Starts and handles GUI application. Contains the main Tkinter frame
+"""
 import tkinter as Tk
 from tkinter import filedialog
 
