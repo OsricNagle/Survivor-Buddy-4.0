@@ -1,3 +1,8 @@
+"""
+Unit tests for NotificationFrame
+"""
+
+
 import pytest
 from .Mock import MockSerial, MockNotificationsFrame, MockStatusBar, MockLogFile
 from gui.NotificationsFrame import NotificationFrame

@@ -1,3 +1,6 @@
+"""
+Unit tests for BuddyMessageClient
+"""
 import pytest
 from pytest_mock import mocker
 

@@ -1,3 +1,6 @@
+"""
+Contains custom Mocks for testing purposes
+"""
 
 import io
 import threading

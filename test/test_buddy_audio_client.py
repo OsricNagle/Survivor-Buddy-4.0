@@ -1,3 +1,7 @@
+"""
+Unit tests for BuddyAudioClient
+"""
+
 import pytest
 from pytest_mock import mocker
 import time

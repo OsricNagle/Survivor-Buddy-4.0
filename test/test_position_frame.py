@@ -1,3 +1,8 @@
+"""
+Unit tests for PositionFrame module
+"""
+
+
 import pytest
 from .Mock import MockSerial, MockNotificationsFrame, MockStatusBar, MockLogFile, MockSerialArmController, MockSpinBox, MockSlider
 import gui.tkvlc
