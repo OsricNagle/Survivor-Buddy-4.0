@@ -129,7 +129,7 @@ class BuddyAudioClient:
         waitForConnect is true. Value of waitForConnect is passed to _startStream()
 
         :param waitForConnect: if true will allow the stream thread to begin before
-        connection to server is established. Defaults to False
+            connection to server is established. Defaults to False
         :type waitForConnect: boolean, optional
         :return: true if thread is started, false otherwise
         :rtype: boolean

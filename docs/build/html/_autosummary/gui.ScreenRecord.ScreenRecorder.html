@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gui.ScreenRecord.ScreenRecorder &#8212; Survivor Buddy 4.0 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="gui.SerialArmController" href="gui.SerialArmController.html" />
+    <link rel="prev" title="gui.ScreenRecord" href="gui.ScreenRecord.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="gui-screenrecord-screenrecorder">
+<h1>gui.ScreenRecord.ScreenRecorder<a class="headerlink" href="#gui-screenrecord-screenrecorder" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="gui.ScreenRecord.ScreenRecorder">
+<em class="property">class </em><code class="sig-prename descclassname">gui.ScreenRecord.</code><code class="sig-name descname">ScreenRecorder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">display_stdout</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">framerate</span><span class="o">=</span><span class="default_value">30</span></em>, <em class="sig-param"><span class="n">encrypt</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">password</span><span class="o">=</span><span class="default_value">'default'</span></em>, <em class="sig-param"><span class="n">output_folder</span><span class="o">=</span><span class="default_value">'./screen_recordings'</span></em>, <em class="sig-param"><span class="n">file_type</span><span class="o">=</span><span class="default_value">'.mp4'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.ScreenRecord.ScreenRecorder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Utilizes FFMPEG to record the entire desktop screen. Also allows for setting of 
+output filepath and password protected encrypting of files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>String</em><em>, </em><em>optional</em>) – custom filepath of output file. Defaults to None</p></li>
+<li><p><strong>display_stdout</strong> (<em>boolean</em><em>, </em><em>optional</em>) – if true prints out ffmpeg execution to terminal, if false hides it. Defaults to False.</p></li>
+<li><p><strong>framerate</strong> (<em>int</em><em>, </em><em>optional</em>) – the framerate at which to record. Defaults to 30</p></li>
+<li><p><strong>encrypt</strong> (<em>boolean</em><em>, </em><em>optional</em>) – if true turns on file encryption. Defaults to False</p></li>
+<li><p><strong>password</strong> (<em>String. optional</em>) – the password of encrypted files. Defaults to ‘default’</p></li>
+<li><p><strong>output_folder</strong> (<em>String</em><em>, </em><em>optional</em>) – the folder to which files will be saved. Defaults to ‘./screen_recordings’</p></li>
+<li><p><strong>file_type</strong> (<em>String</em><em>, </em><em>optional</em>) – the file type of the recordings. Defaults to ‘.mp4’</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="gui.ScreenRecord.ScreenRecorder.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">display_stdout</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">framerate</span><span class="o">=</span><span class="default_value">30</span></em>, <em class="sig-param"><span class="n">encrypt</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">password</span><span class="o">=</span><span class="default_value">'default'</span></em>, <em class="sig-param"><span class="n">output_folder</span><span class="o">=</span><span class="default_value">'./screen_recordings'</span></em>, <em class="sig-param"><span class="n">file_type</span><span class="o">=</span><span class="default_value">'.mp4'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.ScreenRecord.ScreenRecorder.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor for ScreenRecorder</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.ScreenRecord.ScreenRecorder.__init__" title="gui.ScreenRecord.ScreenRecorder.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([filename, display_stdout, …])</p></td>
+<td><p>Constructor for ScreenRecorder</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.ScreenRecord.ScreenRecorder.encryptFile" title="gui.ScreenRecord.ScreenRecorder.encryptFile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encryptFile</span></code></a>(filename)</p></td>
+<td><p>Encrypts the a file with password protection.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.ScreenRecord.ScreenRecorder.generateFilepath" title="gui.ScreenRecord.ScreenRecorder.generateFilepath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generateFilepath</span></code></a>()</p></td>
+<td><p>Generates a filename based on the the current date time</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.ScreenRecord.ScreenRecorder.isRecording" title="gui.ScreenRecord.ScreenRecorder.isRecording"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isRecording</span></code></a>()</p></td>
+<td><p>Checks if currently recording</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.ScreenRecord.ScreenRecorder.setFilename" title="gui.ScreenRecord.ScreenRecorder.setFilename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFilename</span></code></a>(name)</p></td>
+<td><p>Changes the output file name.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.ScreenRecord.ScreenRecorder.setOutputFolder" title="gui.ScreenRecord.ScreenRecorder.setOutputFolder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setOutputFolder</span></code></a>(path)</p></td>
+<td><p>Changed the output folder of recordings</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.ScreenRecord.ScreenRecorder.setPassword" title="gui.ScreenRecord.ScreenRecorder.setPassword"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPassword</span></code></a>(password)</p></td>
+<td><p>Sets the password to encrypt files with.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.ScreenRecord.ScreenRecorder.startRecording" title="gui.ScreenRecord.ScreenRecorder.startRecording"><code class="xref py py-obj docutils literal notranslate"><span class="pre">startRecording</span></code></a>()</p></td>
+<td><p>FFMPEG desktop recording as a subprocess in the background.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.ScreenRecord.ScreenRecorder.stopRecording" title="gui.ScreenRecord.ScreenRecorder.stopRecording"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stopRecording</span></code></a>()</p></td>
+<td><p>Stops the ffmpeg screen recording process.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="gui.ScreenRecord.ScreenRecorder.encryptFile">
+<code class="sig-name descname">encryptFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.ScreenRecord.ScreenRecorder.encryptFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encrypts the a file with password protection. Does so by placing it into a zip folder</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>String</em>) – the file path of the file to encrypt</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.ScreenRecord.ScreenRecorder.generateFilepath">
+<code class="sig-name descname">generateFilepath</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.ScreenRecord.ScreenRecorder.generateFilepath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a filename based on the the current date time</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the generated filepath</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>String</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.ScreenRecord.ScreenRecorder.isRecording">
+<code class="sig-name descname">isRecording</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.ScreenRecord.ScreenRecorder.isRecording" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if currently recording</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>true if recording, false otherwise</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.ScreenRecord.ScreenRecorder.setFilename">
+<code class="sig-name descname">setFilename</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.ScreenRecord.ScreenRecorder.setFilename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the output file name. NOT the output folder</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>String</em>) – the new name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.ScreenRecord.ScreenRecorder.setOutputFolder">
+<code class="sig-name descname">setOutputFolder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.ScreenRecord.ScreenRecorder.setOutputFolder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changed the output folder of recordings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>String</em>) – the path of the new output folder</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.ScreenRecord.ScreenRecorder.setPassword">
+<code class="sig-name descname">setPassword</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">password</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.ScreenRecord.ScreenRecorder.setPassword" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the password to encrypt files with. DOES NOT change password of previously encrypted files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>String</em>) – the new password</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.ScreenRecord.ScreenRecorder.startRecording">
+<code class="sig-name descname">startRecording</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.ScreenRecord.ScreenRecorder.startRecording" title="Permalink to this definition">¶</a></dt>
+<dd><p>FFMPEG desktop recording as a subprocess in the background.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.ScreenRecord.ScreenRecorder.stopRecording">
+<code class="sig-name descname">stopRecording</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.ScreenRecord.ScreenRecorder.stopRecording" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops the ffmpeg screen recording process. If file encryptions is on the file will be encrypted then
+the unencrypted file will be deleted.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Survivor Buddy 4.0</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="gui.html">gui</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gui.Application.html">gui.Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.BuddyAudioClient.html">gui.BuddyAudioClient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.BuddyMessageClient.html">gui.BuddyMessageClient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.ControlButtons.html">gui.ControlButtons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.DropMenus.html">gui.DropMenus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.NotificationsFrame.html">gui.NotificationsFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.PositionFrame.html">gui.PositionFrame</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="gui.ScreenRecord.html">gui.ScreenRecord</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">gui.ScreenRecord.ScreenRecorder</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gui.SerialArmController.html">gui.SerialArmController</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.StatusBar.html">gui.StatusBar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.tkvlc.html">gui.tkvlc</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">test</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="gui.html">gui</a><ul>
+  <li><a href="gui.ScreenRecord.html">gui.ScreenRecord</a><ul>
+      <li>Previous: <a href="gui.ScreenRecord.html" title="previous chapter">gui.ScreenRecord</a></li>
+      <li>Next: <a href="gui.SerialArmController.html" title="next chapter">gui.SerialArmController</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Kyle Hutto, Warren Zhou, Juan Vargas, Connor Tubbesing, Suvedh Srikanth.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_autosummary/gui.ScreenRecord.ScreenRecorder.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

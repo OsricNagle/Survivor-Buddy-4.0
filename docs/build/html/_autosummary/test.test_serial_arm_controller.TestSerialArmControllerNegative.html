@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test.test_serial_arm_controller.TestSerialArmControllerNegative &#8212; Survivor Buddy 4.0 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="test.test_serial_arm_controller.TestSerialArmControllerHappy" href="test.test_serial_arm_controller.TestSerialArmControllerHappy.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="test-test-serial-arm-controller-testserialarmcontrollernegative">
+<h1>test.test_serial_arm_controller.TestSerialArmControllerNegative<a class="headerlink" href="#test-test-serial-arm-controller-testserialarmcontrollernegative" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerNegative">
+<em class="property">class </em><code class="sig-prename descclassname">test.test_serial_arm_controller.</code><code class="sig-name descname">TestSerialArmControllerNegative</code><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerNegative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerNegative.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerNegative.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset_mocked_sar</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerNegative.test_recv_good_bytes_connected" title="test.test_serial_arm_controller.TestSerialArmControllerNegative.test_recv_good_bytes_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_recv_good_bytes_connected</span></code></a>()</p></td>
+<td><p>Tests recv() method of SerialArmController with preset byte data as input while it is connected.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerNegative.test_send_good_bytes_connected" title="test.test_serial_arm_controller.TestSerialArmControllerNegative.test_send_good_bytes_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_send_good_bytes_connected</span></code></a>()</p></td>
+<td><p>Tests send() method of SerialArmController with preset byte data as input while it is connected.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerNegative.test_update_position_is_connected" title="test.test_serial_arm_controller.TestSerialArmControllerNegative.test_update_position_is_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_update_position_is_connected</span></code></a>()</p></td>
+<td><p>Tests update_position() method of SerialArmController with preset byte data as input while it is connected.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">mock_notif_frame</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">mock_serial</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">mock_status_bar</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">my_sar</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerNegative.test_recv_good_bytes_connected">
+<code class="sig-name descname">test_recv_good_bytes_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerNegative.test_recv_good_bytes_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests recv() method of SerialArmController with preset byte data as input
+while it is connected. Uses bad byte data to check for error handling.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerNegative.test_send_good_bytes_connected">
+<code class="sig-name descname">test_send_good_bytes_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerNegative.test_send_good_bytes_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests send() method of SerialArmController with preset byte data as input
+while it is connected. Uses bad byte data to check for error handling.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerNegative.test_update_position_is_connected">
+<code class="sig-name descname">test_update_position_is_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerNegative.test_update_position_is_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests update_position() method of SerialArmController with preset byte data as input
+while it is connected. Uses bad byte data to check for error handling.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Survivor Buddy 4.0</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gui.html">gui</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="test.html">test</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="test.Mock.html">test.Mock</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.test_buddy_audio_client.html">test.test_buddy_audio_client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.test_buddy_message_client.html">test.test_buddy_message_client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.test_control_buttons.html">test.test_control_buttons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.test_example.html">test.test_example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.test_notifications_frame.html">test.test_notifications_frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.test_position_frame.html">test.test_position_frame</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="test.test_serial_arm_controller.html">test.test_serial_arm_controller</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="test.test_serial_arm_controller.TestSerialArmControllerHappy.html">test.test_serial_arm_controller.TestSerialArmControllerHappy</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">test.test_serial_arm_controller.TestSerialArmControllerNegative</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="test.html">test</a><ul>
+  <li><a href="test.test_serial_arm_controller.html">test.test_serial_arm_controller</a><ul>
+      <li>Previous: <a href="test.test_serial_arm_controller.TestSerialArmControllerHappy.html" title="previous chapter">test.test_serial_arm_controller.TestSerialArmControllerHappy</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Kyle Hutto, Warren Zhou, Juan Vargas, Connor Tubbesing, Suvedh Srikanth.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_autosummary/test.test_serial_arm_controller.TestSerialArmControllerNegative.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

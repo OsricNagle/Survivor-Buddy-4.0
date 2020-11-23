@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gui.SerialArmController.SerialArmController &#8212; Survivor Buddy 4.0 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="gui.StatusBar" href="gui.StatusBar.html" />
+    <link rel="prev" title="gui.SerialArmController.Position" href="gui.SerialArmController.Position.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="gui-serialarmcontroller-serialarmcontroller">
+<h1>gui.SerialArmController.SerialArmController<a class="headerlink" href="#gui-serialarmcontroller-serialarmcontroller" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="gui.SerialArmController.SerialArmController">
+<em class="property">class </em><code class="sig-prename descclassname">gui.SerialArmController.</code><code class="sig-name descname">SerialArmController</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_status_bar</span></em>, <em class="sig-param"><span class="n">_notifications</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Send commands to the robot arm and receives data from the arm</p>
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_status_bar</span></em>, <em class="sig-param"><span class="n">_notifications</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor for SerialArmController</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_status_bar</strong> – StatusBar to use</p></li>
+<li><p><strong>_notifications</strong> – NotificationsFrame to use</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.__init__" title="gui.SerialArmController.SerialArmController.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(_status_bar, _notifications)</p></td>
+<td><p>Constructor for SerialArmController</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.close" title="gui.SerialArmController.SerialArmController.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a>()</p></td>
+<td><p>Closes the current connection</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.close_arm" title="gui.SerialArmController.SerialArmController.close_arm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close_arm</span></code></a>()</p></td>
+<td><p>Sends the CLOSE command to the arm</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.connect" title="gui.SerialArmController.SerialArmController.connect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connect</span></code></a>(comport)</p></td>
+<td><p>Connects to the device at the desired COM port</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.landscape" title="gui.SerialArmController.SerialArmController.landscape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">landscape</span></code></a>()</p></td>
+<td><p>Sends the LANDSCAPE command to the arm</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.nod" title="gui.SerialArmController.SerialArmController.nod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nod</span></code></a>()</p></td>
+<td><p>Sends the NOD command to the arm</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.open_arm" title="gui.SerialArmController.SerialArmController.open_arm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_arm</span></code></a>()</p></td>
+<td><p>Sends the OPEN command to the arm</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.portrait" title="gui.SerialArmController.SerialArmController.portrait"><code class="xref py py-obj docutils literal notranslate"><span class="pre">portrait</span></code></a>()</p></td>
+<td><p>Sends the PORTRAIT command to the arm</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.recv" title="gui.SerialArmController.SerialArmController.recv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">recv</span></code></a>()</p></td>
+<td><p>Receives data from the arm</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.send" title="gui.SerialArmController.SerialArmController.send"><code class="xref py py-obj docutils literal notranslate"><span class="pre">send</span></code></a>(data)</p></td>
+<td><p>Sends data to the arm</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.set_pitch" title="gui.SerialArmController.SerialArmController.set_pitch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_pitch</span></code></a>(val)</p></td>
+<td><p>Sends a command to the arm to go to the desired pitch</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.set_roll" title="gui.SerialArmController.SerialArmController.set_roll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_roll</span></code></a>(val)</p></td>
+<td><p>Sends a command to the arm to go to the desired roll</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.set_yaw" title="gui.SerialArmController.SerialArmController.set_yaw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_yaw</span></code></a>(val)</p></td>
+<td><p>Sends a command to the arm to go to the desired yaw</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.shake" title="gui.SerialArmController.SerialArmController.shake"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shake</span></code></a>()</p></td>
+<td><p>Sends the SHAKE command to the arm</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.tilt" title="gui.SerialArmController.SerialArmController.tilt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tilt</span></code></a>()</p></td>
+<td><p>Sends the TILT command to the arm</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.update_devs" title="gui.SerialArmController.SerialArmController.update_devs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_devs</span></code></a>()</p></td>
+<td><p>Updates the list of available devices</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.SerialArmController.SerialArmController.update_position" title="gui.SerialArmController.SerialArmController.update_position"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_position</span></code></a>()</p></td>
+<td><p>Updates the current stored position</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.close">
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the current connection</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.close_arm">
+<code class="sig-name descname">close_arm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.close_arm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends the CLOSE command to the arm</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.connect">
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">comport</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connects to the device at the desired COM port</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>comport</strong> – The name of the COM port to connect to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.landscape">
+<code class="sig-name descname">landscape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.landscape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends the LANDSCAPE command to the arm</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.nod">
+<code class="sig-name descname">nod</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.nod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends the NOD command to the arm</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.open_arm">
+<code class="sig-name descname">open_arm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.open_arm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends the OPEN command to the arm</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.portrait">
+<code class="sig-name descname">portrait</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.portrait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends the PORTRAIT command to the arm</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.recv">
+<code class="sig-name descname">recv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receives data from the arm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>data - bytes from the arm</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.send">
+<code class="sig-name descname">send</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends data to the arm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> – Bytes to send</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.set_pitch">
+<code class="sig-name descname">set_pitch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.set_pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a command to the arm to go to the desired pitch</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>val</strong> – The pitch to go to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.set_roll">
+<code class="sig-name descname">set_roll</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.set_roll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a command to the arm to go to the desired roll</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>val</strong> – The roll to go to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.set_yaw">
+<code class="sig-name descname">set_yaw</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.set_yaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a command to the arm to go to the desired yaw</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>val</strong> – The yaw to go to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.shake">
+<code class="sig-name descname">shake</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.shake" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends the SHAKE command to the arm</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.tilt">
+<code class="sig-name descname">tilt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.tilt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends the TILT command to the arm</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.update_devs">
+<code class="sig-name descname">update_devs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.update_devs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the list of available devices</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.SerialArmController.SerialArmController.update_position">
+<code class="sig-name descname">update_position</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.SerialArmController.SerialArmController.update_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the current stored position</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Survivor Buddy 4.0</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="gui.html">gui</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gui.Application.html">gui.Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.BuddyAudioClient.html">gui.BuddyAudioClient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.BuddyMessageClient.html">gui.BuddyMessageClient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.ControlButtons.html">gui.ControlButtons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.DropMenus.html">gui.DropMenus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.NotificationsFrame.html">gui.NotificationsFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.PositionFrame.html">gui.PositionFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.ScreenRecord.html">gui.ScreenRecord</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="gui.SerialArmController.html">gui.SerialArmController</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="gui.SerialArmController.Command.html">gui.SerialArmController.Command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gui.SerialArmController.Position.html">gui.SerialArmController.Position</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">gui.SerialArmController.SerialArmController</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gui.StatusBar.html">gui.StatusBar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.tkvlc.html">gui.tkvlc</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">test</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="gui.html">gui</a><ul>
+  <li><a href="gui.SerialArmController.html">gui.SerialArmController</a><ul>
+      <li>Previous: <a href="gui.SerialArmController.Position.html" title="previous chapter">gui.SerialArmController.Position</a></li>
+      <li>Next: <a href="gui.StatusBar.html" title="next chapter">gui.StatusBar</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Kyle Hutto, Warren Zhou, Juan Vargas, Connor Tubbesing, Suvedh Srikanth.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_autosummary/gui.SerialArmController.SerialArmController.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
