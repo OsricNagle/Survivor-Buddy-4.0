@@ -19,25 +19,25 @@ import webbrowser
 import subprocess
 from .BuddyAudioClient import BuddyAudioClient
 from functools import partial
-
-
 from .DropMenus import *
-
-
-
 import threading
-# import appscript  # added this
-
 
 class Application(Tk.Frame):
-    '''The main GUI class'''
+    """
+    Main gui class. Everything that the GUI controls or displays is instantiated in this class
+
+    :param master: The Tkinter root
+    :type master: Tkinter widget
+    :param kwargs: the extra tkinter options
+    :type kwargs: kwargs 
+    """
 
 
     def __init__(self, master, **kwargs):
-        '''
-        The constructor for the Application class
-        :param master: the Tk parent widget
-        '''
+        """
+        Constructor for Application
+        Inits all controlled elements and objects
+        """
 
 
         super().__init__(master, **kwargs)
@@ -153,6 +153,9 @@ class Application(Tk.Frame):
         self.master.config(menu=self.menu_bar)
 
     def send_text(self):
+        """
+        Gets string input from popup box and sends it to message server
+        """
         input = self.text_box.get("1.0", Tk.END)
         print(input)
         self.bmc.sendMsg(input)
@@ -171,22 +174,35 @@ class Application(Tk.Frame):
 
 
     def hideMuteIcon(self):
+        """Hides the mute icon on the GUI"""
         self.mute_label.pack_forget()
 
     def displayMuteIcon(self):
+        """Shows the mute icon on the GUI"""
         self.mute_label.pack(side='left')
 
     def displayRecordIcon(self):
+        """Shows the record icon on the GUI"""
         self.record_label.pack(side='left')
 
     def hideRecordIcon(self):
+        """Hides the record icon on the GUI"""
         self.record_label.pack_forget()
 
     def set_password(self, password):
+        """
+        sets the password for screen recording
+
+        :param password: the new password
+        :type password: String
+        """
         self.screen_record.setPassword(password.get())
         self.popup_password.destroy()
 
     def password_popup(self):
+        """
+        Opens a popup to allow for entry of new password string
+        """
         self.popup_password = Tk.Toplevel()
         self.popup_password.wm_title("Set Password")
         password = Tk.StringVar()
@@ -201,9 +217,12 @@ class Application(Tk.Frame):
         self.popup_password.geometry(f"250x100+{w}+{h}")
 
     def validatePort(self, portNum):
-        '''
+        """
         Validates that the given portNum is a valid port number
-        '''
+        
+        :param portNum: the port number to be validated
+        :type portNum: String or int
+        """
         try:
             port = int(portNum)
         except ValueError:
@@ -213,18 +232,41 @@ class Application(Tk.Frame):
 
 
     def set_video_port(self, port):
+        """
+        Changes the port number in the rtsp url for receiving video/audio from
+        android
+
+        :param port: the new port number
+        :type port: String or int
+        """
         self.rtsp_port = port
         self.video_url = f"rtsp://{self.host}:{self.rtsp_port}/"
         self.port_popup.destroy()
 
     def set_ip(self, ip):
+        """
+        Changed the ip address that a connection will be attempted to when sending/receiving
+        data from the mobile application
+
+        :param ip: the new ip address
+        :type ip: String
+        """
         self.host = ip.get()
         self.video_url = f"rtsp://{self.host}:{self.rtsp_port}/"
         print(self.video_url)
         self.ip_popup.destroy()
 
     def set_port(self, device_type, port):
+        """
+        Changes the port number based on the chosen device type. 
+        If port is invalid an error box will be displayed
 
+        :param device_type: denotes which port number to change, current valid options are:
+            'audio', 'video', 'message'
+        :type device_type: String
+        :param port: the new port number
+        :type port: Tk.StringVar
+        """
         if(self.validatePort(port.get())):
             port_num = int(port.get())
 
@@ -255,6 +297,10 @@ class Application(Tk.Frame):
 
 
     def popup_ip(self):
+        """
+        Opens a popup box allowing for entry of a new ip address to attempt to connect to
+        when sending data to the mobile device
+        """
         self.ip_popup = Tk.Toplevel()
         self.ip_popup.wm_title("Set ip")
         ip = Tk.StringVar()
@@ -270,6 +316,13 @@ class Application(Tk.Frame):
         self.ip_popup.geometry(f"200x100+{w}+{h}")
 
     def popup_port(self, device_type):
+        """
+        Opens a popup box allowing for entry of a new port number for the chosen device_type.
+
+        :param device_type: The device on which the port will be set. Valid inputs include:
+            'audio', 'video', 'message'
+        "type device_type: String
+        """
         self.port_popup = Tk.Toplevel()
         self.port_popup.wm_title("Set " + device_type + " port")
         port = Tk.StringVar()
@@ -296,9 +349,23 @@ class Application(Tk.Frame):
         self.port_popup.geometry(f"200x100+{w}+{h}")
 
     def displayFileDialog(self):
+        """
+        Opens a file dialog asking for a choice of folder
+
+        :return: the path of the chosen folder
+        :rtype: String
+        """
         return filedialog.askdirectory()
 
     def showPopupMessage(self, title="Suvivor Buddy 4.0", msg_text="CONTENT"):
+        """
+        Displays a popup box with the input message and title
+
+        :param title: The title of the popup box. Defaults to "Survivor Buddy 4.0"
+        "type title: String
+        :param msg_text: The text content of the popup box. Defaults to "CONTENT"
+        :type msg_text: String
+        """
         popup = Tk.Toplevel()
         popup.wm_title(title)
         
@@ -320,9 +387,14 @@ class Application(Tk.Frame):
 
 
     def updateMenuOptions(self, event):
-        '''
-        Callback function to update the drop down menus
-        '''
+        """
+        Callback function to update the drop down menus in the top menu bar.
+        Figures out which drop down menu was opened and calls the updateMenu() function
+        member of that menu
+
+        :param event: Tkinter event which is used to figure out the menu opened
+        :type event: Tkinter event
+        """
 
         activeMenuIndex = self.theroot.call(event.widget, 'index', 'active')
 
@@ -340,8 +412,9 @@ class Application(Tk.Frame):
 
     def create_menu(self, root_menu):
         '''
-        Creates the main GUI menu
+        Initializes the menu bar of the main GUI.
         :param root_menu: The root menu (self.menu_bar) that is instantiated in create_widgets()
+        :type root_menu: Tkinter Menu
         '''
 
         # File Menu
