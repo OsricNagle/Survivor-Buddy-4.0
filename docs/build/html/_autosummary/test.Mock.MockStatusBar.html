@@ -39,6 +39,7 @@
 <dt id="test.Mock.MockStatusBar">
 <em class="property">class </em><code class="sig-prename descclassname">test.Mock.</code><code class="sig-name descname">MockStatusBar</code><a class="headerlink" href="#test.Mock.MockStatusBar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to mock a status bar</p>
 <dl class="py method">
 <dt id="test.Mock.MockStatusBar.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.Mock.MockStatusBar.__init__" title="Permalink to this definition">¶</a></dt>
@@ -55,14 +56,31 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#test.Mock.MockStatusBar.__init__" title="test.Mock.MockStatusBar.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
 <td><p>Initialize self.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_status</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.Mock.MockStatusBar.get_status" title="test.Mock.MockStatusBar.get_status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_status</span></code></a>()</p></td>
+<td><p>Returns the status</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_status</span></code>(status)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.Mock.MockStatusBar.set_status" title="test.Mock.MockStatusBar.set_status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_status</span></code></a>(status)</p></td>
+<td><p>Sets the status based on what is passed in</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py method">
+<dt id="test.Mock.MockStatusBar.get_status">
+<code class="sig-name descname">get_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.Mock.MockStatusBar.get_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the status</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.Mock.MockStatusBar.set_status">
+<code class="sig-name descname">set_status</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.Mock.MockStatusBar.set_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the status based on what is passed in</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>status</strong> (<em>String</em>) – Passed in value that is either “CONNECTED” or “DISCONNECTED”</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>

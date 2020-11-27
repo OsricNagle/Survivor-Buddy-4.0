@@ -14,31 +14,63 @@ UNO_PID      = 0x0043
 LEONARDO_PID = 0x8036
 
 class Command():
-    '''A class to keep track of command numbers'''
+    '''
+    A class to keep track of command numbers
+    '''
 
     PITCH = 0
+    """PITCH variable set to 0 for future use"""
+
     YAW = 1
+
+    """YAW variable set to 1 for future use"""
     ROLL = 2
+
+    """ROLL variable set to 2 for future use"""
     CLOSE = 3
+
+    """CLOSE variable set to 3 for future use"""
     OPEN = 4
+
+    """OPEN variable set to 4 for future use"""
     PORTRAIT = 5
+
+    """PORTRAIT variable set to 5 for future use"""
     LANDSCAPE = 6
+
+    """LANDSCAPE variable set to 6 for future use"""
     NOD = 7
+
+    """NOD variable set to 7 for future use"""
     SHAKE = 8
+
+    """SHAKE variable set to 8 for future use"""
     TILT = 9
+
+    """TILT variable set to 9 for future use"""
     SHUTDOWN = 0x10
+
+    """SHUTDOWN variable set to 10 for future use"""
 
 
 class Position:
-    '''A class to store position data'''
+    """
+    A class to store position data
+
+    """
+
+
 
     def __init__(self, pitch=0, yaw=0, roll=0):
         '''
         Constructor for Position
 
-        :param pitch: The pitch value
-        :param yaw: The yaw value
-        :param roll: The roll value
+        :param pitch: the pitch value of the robot
+        :type pitch: int
+        :param yaw: the yaw value of the robot
+        :type yaw: int
+        :param roll: the roll value of the robot
+        :type yaw: int
         '''
 
         self.pitch = pitch
@@ -50,14 +82,19 @@ class Position:
 
         
 class SerialArmController:
-    '''Send commands to the robot arm and receives data from the arm'''
+    '''
+    This class sends commands to the robot arm and receives data from the arm.
+
+    '''
 
     def __init__(self, _status_bar, _notifications):
         '''
         Constructor for SerialArmController
 
-        :param _status_bar: StatusBar to use
-        :param _notifications: NotificationsFrame to use
+        :param _status_bar: The status bar of the GUI passed in, allows us to change if it's connected or not
+        :type _status_bar: StatusBar
+        :param _notifications: The notifications frame of the GUI passed in, allows us to add to the notifications frame
+        :type _notifications: NotificationsFrame
         '''
 
         self.status_bar = _status_bar
@@ -89,6 +126,7 @@ class SerialArmController:
         Connects to the device at the desired COM port
 
         :param comport: The name of the COM port to connect to
+        :type comport: String
         '''
 
         if not self.is_connected:
@@ -98,7 +136,10 @@ class SerialArmController:
         
         
     def close(self):
-        '''Closes the current connection'''
+        '''
+        Closes the current connection from PC to arduino
+
+        '''
 
         if self.is_connected:
             self._device.close()
@@ -111,6 +152,7 @@ class SerialArmController:
         Sends data to the arm
 
         :param data: Bytes to send
+        :type data: Byte
         '''
         if self.is_connected:
             print("Sending: \"{}\"".format(data))
@@ -122,6 +164,7 @@ class SerialArmController:
         Receives data from the arm
         
         :returns: data - bytes from the arm
+        :rtype: Byte
         '''
 
         if self.is_connected:
@@ -131,7 +174,10 @@ class SerialArmController:
 
 
     def update_position(self):
-        '''Updates the current stored position'''
+        '''
+        Updates the current stored position
+
+        '''
 
         pos = self.recv()
         if pos:
@@ -148,7 +194,8 @@ class SerialArmController:
         '''
         Sends a command to the arm to go to the desired pitch
 
-        :param val: The pitch to go to
+        :param val: Sets the pitch based on the parameter passed in
+        :type val: int
         '''
 
         # val is one byte
@@ -160,7 +207,8 @@ class SerialArmController:
         '''
         Sends a command to the arm to go to the desired yaw
 
-        :param val: The yaw to go to
+        :param val: Sets the yaw based on the parameter passed in
+        :type val: int
         '''
 
         # val is 1 byte
@@ -172,7 +220,8 @@ class SerialArmController:
         '''
         Sends a command to the arm to go to the desired roll
 
-        :param val: The roll to go to
+        :param val: Sets the roll based on the parameter passed in
+        :type val: int
         '''
 
         # val is one byte
@@ -181,7 +230,10 @@ class SerialArmController:
 
             
     def close_arm(self):
-        '''Sends the CLOSE command to the arm'''
+        '''
+        Sends the CLOSE command to the arm
+
+        '''
 
         if self.position.pitch == 0:
             self.notifications.append_line("WARNING: ARM ALREADY CLOSED")
@@ -190,7 +242,10 @@ class SerialArmController:
         
 
     def open_arm(self):
-        '''Sends the OPEN command to the arm'''
+        '''
+        Sends the OPEN command to the arm
+
+        '''
 
         if self.position.pitch == 90:
             self.notifications.append_line("WARNING: ARM ALREADY OPEN")
@@ -199,7 +254,10 @@ class SerialArmController:
         
 
     def portrait(self):
-        '''Sends the PORTRAIT command to the arm'''
+        '''
+        Sends the PORTRAIT command to the arm
+
+        '''
 
         if self.is_connected:
             if self.position.roll == 0:
@@ -209,7 +267,10 @@ class SerialArmController:
                 
 
     def landscape(self):
-        '''Sends the LANDSCAPE command to the arm'''
+        '''
+        Sends the LANDSCAPE command to the arm
+
+        '''
 
         if self.is_connected:
             if self.position.roll == 90:
@@ -219,28 +280,40 @@ class SerialArmController:
                 
 
     def tilt(self):
-        '''Sends the TILT command to the arm'''
+        '''
+        Sends the TILT command to the arm
+
+        '''
 
         if self.is_connected:
             self.send(bytes((Command.TILT, 0)))
             
 
     def nod(self):
-        '''Sends the NOD command to the arm'''
+        '''
+        Sends the NOD command to the arm
+
+        '''
 
         if self.is_connected:
             self.send(bytes((Command.NOD, 0)))
 
             
     def shake(self):
-        '''Sends the SHAKE command to the arm'''
+        '''
+        Sends the SHAKE command to the arm
+
+        '''
 
         if self.is_connected:
             self.send(bytes((Command.SHAKE, 0)))
 
 
     def _shutdown(self):
-        '''Sends the SHUTDOWN command to the arm'''
+        '''
+        Sends the SHUTDOWN command to the arm
+
+        '''
 
         if self.is_connected:
             self.send(bytes((Command.SHUTDOWN, 0)))

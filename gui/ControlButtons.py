@@ -8,15 +8,18 @@ import tkinter.ttk as ttk
 
 
 class ControlButtons(tk.Frame):
-    '''Buttons to control the Survivor Buddy 3.0 arm'''
+    '''Buttons to control the Survivor Buddy 4.0 arm'''
 
     def __init__(self, master, arm_controller, notifications, **kwargs):
         '''
         The constructor for ControlButtons
 
         :param master: The Tk parent widget
+        :type master: Tk
         :param arm_controller: The SerialArmController being used
+        :type arm_controller: SerialArmController
         :param notifications: The NotificationsFrame being used
+        :type notifications: NotificationsFrame
         '''
 
         super().__init__(master, **kwargs)
@@ -28,7 +31,10 @@ class ControlButtons(tk.Frame):
 
         
     def create_buttons(self):
-        '''Creates the control buttons displayed in the GUI'''
+        '''
+        Creates the control buttons displayed in the GUI
+
+        '''
 
         self.top_frame = tk.Frame(self)
         self.top_frame.pack(fill="x")
@@ -77,7 +83,10 @@ class ControlButtons(tk.Frame):
         
                 
     def open_arm(self):
-        '''Opens the arm using SerialArmController'''
+        '''
+        Opens the arm using
+
+        '''
 
         if self.serial_arm_controller.is_connected:
             self.notifications_frame.append_line("Opening arm...")
@@ -87,7 +96,10 @@ class ControlButtons(tk.Frame):
 
 
     def close_arm(self):
-        '''Closes the arm using SerialArmController'''
+        '''
+        Closes the arm using SerialArmController
+
+        '''
 
         if self.serial_arm_controller.is_connected:
             self.notifications_frame.append_line("Closing arm...")
@@ -97,7 +109,10 @@ class ControlButtons(tk.Frame):
 
                 
     def portrait(self):
-        '''Changes the arm to portrait mode using SerialArmController'''
+        '''
+        Changes the arm to portrait mode using SerialArmController
+
+        '''
 
         if self.serial_arm_controller.is_connected:
             self.notifications_frame.append_line("Changing to portrait...")
@@ -108,7 +123,10 @@ class ControlButtons(tk.Frame):
                 
 
     def landscape(self):
-        '''Changes the arm to landscape mode using SerialArmController'''
+        '''
+        Changes the arm to landscape mode using SerialArmController
+
+        '''
 
         if self.serial_arm_controller.is_connected:
             self.notifications_frame.append_line("Changing to landscape...")
@@ -119,7 +137,10 @@ class ControlButtons(tk.Frame):
                 
 
     def tilt(self):
-        '''Tilts the arm using SerialArmController'''
+        '''
+        Tilts the arm using SerialArmController
+
+        '''
 
         if self.serial_arm_controller.is_connected:
             self.notifications_frame.append_line("Tilting head...")
@@ -129,7 +150,10 @@ class ControlButtons(tk.Frame):
 
             
     def nod(self):
-        '''Nods the arm using SerialArmController'''
+        '''
+        Nods the arm using SerialArmController
+
+        '''
 
         if self.serial_arm_controller.is_connected:
             self.notifications_frame.append_line("Nodding head...")
@@ -139,7 +163,10 @@ class ControlButtons(tk.Frame):
 
             
     def shake(self):
-        '''Shakes the arm using SerialArmController'''
+        '''
+        Shakes the arm using SerialArmController
+
+        '''
 
         if self.serial_arm_controller.is_connected:
             self.notifications_frame.append_line("Shaking head...")
@@ -149,7 +176,10 @@ class ControlButtons(tk.Frame):
 
 
     def shutdown(self):
-        '''Shuts down the arm using SerialArmController'''
+        '''
+        Shuts down the arm using SerialArmController
+
+        '''
 
         if self.serial_arm_controller.is_connected:
             self.notifications_frame.append_line("Shutting down...")

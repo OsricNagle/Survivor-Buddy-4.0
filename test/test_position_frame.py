@@ -12,6 +12,10 @@ import tkinter as tk
 
 
 class TestLabelScaleSpinboxHappy:
+    """
+    Tests for all the LabelScaleSpinbox functions with good values
+
+    """
 
     mock_serial = None
     mock_notif_frame = None
@@ -19,6 +23,10 @@ class TestLabelScaleSpinboxHappy:
     master = tk.Tk()
     lss = None
     def reset_mocked(self):
+        """
+        Resets all of the initializations
+
+        """
 
         self.mock_serial = MockSerial()
         self.mock_notif_frame = MockNotificationsFrame()

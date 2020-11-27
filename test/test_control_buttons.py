@@ -8,6 +8,10 @@ from .Mock import MockSerial, MockNotificationsFrame, MockStatusBar, MockSerialA
 from gui.ControlButtons import ControlButtons
 import tkinter as tk
 class TestControlButtonsHappy:
+    """
+    Tests for all the ControlButton functoins with good values
+
+    """
     mock_serial = None
     mock_notif_frame = None
     mock_status_bar = None
@@ -15,6 +19,10 @@ class TestControlButtonsHappy:
     my_cb =  None
     master = tk.Tk()
     def reset_mocked_cb(self):
+        """
+        Resets all of the initializations
+
+        """
 
         self.mock_serial = MockSerial()
         self.mock_notif_frame = MockNotificationsFrame()

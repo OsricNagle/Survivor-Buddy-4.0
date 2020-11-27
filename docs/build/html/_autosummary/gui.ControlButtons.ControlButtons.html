@@ -39,7 +39,7 @@
 <dt id="gui.ControlButtons.ControlButtons">
 <em class="property">class </em><code class="sig-prename descclassname">gui.ControlButtons.</code><code class="sig-name descname">ControlButtons</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">master</span></em>, <em class="sig-param"><span class="n">arm_controller</span></em>, <em class="sig-param"><span class="n">notifications</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.ControlButtons.ControlButtons" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tkinter.Frame</span></code></p>
-<p>Buttons to control the Survivor Buddy 3.0 arm</p>
+<p>Buttons to control the Survivor Buddy 4.0 arm</p>
 <dl class="py method">
 <dt id="gui.ControlButtons.ControlButtons.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">master</span></em>, <em class="sig-param"><span class="n">arm_controller</span></em>, <em class="sig-param"><span class="n">notifications</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.ControlButtons.ControlButtons.__init__" title="Permalink to this definition">¶</a></dt>
@@ -47,9 +47,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>master</strong> – The Tk parent widget</p></li>
-<li><p><strong>arm_controller</strong> – The SerialArmController being used</p></li>
-<li><p><strong>notifications</strong> – The NotificationsFrame being used</p></li>
+<li><p><strong>master</strong> (<em>Tk</em>) – The Tk parent widget</p></li>
+<li><p><strong>arm_controller</strong> (<a class="reference internal" href="gui.SerialArmController.SerialArmController.html#gui.SerialArmController.SerialArmController" title="gui.SerialArmController.SerialArmController"><em>SerialArmController</em></a>) – The SerialArmController being used</p></li>
+<li><p><strong>notifications</strong> (<em>NotificationsFrame</em>) – The NotificationsFrame being used</p></li>
 </ul>
 </dd>
 </dl>
@@ -78,7 +78,7 @@
 <td><p>Nods the arm using SerialArmController</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#gui.ControlButtons.ControlButtons.open_arm" title="gui.ControlButtons.ControlButtons.open_arm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_arm</span></code></a>()</p></td>
-<td><p>Opens the arm using SerialArmController</p></td>
+<td><p>Opens the arm using</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#gui.ControlButtons.ControlButtons.portrait" title="gui.ControlButtons.ControlButtons.portrait"><code class="xref py py-obj docutils literal notranslate"><span class="pre">portrait</span></code></a>()</p></td>
 <td><p>Changes the arm to portrait mode using SerialArmController</p></td>
@@ -640,7 +640,7 @@ its Tcl name NAME.</p>
 <dl class="py method">
 <dt id="gui.ControlButtons.ControlButtons.open_arm">
 <code class="sig-name descname">open_arm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.ControlButtons.ControlButtons.open_arm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Opens the arm using SerialArmController</p>
+<dd><p>Opens the arm using</p>
 </dd></dl>
 
 <dl class="py method">

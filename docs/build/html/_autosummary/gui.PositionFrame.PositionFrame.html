@@ -37,19 +37,24 @@
 <h1>gui.PositionFrame.PositionFrame<a class="headerlink" href="#gui-positionframe-positionframe" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="gui.PositionFrame.PositionFrame">
-<em class="property">class </em><code class="sig-prename descclassname">gui.PositionFrame.</code><code class="sig-name descname">PositionFrame</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">master</span></em>, <em class="sig-param"><span class="n">arm_controller</span></em>, <em class="sig-param"><span class="n">_logFile</span></em>, <em class="sig-param"><span class="n">top_frame</span></em>, <em class="sig-param"><span class="n">middle_frame</span></em>, <em class="sig-param"><span class="n">bottom_frame</span></em>, <em class="sig-param"><span class="n">root</span></em>, <em class="sig-param"><span class="n">host_ip</span></em>, <em class="sig-param"><span class="n">video_url</span></em>, <em class="sig-param"><span class="n">notifications_frame</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.PositionFrame.PositionFrame" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">gui.PositionFrame.</code><code class="sig-name descname">PositionFrame</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">master</span></em>, <em class="sig-param"><span class="n">arm_controller</span></em>, <em class="sig-param"><span class="n">_logFile</span></em>, <em class="sig-param"><span class="n">top_frame</span></em>, <em class="sig-param"><span class="n">middle_frame</span></em>, <em class="sig-param"><span class="n">bottom_frame</span></em>, <em class="sig-param"><span class="n">root</span></em>, <em class="sig-param"><span class="n">notifications_frame</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.PositionFrame.PositionFrame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tkinter.Frame</span></code></p>
 <p>Creates the Render and Control Sliders in the GUI</p>
 <dl class="py method">
 <dt id="gui.PositionFrame.PositionFrame.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">master</span></em>, <em class="sig-param"><span class="n">arm_controller</span></em>, <em class="sig-param"><span class="n">_logFile</span></em>, <em class="sig-param"><span class="n">top_frame</span></em>, <em class="sig-param"><span class="n">middle_frame</span></em>, <em class="sig-param"><span class="n">bottom_frame</span></em>, <em class="sig-param"><span class="n">root</span></em>, <em class="sig-param"><span class="n">host_ip</span></em>, <em class="sig-param"><span class="n">video_url</span></em>, <em class="sig-param"><span class="n">notifications_frame</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.PositionFrame.PositionFrame.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">master</span></em>, <em class="sig-param"><span class="n">arm_controller</span></em>, <em class="sig-param"><span class="n">_logFile</span></em>, <em class="sig-param"><span class="n">top_frame</span></em>, <em class="sig-param"><span class="n">middle_frame</span></em>, <em class="sig-param"><span class="n">bottom_frame</span></em>, <em class="sig-param"><span class="n">root</span></em>, <em class="sig-param"><span class="n">notifications_frame</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.PositionFrame.PositionFrame.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructor for PositionFrame</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>master</strong> – The Tk parent widget</p></li>
-<li><p><strong>arm_controller</strong> – The SerialArmController</p></li>
-<li><p><strong>_logFile</strong> – The output log file handle</p></li>
+<li><p><strong>master</strong> (<em>Tk</em>) – The Tk parent widget</p></li>
+<li><p><strong>arm_controller</strong> (<a class="reference internal" href="gui.SerialArmController.SerialArmController.html#gui.SerialArmController.SerialArmController" title="gui.SerialArmController.SerialArmController"><em>SerialArmController</em></a>) – The SerialArmController</p></li>
+<li><p><strong>_logFile</strong> (<em>file object</em>) – The output log file handle</p></li>
+<li><p><strong>top_frame</strong> (<em>Frame</em><em> (</em><em>from Tkinter</em><em>)</em>) – Frame to be later used in LabelScaleSpinBox</p></li>
+<li><p><strong>middle_frame</strong> (<em>Frame</em><em> (</em><em>from Tkinter</em><em>)</em>) – Frame to be later used in LabelScaleSpinBox</p></li>
+<li><p><strong>bottom_frame</strong> (<em>Frame</em><em> (</em><em>from Tkinter</em><em>)</em>) – Frame to be later used in LabelScaleSpinBox</p></li>
+<li><p><strong>root</strong> (<em>Tk</em>) – The outmost Tk application (called root inside the main function in Application.py)</p></li>
+<li><p><strong>notifications_frame</strong> (<em>NotificationsFrame</em>) – The NotificationsFrame</p></li>
 </ul>
 </dd>
 </dl>
@@ -270,7 +275,7 @@ the allowed keyword arguments call the method keys.</p>
 <dd><p>Creates LabelScaleSpinbox controls</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>master</strong> – The Tk parent widget</p>
+<dd class="field-odd"><p><strong>master</strong> (<em>Tk</em>) – The Tk parent widget</p>
 </dd>
 </dl>
 </dd></dl>
@@ -281,7 +286,7 @@ the allowed keyword arguments call the method keys.</p>
 <dd><p>Initializes render of arm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>master</strong> – The Tk parent widget</p>
+<dd class="field-odd"><p><strong>master</strong> (<em>Tk</em>) – The Tk parent widget</p>
 </dd>
 </dl>
 </dd></dl>

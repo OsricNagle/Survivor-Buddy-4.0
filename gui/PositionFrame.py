@@ -26,13 +26,21 @@ class PositionUpdater(Thread):
         Constructor for PositionUpdater
         
         :param dev: The SerialArmController
+        :type dev: SerialArmController
         :param _pitch_control: The pitch LabelScaleSpinbox
+        :type _pitch_control: LabelScaleSpinbox
         :param _yaw_control: The yaw LabelScaleSpinbox
+        :type _yaw_control: LabelScaleSpinbox
         :param _roll_control: The roll LabelScaleSpinbox
-        :param _yaw_queue: The yaw queue
-        :param _pitch_queue: The pitch queue
-        :param _roll_queue: The roll queue
+        :type _roll_control: LabelScaleSpinbox
+        :param _yaw_queue: A queue that stores yaw values
+        :type _yaw_queue: queue
+        :param _pitch_queue: A queue that stores pitch values
+        :type _pitch_queue: queue
+        :param _roll_queue: A queue that stores roll values
+        :type _roll_queue: queue
         :param _notifications: The NotificationsFrame
+        :type _notifications: NotificationsFrame
         '''
 
         super().__init__(**kwargs)
@@ -85,7 +93,10 @@ class PositionUpdater(Thread):
 
 
 class LabelScaleSpinbox(tk.Frame):
-    '''A custom class to combine Tk Scale and Spinbox and keep them in sync'''
+    '''
+    A custom class to combine Tk Scale and Spinbox and keep them in sync
+
+    '''
 
     def __init__(
         self, 
@@ -110,11 +121,35 @@ class LabelScaleSpinbox(tk.Frame):
         Constructor for LabelScaleSpinbox
         
         :param master: The Tk parent widget
+        :type master: Tk
         :param text: The text to display next to the control
+        :type text: String
         :param from_: The minimum valid value
+        :type from_: int
         :param to: The maximum valid value
-        :param axis: The axis that this LabelScaleSpinbox controls
+        :type to: int
+        :param axis: The axis that this LabelScaleSpinbox controls, range: [0,2]; 0 means pitch, 1 means yaw, and 2 means roll
+        :type axis:  int
         :param dev: The SerialArmController
+        :type dev: SerialArmController
+        :param up: Tells us if we need to create the "move up" button on GUI
+        :type up: boolean
+        :param down: Tells us if we need to create the "move down" button on GUI
+        :type down: boolean
+        :param left: Tells us if we need to create the "move left" button on GUI
+        :type left: boolean
+        :param right: Tells us if we need to create the "move right" button on GUI
+        :type right: boolean
+        :param top_frame: Frame passed in to denote placement of buttons around the video frame. Top frame will be used to place the "move up" button
+        :type top_frame: Frame (from Tkinter)
+        :param middle_frame: Frame passed in to denote placement of buttons around the video frame. Middle frame will be used to place the "move left" button, "move right" button, and the video frame itself
+        :type middle_frame: Frame (from Tkinter)
+        :param bottom_frame: Frame passed in to denote placement of buttons around the video frame. Bottom frame will be used to place the "move down" button
+        :type bottom_frame: Frame (from Tkinter)
+        :param root: The highest level tkinter frame
+        :type root: Tk
+        :param app_master: The application.py's master variable
+        :type app_master: Tk
         '''
 
         super().__init__(master, **kwargs)
@@ -186,14 +221,19 @@ class LabelScaleSpinbox(tk.Frame):
         Sends command to arm based on slider value, sets spinbox based on slider
         
         :param val: The value passed to this function when the slider is released
+        :type val: int
         '''
-
         newVal = int(self.slider.get())
         self.spinbox.set(newVal)    #Update spinbox value
         self.current_value = newVal
         self.send_command()
 
     def incrementUp(self):
+        '''
+        Functionality for the "move up" button on the GUI, currently increments by 5 units
+
+        '''
+
         newVal = int(self.spinbox.get())
         newVal = newVal + 5
         if newVal >= 90:
@@ -205,6 +245,10 @@ class LabelScaleSpinbox(tk.Frame):
             self.send_command()
 
     def incrementRight(self):
+        '''
+        Functionality for the "move right" button on the GUI, currently increments by 20 units
+
+        '''
         newVal = int(self.spinbox.get())
         newVal = newVal + 20
         if newVal >= 90:
@@ -217,6 +261,10 @@ class LabelScaleSpinbox(tk.Frame):
 
 
     def decrementLeft(self):
+        '''
+        Functionality for the "move left" button on the GUI, currently decrements by 20 units
+
+        '''
         newVal = int(self.spinbox.get())
         newVal = newVal - 20
         if newVal <= -90:
@@ -228,6 +276,10 @@ class LabelScaleSpinbox(tk.Frame):
             self.send_command()
 
     def decrementDown(self):
+        '''
+        Functionality for the "move down" button on the GUI, currently decrements by 20 units
+
+        '''
         newVal = int(self.spinbox.get())
         newVal = newVal - 5
         if newVal <= 0:
@@ -244,9 +296,11 @@ class LabelScaleSpinbox(tk.Frame):
         Check that spinbox and slider are within valid range of values
         
         :param val: The value from the spinbox
+        :type val: int
         '''
 
         try:
+            print(type(val))
             ival = int(val)
             if ival < self.min or ival > self.max:
                 self.spinbox.set(str(round(self.current_value)))
@@ -261,13 +315,17 @@ class LabelScaleSpinbox(tk.Frame):
         
 
     def invalid_spinbox(self):
-        '''Function that runs when the spinbox has an invalid value'''
+        '''
+        Function that runs when the spinbox has an invalid value
+        '''
 
         print("Error: Position input must be a number between {} and {}".format(self.min, self.max))
     
 
     def set_slider(self):
-        '''Set slider position based on spinbox value, send command to arm'''
+        '''
+        Set slider position based on spinbox value, send command to arm
+        '''
 
         try:
             val = int(self.spinbox.get())
@@ -280,7 +338,9 @@ class LabelScaleSpinbox(tk.Frame):
     
 
     def send_command(self):
-        '''Sends a new position to the arm based on changed axis'''
+        '''
+        Sends a new position to the arm based on changed axis
+        '''
 
         if self.serial_arm_controller.is_connected:
             if self.axis == 0:  #Pitch
@@ -293,7 +353,9 @@ class LabelScaleSpinbox(tk.Frame):
         
 
 class RenderDiagram(tk.Frame): 
-    '''Displays a basic render of arm, helps to show position when arm can not be seen by user'''
+    '''
+    Displays a basic render of arm, helps to show position when arm can not be seen by user
+    '''
 
     def __init__(self, master, dev=None, **kwargs):
         '''
@@ -325,7 +387,9 @@ class RenderDiagram(tk.Frame):
     
 
     def draw_axes(self):
-        '''Clear units from axes, display arm base, set axis limits'''
+        '''
+        Clear units from axes, display arm base, set axis limits
+        '''
 
         # Remove unneccesary information from plot
         self.ax.set_xticklabels([])
@@ -357,9 +421,13 @@ class RenderDiagram(tk.Frame):
         Update display of render based on new arm position
         
         :param master: The Tk parent widget
+        :type master: Tk
         :param new_yaw: The new yaw value
+        :type new_yaw: int
         :param new_pitch: The new pitch value
+        :type new_pitch: int
         :param new_roll: The new roll value
+        :type new_roll: int
         '''
 
         self.ax.clear() #clear old data
@@ -441,27 +509,38 @@ class RenderDiagram(tk.Frame):
 class PositionFrame(tk.Frame):
     '''Creates the Render and Control Sliders in the GUI'''
 
-    def __init__(self, master, arm_controller, _logFile, top_frame, middle_frame, bottom_frame, root, host_ip, video_url, notifications_frame, **kwargs):
+    def __init__(self, master, arm_controller, _logFile, top_frame, middle_frame, bottom_frame, root, notifications_frame, **kwargs):
         '''
         Constructor for PositionFrame
         
         :param master: The Tk parent widget
+        :type master: Tk
         :param arm_controller: The SerialArmController
+        :type arm_controller: SerialArmController
         :param _logFile: The output log file handle
+        :type _logFile: file object
+        :param top_frame: Frame to be later used in LabelScaleSpinBox
+        :type top_frame: Frame (from Tkinter)
+        :param middle_frame: Frame to be later used in LabelScaleSpinBox
+        :type middle_frame: Frame (from Tkinter)
+        :param bottom_frame: Frame to be later used in LabelScaleSpinBox
+        :type bottom_frame: Frame (from Tkinter)
+        :param root: The outmost Tk application (called root inside the main function in Application.py)
+        :type root: Tk
+        :param notifications_frame: The NotificationsFrame
+        :type notifications_frame: NotificationsFrame
         '''
 
         super().__init__(master, **kwargs)
         self._master = master
         self.notifications_frame = notifications_frame
         self.serial_arm_controller = arm_controller
-        self.video_url = video_url
         self.logFile = _logFile
         self.top_frame = top_frame
         self.middle_frame = middle_frame
         self.bottom_frame = bottom_frame
 
         self.root = root
-        self.host_ip = host_ip
 
         self.render_frame = tk.Frame(self)
         self.render_frame.pack(side="top")
@@ -496,6 +575,7 @@ class PositionFrame(tk.Frame):
         Initializes render of arm
         
         :param master: The Tk parent widget
+        :type master: Tk
         '''
 
         self.pos_render = RenderDiagram(
@@ -509,6 +589,7 @@ class PositionFrame(tk.Frame):
         Creates LabelScaleSpinbox controls
         
         :param master: The Tk parent widget
+        :type master: Tk
         '''
 
         self.pitch_control = LabelScaleSpinbox(
@@ -525,7 +606,10 @@ class PositionFrame(tk.Frame):
 
 
     def create_updater(self):
-        '''Starts updater function to update GUI based on current position'''
+        '''
+        Starts updater function to update GUI based on current position
+
+        '''
 
         self.update_thread = PositionUpdater(
             self.serial_arm_controller,
@@ -544,7 +628,7 @@ class PositionFrame(tk.Frame):
     def process_queue(self):
         '''
         Processes queue of position updates
-    
+
         Uses this queue data to print new position to log file, and to update render position
         '''
 

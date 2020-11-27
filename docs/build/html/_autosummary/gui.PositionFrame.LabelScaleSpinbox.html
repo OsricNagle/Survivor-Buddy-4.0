@@ -47,12 +47,21 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>master</strong> – The Tk parent widget</p></li>
-<li><p><strong>text</strong> – The text to display next to the control</p></li>
-<li><p><strong>from</strong> – The minimum valid value</p></li>
-<li><p><strong>to</strong> – The maximum valid value</p></li>
-<li><p><strong>axis</strong> – The axis that this LabelScaleSpinbox controls</p></li>
-<li><p><strong>dev</strong> – The SerialArmController</p></li>
+<li><p><strong>master</strong> (<em>Tk</em>) – The Tk parent widget</p></li>
+<li><p><strong>text</strong> (<em>String</em>) – The text to display next to the control</p></li>
+<li><p><strong>from</strong> (<em>int</em>) – The minimum valid value</p></li>
+<li><p><strong>to</strong> (<em>int</em>) – The maximum valid value</p></li>
+<li><p><strong>axis</strong> (<em>int</em>) – The axis that this LabelScaleSpinbox controls, range: [0,2]; 0 means pitch, 1 means yaw, and 2 means roll</p></li>
+<li><p><strong>dev</strong> (<a class="reference internal" href="gui.SerialArmController.SerialArmController.html#gui.SerialArmController.SerialArmController" title="gui.SerialArmController.SerialArmController"><em>SerialArmController</em></a>) – The SerialArmController</p></li>
+<li><p><strong>up</strong> (<em>boolean</em>) – Tells us if we need to create the “move up” button on GUI</p></li>
+<li><p><strong>down</strong> (<em>boolean</em>) – Tells us if we need to create the “move down” button on GUI</p></li>
+<li><p><strong>left</strong> (<em>boolean</em>) – Tells us if we need to create the “move left” button on GUI</p></li>
+<li><p><strong>right</strong> (<em>boolean</em>) – Tells us if we need to create the “move right” button on GUI</p></li>
+<li><p><strong>top_frame</strong> (<em>Frame</em><em> (</em><em>from Tkinter</em><em>)</em>) – Frame passed in to denote placement of buttons around the video frame. Top frame will be used to place the “move up” button</p></li>
+<li><p><strong>middle_frame</strong> (<em>Frame</em><em> (</em><em>from Tkinter</em><em>)</em>) – Frame passed in to denote placement of buttons around the video frame. Middle frame will be used to place the “move left” button, “move right” button, and the video frame itself</p></li>
+<li><p><strong>bottom_frame</strong> (<em>Frame</em><em> (</em><em>from Tkinter</em><em>)</em>) – Frame passed in to denote placement of buttons around the video frame. Bottom frame will be used to place the “move down” button</p></li>
+<li><p><strong>root</strong> (<em>Tk</em>) – The highest level tkinter frame</p></li>
+<li><p><strong>app_master</strong> (<em>Tk</em>) – The application.py’s master variable</p></li>
 </ul>
 </dd>
 </dl>
@@ -68,17 +77,17 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#gui.PositionFrame.LabelScaleSpinbox.__init__" title="gui.PositionFrame.LabelScaleSpinbox.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(master[, text, from_, to, axis, …])</p></td>
 <td><p>Constructor for LabelScaleSpinbox</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">decrementDown</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.PositionFrame.LabelScaleSpinbox.decrementDown" title="gui.PositionFrame.LabelScaleSpinbox.decrementDown"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decrementDown</span></code></a>()</p></td>
+<td><p>Functionality for the “move down” button on the GUI, currently decrements by 20 units</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">decrementLeft</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.PositionFrame.LabelScaleSpinbox.decrementLeft" title="gui.PositionFrame.LabelScaleSpinbox.decrementLeft"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decrementLeft</span></code></a>()</p></td>
+<td><p>Functionality for the “move left” button on the GUI, currently decrements by 20 units</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">incrementRight</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.PositionFrame.LabelScaleSpinbox.incrementRight" title="gui.PositionFrame.LabelScaleSpinbox.incrementRight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">incrementRight</span></code></a>()</p></td>
+<td><p>Functionality for the “move right” button on the GUI, currently increments by 20 units</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">incrementUp</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.PositionFrame.LabelScaleSpinbox.incrementUp" title="gui.PositionFrame.LabelScaleSpinbox.incrementUp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">incrementUp</span></code></a>()</p></td>
+<td><p>Functionality for the “move up” button on the GUI, currently increments by 5 units</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#gui.PositionFrame.LabelScaleSpinbox.invalid_spinbox" title="gui.PositionFrame.LabelScaleSpinbox.invalid_spinbox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">invalid_spinbox</span></code></a>()</p></td>
 <td><p>Function that runs when the spinbox has an invalid value</p></td>
@@ -280,6 +289,18 @@ the allowed keyword arguments call the method keys.</p>
 <p>The values for resources are specified as keyword
 arguments. To get an overview about
 the allowed keyword arguments call the method keys.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.PositionFrame.LabelScaleSpinbox.decrementDown">
+<code class="sig-name descname">decrementDown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.PositionFrame.LabelScaleSpinbox.decrementDown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functionality for the “move down” button on the GUI, currently decrements by 20 units</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.PositionFrame.LabelScaleSpinbox.decrementLeft">
+<code class="sig-name descname">decrementLeft</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.PositionFrame.LabelScaleSpinbox.decrementLeft" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functionality for the “move left” button on the GUI, currently decrements by 20 units</p>
 </dd></dl>
 
 <dl class="py method">
@@ -568,6 +589,18 @@ in its packing order.</p>
 <dt id="gui.PositionFrame.LabelScaleSpinbox.image_types">
 <code class="sig-name descname">image_types</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.PositionFrame.LabelScaleSpinbox.image_types" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of all available image types (e.g. photo bitmap).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.PositionFrame.LabelScaleSpinbox.incrementRight">
+<code class="sig-name descname">incrementRight</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.PositionFrame.LabelScaleSpinbox.incrementRight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functionality for the “move right” button on the GUI, currently increments by 20 units</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.PositionFrame.LabelScaleSpinbox.incrementUp">
+<code class="sig-name descname">incrementUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.PositionFrame.LabelScaleSpinbox.incrementUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functionality for the “move up” button on the GUI, currently increments by 5 units</p>
 </dd></dl>
 
 <dl class="py method">
@@ -938,7 +971,7 @@ in its packing order.</p>
 <dd><p>Sends command to arm based on slider value, sets spinbox based on slider</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>val</strong> – The value passed to this function when the slider is released</p>
+<dd class="field-odd"><p><strong>val</strong> (<em>int</em>) – The value passed to this function when the slider is released</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1044,7 +1077,7 @@ the user.</p>
 <dd><p>Check that spinbox and slider are within valid range of values</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>val</strong> – The value from the spinbox</p>
+<dd class="field-odd"><p><strong>val</strong> (<em>int</em>) – The value from the spinbox</p>
 </dd>
 </dl>
 </dd></dl>
