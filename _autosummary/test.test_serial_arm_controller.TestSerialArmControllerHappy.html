@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test.test_serial_arm_controller.TestSerialArmControllerHappy &#8212; Survivor Buddy 4.0 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="test.test_serial_arm_controller.TestSerialArmControllerNegative" href="test.test_serial_arm_controller.TestSerialArmControllerNegative.html" />
+    <link rel="prev" title="test.test_serial_arm_controller" href="test.test_serial_arm_controller.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="test-test-serial-arm-controller-testserialarmcontrollerhappy">
+<h1>test.test_serial_arm_controller.TestSerialArmControllerHappy<a class="headerlink" href="#test-test-serial-arm-controller-testserialarmcontrollerhappy" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy">
+<em class="property">class </em><code class="sig-prename descclassname">test.test_serial_arm_controller.</code><code class="sig-name descname">TestSerialArmControllerHappy</code><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Tests for all the SerialArmController functions with good values</p>
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.reset_mocked_sar" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.reset_mocked_sar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset_mocked_sar</span></code></a>()</p></td>
+<td><p>Resets all of the initializations</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_arm_pitch_0" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_arm_pitch_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_close_arm_pitch_0</span></code></a>()</p></td>
+<td><p>Tests close_arm() method of SerialArmController with preset byte data as input when the pitch is already 0</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_arm_pitch_not_0" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_arm_pitch_not_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_close_arm_pitch_not_0</span></code></a>()</p></td>
+<td><p>Tests close_arm() method of SerialArmController with preset byte data as input when the pitch is not 0</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_close_connected</span></code></a>()</p></td>
+<td><p>Tests close() method of SerialArmController when it is connected</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_not_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_not_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_close_not_connected</span></code></a>()</p></td>
+<td><p>Tests close() method of SerialArmController when it not connected</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_is_connected_roll_90" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_is_connected_roll_90"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_landscape_is_connected_roll_90</span></code></a>()</p></td>
+<td><p>Tests landscape() method of SerialArmController with preset byte data as input when the roll is 90 and is connected</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_is_connected_roll_not_90" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_is_connected_roll_not_90"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_landscape_is_connected_roll_not_90</span></code></a>()</p></td>
+<td><p>Tests landscape() method of SerialArmController with preset byte data as input when the roll is not 90 and is connected</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_is_not_connected_roll_not_90" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_is_not_connected_roll_not_90"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_landscape_is_not_connected_roll_not_90</span></code></a>()</p></td>
+<td><p>Tests landscape() method of SerialArmController with preset byte data as input when the roll is not 90 and is not connected</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_not_connected_roll_90" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_not_connected_roll_90"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_landscape_not_connected_roll_90</span></code></a>()</p></td>
+<td><p>Tests landscape() method of SerialArmController with preset byte data as input when the roll is 90 and is not connected</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_nod_is_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_nod_is_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_nod_is_connected</span></code></a>()</p></td>
+<td><p>Tests nod() method of SerialArmController with preset byte data as input while it is connected</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_nod_is_not_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_nod_is_not_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_nod_is_not_connected</span></code></a>()</p></td>
+<td><p>Tests nod() method of SerialArmController with preset byte data as input while it is not connected</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_open_arm_pitch_90" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_open_arm_pitch_90"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_open_arm_pitch_90</span></code></a>()</p></td>
+<td><p>Tests open_arm() method of SerialArmController with preset byte data as input when the pitch is already 90</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_open_arm_pitch_not_90" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_open_arm_pitch_not_90"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_open_arm_pitch_not_90</span></code></a>()</p></td>
+<td><p>Tests open_arm() method of SerialArmController with preset byte data as input when the pitch is not 90</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_is_connected_roll_0" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_is_connected_roll_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_portrait_is_connected_roll_0</span></code></a>()</p></td>
+<td><p>Tests portrait() method of SerialArmController with preset byte data as input when the roll is 0 and is connected</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_is_connected_roll_not_0" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_is_connected_roll_not_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_portrait_is_connected_roll_not_0</span></code></a>()</p></td>
+<td><p>Tests portrait() method of SerialArmController with preset byte data as input when the roll is not 0 and is connected</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_is_not_connected_roll_not_0" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_is_not_connected_roll_not_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_portrait_is_not_connected_roll_not_0</span></code></a>()</p></td>
+<td><p>Tests portrait() method of SerialArmController with preset byte data as input when the roll is not 0 and is not connected</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_not_connected_roll_0" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_not_connected_roll_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_portrait_not_connected_roll_0</span></code></a>()</p></td>
+<td><p>Tests portrait() method of SerialArmController with preset byte data as input when the roll is 0 and is not connected</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_recv_good_bytes_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_recv_good_bytes_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_recv_good_bytes_connected</span></code></a>()</p></td>
+<td><p>Tests recv() method of SerialArmController with preset byte data as input while it is connected</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_recv_good_bytes_not_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_recv_good_bytes_not_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_recv_good_bytes_not_connected</span></code></a>()</p></td>
+<td><p>Tests recv() method of SerialArmController with preset byte data as input while it is connected</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_send_good_bytes_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_send_good_bytes_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_send_good_bytes_connected</span></code></a>()</p></td>
+<td><p>Tests send() method of SerialArmController with preset byte data as input while it is connected</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_send_good_bytes_not_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_send_good_bytes_not_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_send_good_bytes_not_connected</span></code></a>()</p></td>
+<td><p>Tests send() method of SerialArmController with preset byte data as input while it is not connected</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_pitch_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_pitch_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_set_pitch_connected</span></code></a>(input_val)</p></td>
+<td><p>Tests set_pitch() method of SerialArmController with preset byte data as input while it is connected</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_pitch_not_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_pitch_not_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_set_pitch_not_connected</span></code></a>(input_val)</p></td>
+<td><p>Tests set_pitch() method of SerialArmController with preset byte data as input while it is not connected</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_roll_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_roll_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_set_roll_connected</span></code></a>(input_val)</p></td>
+<td><p>Tests set_roll() method of SerialArmController with preset byte data as input while it is connected</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_roll_not_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_roll_not_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_set_roll_not_connected</span></code></a>(input_val)</p></td>
+<td><p>Tests set_roll() method of SerialArmController with preset byte data as input while it is not connected</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_yaw_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_yaw_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_set_yaw_connected</span></code></a>(input_val)</p></td>
+<td><p>Tests set_yaw() method of SerialArmController with preset byte data as input while it is connected</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_yaw_not_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_yaw_not_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_set_yaw_not_connected</span></code></a>(input_val)</p></td>
+<td><p>Tests set_yaw() method of SerialArmController with preset byte data as input while it is not connected</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shake_is_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shake_is_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_shake_is_connected</span></code></a>()</p></td>
+<td><p>Tests shake() method of SerialArmController with preset byte data as input while it is connected</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shake_is_not_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shake_is_not_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_shake_is_not_connected</span></code></a>()</p></td>
+<td><p>Tests shake() method of SerialArmController with preset byte data as input while it is not connected</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shutdown_is_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shutdown_is_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_shutdown_is_connected</span></code></a>()</p></td>
+<td><p>Tests _shutdown() method of SerialArmController with preset byte data as input while it is connected</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shutdown_is_not_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shutdown_is_not_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_shutdown_is_not_connected</span></code></a>()</p></td>
+<td><p>Tests shutdown() method of SerialArmController with preset byte data as input while it is not connected</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_tilt_is_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_tilt_is_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_tilt_is_connected</span></code></a>()</p></td>
+<td><p>Tests tilt() method of SerialArmController with preset byte data as input while it is connected</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_tilt_is_not_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_tilt_is_not_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_tilt_is_not_connected</span></code></a>()</p></td>
+<td><p>Tests tilt() method of SerialArmController with preset byte data as input while it is not connected</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_update_position_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_update_position_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_update_position_connected</span></code></a>()</p></td>
+<td><p>Tests update_position() method of SerialArmController with preset byte data as input while it is connected</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_update_position_not_connected" title="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_update_position_not_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_update_position_not_connected</span></code></a>()</p></td>
+<td><p>Tests update_position() method of SerialArmController with preset byte data as input while it is NOT connected</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">mock_notif_frame</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">mock_serial</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">mock_status_bar</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">my_sar</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.reset_mocked_sar">
+<code class="sig-name descname">reset_mocked_sar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.reset_mocked_sar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets all of the initializations</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_arm_pitch_0">
+<code class="sig-name descname">test_close_arm_pitch_0</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_arm_pitch_0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests close_arm() method of SerialArmController with preset byte data as input
+when the pitch is already 0</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_arm_pitch_not_0">
+<code class="sig-name descname">test_close_arm_pitch_not_0</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_arm_pitch_not_0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests close_arm() method of SerialArmController with preset byte data as input
+when the pitch is not 0</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_connected">
+<code class="sig-name descname">test_close_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests close() method of SerialArmController when it is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_not_connected">
+<code class="sig-name descname">test_close_not_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_close_not_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests close() method of SerialArmController when it not connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_is_connected_roll_90">
+<code class="sig-name descname">test_landscape_is_connected_roll_90</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_is_connected_roll_90" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests landscape() method of SerialArmController with preset byte data as input
+when the roll is 90 and is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_is_connected_roll_not_90">
+<code class="sig-name descname">test_landscape_is_connected_roll_not_90</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_is_connected_roll_not_90" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests landscape() method of SerialArmController with preset byte data as input
+when the roll is not 90 and is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_is_not_connected_roll_not_90">
+<code class="sig-name descname">test_landscape_is_not_connected_roll_not_90</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_is_not_connected_roll_not_90" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests landscape() method of SerialArmController with preset byte data as input
+when the roll is not 90 and is not connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_not_connected_roll_90">
+<code class="sig-name descname">test_landscape_not_connected_roll_90</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_landscape_not_connected_roll_90" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests landscape() method of SerialArmController with preset byte data as input
+when the roll is 90 and is not connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_nod_is_connected">
+<code class="sig-name descname">test_nod_is_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_nod_is_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests nod() method of SerialArmController with preset byte data as input
+while it is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_nod_is_not_connected">
+<code class="sig-name descname">test_nod_is_not_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_nod_is_not_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests nod() method of SerialArmController with preset byte data as input
+while it is not connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_open_arm_pitch_90">
+<code class="sig-name descname">test_open_arm_pitch_90</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_open_arm_pitch_90" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests open_arm() method of SerialArmController with preset byte data as input
+when the pitch is already 90</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_open_arm_pitch_not_90">
+<code class="sig-name descname">test_open_arm_pitch_not_90</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_open_arm_pitch_not_90" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests open_arm() method of SerialArmController with preset byte data as input
+when the pitch is not 90</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_is_connected_roll_0">
+<code class="sig-name descname">test_portrait_is_connected_roll_0</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_is_connected_roll_0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests portrait() method of SerialArmController with preset byte data as input
+when the roll is 0 and is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_is_connected_roll_not_0">
+<code class="sig-name descname">test_portrait_is_connected_roll_not_0</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_is_connected_roll_not_0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests portrait() method of SerialArmController with preset byte data as input
+when the roll is not 0 and is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_is_not_connected_roll_not_0">
+<code class="sig-name descname">test_portrait_is_not_connected_roll_not_0</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_is_not_connected_roll_not_0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests portrait() method of SerialArmController with preset byte data as input
+when the roll is not 0 and is not connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_not_connected_roll_0">
+<code class="sig-name descname">test_portrait_not_connected_roll_0</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_portrait_not_connected_roll_0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests portrait() method of SerialArmController with preset byte data as input
+when the roll is 0 and is not connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_recv_good_bytes_connected">
+<code class="sig-name descname">test_recv_good_bytes_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_recv_good_bytes_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests recv() method of SerialArmController with preset byte data as input
+while it is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_recv_good_bytes_not_connected">
+<code class="sig-name descname">test_recv_good_bytes_not_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_recv_good_bytes_not_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests recv() method of SerialArmController with preset byte data as input
+while it is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_send_good_bytes_connected">
+<code class="sig-name descname">test_send_good_bytes_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_send_good_bytes_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests send() method of SerialArmController with preset byte data as input
+while it is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_send_good_bytes_not_connected">
+<code class="sig-name descname">test_send_good_bytes_not_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_send_good_bytes_not_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests send() method of SerialArmController with preset byte data as input
+while it is not connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_pitch_connected">
+<code class="sig-name descname">test_set_pitch_connected</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_pitch_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests set_pitch() method of SerialArmController with preset byte data as input
+while it is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_pitch_not_connected">
+<code class="sig-name descname">test_set_pitch_not_connected</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_pitch_not_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests set_pitch() method of SerialArmController with preset byte data as input
+while it is not connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_roll_connected">
+<code class="sig-name descname">test_set_roll_connected</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_roll_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests set_roll() method of SerialArmController with preset byte data as input
+while it is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_roll_not_connected">
+<code class="sig-name descname">test_set_roll_not_connected</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_roll_not_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests set_roll() method of SerialArmController with preset byte data as input
+while it is not connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_yaw_connected">
+<code class="sig-name descname">test_set_yaw_connected</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_yaw_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests set_yaw() method of SerialArmController with preset byte data as input
+while it is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_yaw_not_connected">
+<code class="sig-name descname">test_set_yaw_not_connected</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_set_yaw_not_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests set_yaw() method of SerialArmController with preset byte data as input
+while it is not connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shake_is_connected">
+<code class="sig-name descname">test_shake_is_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shake_is_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests shake() method of SerialArmController with preset byte data as input
+while it is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shake_is_not_connected">
+<code class="sig-name descname">test_shake_is_not_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shake_is_not_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests shake() method of SerialArmController with preset byte data as input
+while it is not connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shutdown_is_connected">
+<code class="sig-name descname">test_shutdown_is_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shutdown_is_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests _shutdown() method of SerialArmController with preset byte data as input
+while it is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shutdown_is_not_connected">
+<code class="sig-name descname">test_shutdown_is_not_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_shutdown_is_not_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests shutdown() method of SerialArmController with preset byte data as input
+while it is not connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_tilt_is_connected">
+<code class="sig-name descname">test_tilt_is_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_tilt_is_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests tilt() method of SerialArmController with preset byte data as input
+while it is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_tilt_is_not_connected">
+<code class="sig-name descname">test_tilt_is_not_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_tilt_is_not_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests tilt() method of SerialArmController with preset byte data as input
+while it is not connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_update_position_connected">
+<code class="sig-name descname">test_update_position_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_update_position_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests update_position() method of SerialArmController with preset byte data as input
+while it is connected</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_serial_arm_controller.TestSerialArmControllerHappy.test_update_position_not_connected">
+<code class="sig-name descname">test_update_position_not_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_serial_arm_controller.TestSerialArmControllerHappy.test_update_position_not_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests update_position() method of SerialArmController with preset byte data as input
+while it is NOT connected</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Survivor Buddy 4.0</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gui.html">gui</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="test.html">test</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="test.Mock.html">test.Mock</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.test_buddy_audio_client.html">test.test_buddy_audio_client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.test_buddy_message_client.html">test.test_buddy_message_client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.test_control_buttons.html">test.test_control_buttons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.test_notifications_frame.html">test.test_notifications_frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.test_position_frame.html">test.test_position_frame</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="test.test_serial_arm_controller.html">test.test_serial_arm_controller</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">test.test_serial_arm_controller.TestSerialArmControllerHappy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.test_serial_arm_controller.TestSerialArmControllerNegative.html">test.test_serial_arm_controller.TestSerialArmControllerNegative</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="test.html">test</a><ul>
+  <li><a href="test.test_serial_arm_controller.html">test.test_serial_arm_controller</a><ul>
+      <li>Previous: <a href="test.test_serial_arm_controller.html" title="previous chapter">test.test_serial_arm_controller</a></li>
+      <li>Next: <a href="test.test_serial_arm_controller.TestSerialArmControllerNegative.html" title="next chapter">test.test_serial_arm_controller.TestSerialArmControllerNegative</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Kyle Hutto, Warren Zhou, Juan Vargas, Connor Tubbesing, Suvedh Srikanth.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_autosummary/test.test_serial_arm_controller.TestSerialArmControllerHappy.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
