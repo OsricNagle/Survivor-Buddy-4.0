@@ -39,6 +39,7 @@
 <dt id="test.test_buddy_audio_client.TestBuddyAudioClientHappy">
 <em class="property">class </em><code class="sig-prename descclassname">test.test_buddy_audio_client.</code><code class="sig-name descname">TestBuddyAudioClientHappy</code><a class="headerlink" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Suite of Happy Path tests for BuddyAudioClient</p>
 <dl class="py method">
 <dt id="test.test_buddy_audio_client.TestBuddyAudioClientHappy.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.__init__" title="Permalink to this definition">¶</a></dt>
@@ -58,32 +59,29 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_disconnect" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_disconnect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_disconnect</span></code></a>(mocker)</p></td>
 <td><p>Tests disconnectAndStop() method if called when connected</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_foo</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_dicts_input_devices" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_dicts_input_devices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_get_input_device_dicts_input_devices</span></code></a>(…)</p></td>
+<td><p>Tests that getInputDeviceDicts properly filters and returns only input devices</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_dicts_input_devices" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_dicts_input_devices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_get_input_device_dicts_input_devices</span></code></a>(…)</p></td>
-<td><p>Tests that getInputDeviceDicts properly filter and returns only input devices</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_dicts_output_devices" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_dicts_output_devices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_get_input_device_dicts_output_devices</span></code></a>(…)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_dicts_output_devices" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_dicts_output_devices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_get_input_device_dicts_output_devices</span></code></a>(…)</p></td>
 <td><p>Tests that getInputDeviceDicts properly filters for input devices.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_name_content" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_name_content"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_get_input_device_name_content</span></code></a>(mocker)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_name_content" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_name_content"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_get_input_device_name_content</span></code></a>(mocker)</p></td>
 <td><p>Tests that getInputDeviceNames() returns a list of the device names.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_names_number_of_names" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_names_number_of_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_get_input_device_names_number_of_names</span></code></a>(mocker)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_names_number_of_names" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_names_number_of_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_get_input_device_names_number_of_names</span></code></a>(mocker)</p></td>
 <td><p>Tests that getInputDeviceNames() returns a list of the device names and that the number of names in the list is as expected</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_handle_connect_and_start_connection_failed" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_handle_connect_and_start_connection_failed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_handle_connect_and_start_connection_failed</span></code></a>(mocker)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_handle_connect_and_start_connection_failed" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_handle_connect_and_start_connection_failed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_handle_connect_and_start_connection_failed</span></code></a>(mocker)</p></td>
 <td><p>Test that the handleConnectAndStart() method calls start_strem when connection fails</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_handle_connect_connection_success" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_handle_connect_connection_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_handle_connect_connection_success</span></code></a>(mocker)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_handle_connect_connection_success" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_handle_connect_connection_success"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_handle_connect_connection_success</span></code></a>(mocker)</p></td>
 <td><p>Test that the handleConnectAndStart() method calls start_strem when connection is successful</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_set_input_device" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_set_input_device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_set_input_device</span></code></a>(mocker, input_vals)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_set_input_device" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_set_input_device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_set_input_device</span></code></a>(mocker, input_vals)</p></td>
 <td><p>Tests that setInputDevice properly sets the input device to the input</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_stream_loop</span></code>(mocker, input_val)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_stream_loop" title="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_stream_loop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_stream_loop</span></code></a>(mocker, input_val)</p></td>
+<td><p>Tests that the bytes are properly read/decoded and sent unmodified to the socket</p></td>
 </tr>
 </tbody>
 </table>
@@ -104,7 +102,7 @@ to the server</p>
 <dl class="py method">
 <dt id="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_dicts_input_devices">
 <code class="sig-name descname">test_get_input_device_dicts_input_devices</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mocker</span></em>, <em class="sig-param"><span class="n">input_val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_get_input_device_dicts_input_devices" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tests that getInputDeviceDicts properly filter and returns only input devices</p>
+<dd><p>Tests that getInputDeviceDicts properly filters and returns only input devices</p>
 </dd></dl>
 
 <dl class="py method">
@@ -144,6 +142,12 @@ that the number of names in the list is as expected</p>
 <dt id="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_set_input_device">
 <code class="sig-name descname">test_set_input_device</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mocker</span></em>, <em class="sig-param"><span class="n">input_vals</span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_set_input_device" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests that setInputDevice properly sets the input device to the input</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_stream_loop">
+<code class="sig-name descname">test_stream_loop</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mocker</span></em>, <em class="sig-param"><span class="n">input_val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.test_buddy_audio_client.TestBuddyAudioClientHappy.test_stream_loop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests that the bytes are properly read/decoded and sent unmodified to the socket</p>
 </dd></dl>
 
 </dd></dl>
