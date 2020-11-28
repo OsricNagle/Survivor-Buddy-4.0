@@ -1,4 +1,4 @@
-test.test\_buddy\_audio\_client.TestBuddyAudioClientHappy
+﻿test.test\_buddy\_audio\_client.TestBuddyAudioClientHappy
 =========================================================
 
 .. currentmodule:: test.test_buddy_audio_client
@@ -18,7 +18,6 @@ test.test\_buddy\_audio\_client.TestBuddyAudioClientHappy
    
       ~TestBuddyAudioClientHappy.test_connect_successful
       ~TestBuddyAudioClientHappy.test_disconnect
-      ~TestBuddyAudioClientHappy.test_foo
       ~TestBuddyAudioClientHappy.test_get_input_device_dicts_input_devices
       ~TestBuddyAudioClientHappy.test_get_input_device_dicts_output_devices
       ~TestBuddyAudioClientHappy.test_get_input_device_name_content

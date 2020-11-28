@@ -39,10 +39,11 @@
 <dt id="test.Mock.MockSerial">
 <em class="property">class </em><code class="sig-prename descclassname">test.Mock.</code><code class="sig-name descname">MockSerial</code><a class="headerlink" href="#test.Mock.MockSerial" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Mock of function used from Serial library</p>
 <dl class="py method">
 <dt id="test.Mock.MockSerial.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.Mock.MockSerial.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dd><p>Constructor for MockSerial</p>
 </dd></dl>
 
 <p class="rubric">Methods</p>
@@ -53,19 +54,59 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#test.Mock.MockSerial.__init__" title="test.Mock.MockSerial.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
-<td><p>Initialize self.</p></td>
+<td><p>Constructor for MockSerial</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.Mock.MockSerial.close" title="test.Mock.MockSerial.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a>()</p></td>
+<td><p>Closes the buffer</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code>(size)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#test.Mock.MockSerial.read" title="test.Mock.MockSerial.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a>(size)</p></td>
+<td><p>Mock read</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write</span></code>(data)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#test.Mock.MockSerial.write" title="test.Mock.MockSerial.write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write</span></code></a>(data)</p></td>
+<td><p>Mock write</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py method">
+<dt id="test.Mock.MockSerial.close">
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.Mock.MockSerial.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the buffer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.Mock.MockSerial.read">
+<code class="sig-name descname">read</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.Mock.MockSerial.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mock read</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>int</em>) – the number of bytes to read</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the bytes read or None if Buffer is not open</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bytes or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="test.Mock.MockSerial.write">
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.Mock.MockSerial.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mock write</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>bytes</em>) – the bytes to write</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of bytes written or None if buffer is not open</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int or None</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>

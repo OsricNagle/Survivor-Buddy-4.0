@@ -39,12 +39,20 @@
 <dt id="gui.Application.Application">
 <em class="property">class </em><code class="sig-prename descclassname">gui.Application.</code><code class="sig-name descname">Application</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">master</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tkinter.Frame</span></code></p>
-<p>The main GUI class</p>
+<p>Main gui class. Everything that the GUI controls or displays is instantiated in this class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>master</strong> (<em>Tkinter widget</em>) – The Tkinter root</p></li>
+<li><p><strong>kwargs</strong> (<em>kwargs</em>) – the extra tkinter options</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="gui.Application.Application.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">master</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>The constructor for the Application class
-:param master: the Tk parent widget</p>
+<dd><p>Constructor for Application
+Inits all controlled elements and objects</p>
 </dd></dl>
 
 <p class="rubric">Methods</p>
@@ -55,58 +63,58 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#gui.Application.Application.__init__" title="gui.Application.Application.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(master, **kwargs)</p></td>
-<td><p>The constructor for the Application class :param master: the Tk parent widget</p></td>
+<td><p>Constructor for Application Inits all controlled elements and objects</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#gui.Application.Application.close_app" title="gui.Application.Application.close_app"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close_app</span></code></a>()</p></td>
 <td><p>Closes the GUI application</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#gui.Application.Application.create_menu" title="gui.Application.Application.create_menu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_menu</span></code></a>(root_menu)</p></td>
-<td><p>Creates the main GUI menu :param root_menu: The root menu (self.menu_bar) that is instantiated in create_widgets()</p></td>
+<td><p>Initializes the menu bar of the main GUI.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">displayFileDialog</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.Application.Application.displayFileDialog" title="gui.Application.Application.displayFileDialog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">displayFileDialog</span></code></a>()</p></td>
+<td><p>Opens a file dialog asking for a choice of folder</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">displayMuteIcon</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.Application.Application.displayMuteIcon" title="gui.Application.Application.displayMuteIcon"><code class="xref py py-obj docutils literal notranslate"><span class="pre">displayMuteIcon</span></code></a>()</p></td>
+<td><p>Shows the mute icon on the GUI</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">displayRecordIcon</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.Application.Application.displayRecordIcon" title="gui.Application.Application.displayRecordIcon"><code class="xref py py-obj docutils literal notranslate"><span class="pre">displayRecordIcon</span></code></a>()</p></td>
+<td><p>Shows the record icon on the GUI</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">hideMuteIcon</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.Application.Application.hideMuteIcon" title="gui.Application.Application.hideMuteIcon"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hideMuteIcon</span></code></a>()</p></td>
+<td><p>Hides the mute icon on the GUI</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">hideRecordIcon</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.Application.Application.hideRecordIcon" title="gui.Application.Application.hideRecordIcon"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hideRecordIcon</span></code></a>()</p></td>
+<td><p>Hides the record icon on the GUI</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">password_popup</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.Application.Application.password_popup" title="gui.Application.Application.password_popup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">password_popup</span></code></a>()</p></td>
+<td><p>Opens a popup to allow for entry of new password string</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">popup_ip</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.Application.Application.popup_ip" title="gui.Application.Application.popup_ip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">popup_ip</span></code></a>()</p></td>
+<td><p>Opens a popup box allowing for entry of a new ip address to attempt to connect to when sending data to the mobile device</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">popup_port</span></code>(device_type)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.Application.Application.popup_port" title="gui.Application.Application.popup_port"><code class="xref py py-obj docutils literal notranslate"><span class="pre">popup_port</span></code></a>(device_type)</p></td>
+<td><p>Opens a popup box allowing for entry of a new port number for the chosen device_type.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">send_text</span></code>()</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.Application.Application.send_text" title="gui.Application.Application.send_text"><code class="xref py py-obj docutils literal notranslate"><span class="pre">send_text</span></code></a>()</p></td>
+<td><p>Gets string input from popup box and sends it to message server</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ip</span></code>(ip)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.Application.Application.set_ip" title="gui.Application.Application.set_ip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ip</span></code></a>(ip)</p></td>
+<td><p>Changed the ip address that a connection will be attempted to when sending/receiving data from the mobile application</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_password</span></code>(password)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.Application.Application.set_password" title="gui.Application.Application.set_password"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_password</span></code></a>(password)</p></td>
+<td><p>sets the password for screen recording</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_port</span></code>(device_type, port)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.Application.Application.set_port" title="gui.Application.Application.set_port"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_port</span></code></a>(device_type, port)</p></td>
+<td><p>Changes the port number based on the chosen device type.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_video_port</span></code>(port)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#gui.Application.Application.set_video_port" title="gui.Application.Application.set_video_port"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_video_port</span></code></a>(port)</p></td>
+<td><p>Changes the port number in the rtsp url for receiving video/audio from android</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">showPopupMessage</span></code>([title, msg_text])</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#gui.Application.Application.showPopupMessage" title="gui.Application.Application.showPopupMessage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">showPopupMessage</span></code></a>([title, msg_text])</p></td>
+<td><p>Displays a popup box with the input message and title</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#gui.Application.Application.updateMenuOptions" title="gui.Application.Application.updateMenuOptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">updateMenuOptions</span></code></a>(event)</p></td>
-<td><p>Callback function to update the drop down menus</p></td>
+<td><p>Callback function to update the drop down menus in the top menu bar.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#gui.Application.Application.validatePort" title="gui.Application.Application.validatePort"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validatePort</span></code></a>(portNum)</p></td>
 <td><p>Validates that the given portNum is a valid port number</p></td>
@@ -307,8 +315,9 @@ the allowed keyword arguments call the method keys.</p>
 <dl class="py method">
 <dt id="gui.Application.Application.create_menu">
 <code class="sig-name descname">create_menu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_menu</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.create_menu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates the main GUI menu
-:param root_menu: The root menu (self.menu_bar) that is instantiated in create_widgets()</p>
+<dd><p>Initializes the menu bar of the main GUI.
+:param root_menu: The root menu (self.menu_bar) that is instantiated in create_widgets()
+:type root_menu: Tkinter Menu</p>
 </dd></dl>
 
 <dl class="py method">
@@ -322,6 +331,32 @@ the allowed keyword arguments call the method keys.</p>
 <dt id="gui.Application.Application.destroy">
 <code class="sig-name descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Destroy this and all descendants widgets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.Application.Application.displayFileDialog">
+<code class="sig-name descname">displayFileDialog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.displayFileDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a file dialog asking for a choice of folder</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the path of the chosen folder</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>String</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.Application.Application.displayMuteIcon">
+<code class="sig-name descname">displayMuteIcon</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.displayMuteIcon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the mute icon on the GUI</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.Application.Application.displayRecordIcon">
+<code class="sig-name descname">displayRecordIcon</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.displayRecordIcon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the record icon on the GUI</p>
 </dd></dl>
 
 <dl class="py method">
@@ -588,6 +623,18 @@ in its packing order.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="gui.Application.Application.hideMuteIcon">
+<code class="sig-name descname">hideMuteIcon</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.hideMuteIcon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hides the mute icon on the GUI</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.Application.Application.hideRecordIcon">
+<code class="sig-name descname">hideRecordIcon</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.hideRecordIcon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hides the record icon on the GUI</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="gui.Application.Application.image_names">
 <code class="sig-name descname">image_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.image_names" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of all existing image names.</p>
@@ -749,6 +796,12 @@ in its packing order.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="gui.Application.Application.password_popup">
+<code class="sig-name descname">password_popup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.password_popup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a popup to allow for entry of new password string</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="gui.Application.Application.place">
 <code class="sig-name descname">place</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cnf</span><span class="o">=</span><span class="default_value">{}</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kw</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.place" title="Permalink to this definition">¶</a></dt>
 <dd><p>Place a widget in the parent widget. Use as options:
@@ -832,6 +885,26 @@ for this widget.</p>
 <code class="sig-name descname">place_slaves</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.place_slaves" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of all slaves of this widget
 in its packing order.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.Application.Application.popup_ip">
+<code class="sig-name descname">popup_ip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.popup_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a popup box allowing for entry of a new ip address to attempt to connect to
+when sending data to the mobile device</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.Application.Application.popup_port">
+<code class="sig-name descname">popup_port</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">device_type</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.popup_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a popup box allowing for entry of a new port number for the chosen device_type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>device_type</strong> – The device on which the port will be set. Valid inputs include:
+‘audio’, ‘video’, ‘message’</p>
+</dd>
+</dl>
+<p>“type device_type: String</p>
 </dd></dl>
 
 <dl class="py method">
@@ -925,9 +998,80 @@ type - type of the selection (e.g. STRING, FILE_NAME).</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="gui.Application.Application.send_text">
+<code class="sig-name descname">send_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.send_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets string input from popup box and sends it to message server</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.Application.Application.set_ip">
+<code class="sig-name descname">set_ip</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ip</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.set_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changed the ip address that a connection will be attempted to when sending/receiving
+data from the mobile application</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ip</strong> (<em>String</em>) – the new ip address</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.Application.Application.set_password">
+<code class="sig-name descname">set_password</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">password</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.set_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the password for screen recording</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>String</em>) – the new password</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.Application.Application.set_port">
+<code class="sig-name descname">set_port</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">device_type</span></em>, <em class="sig-param"><span class="n">port</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.set_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the port number based on the chosen device type. 
+If port is invalid an error box will be displayed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>device_type</strong> (<em>String</em>) – denotes which port number to change, current valid options are:
+‘audio’, ‘video’, ‘message’</p></li>
+<li><p><strong>port</strong> (<em>Tk.StringVar</em>) – the new port number</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.Application.Application.set_video_port">
+<code class="sig-name descname">set_video_port</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">port</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.set_video_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the port number in the rtsp url for receiving video/audio from
+android</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>port</strong> (<em>String</em><em> or </em><em>int</em>) – the new port number</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="gui.Application.Application.setvar">
 <code class="sig-name descname">setvar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">'PY_VAR'</span></em>, <em class="sig-param"><span class="n">value</span><span class="o">=</span><span class="default_value">'1'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.setvar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set Tcl variable NAME to VALUE.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gui.Application.Application.showPopupMessage">
+<code class="sig-name descname">showPopupMessage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">'Suvivor Buddy 4.0'</span></em>, <em class="sig-param"><span class="n">msg_text</span><span class="o">=</span><span class="default_value">'CONTENT'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.showPopupMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays a popup box with the input message and title</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>title</strong> – The title of the popup box. Defaults to “Survivor Buddy 4.0”</p>
+</dd>
+</dl>
+<p>“type title: String
+:param msg_text: The text content of the popup box. Defaults to “CONTENT”
+:type msg_text: String</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1033,7 +1177,14 @@ all functions.</p>
 <dl class="py method">
 <dt id="gui.Application.Application.updateMenuOptions">
 <code class="sig-name descname">updateMenuOptions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.updateMenuOptions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Callback function to update the drop down menus</p>
+<dd><p>Callback function to update the drop down menus in the top menu bar.
+Figures out which drop down menu was opened and calls the updateMenu() function
+member of that menu</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>event</strong> (<em>Tkinter event</em>) – Tkinter event which is used to figure out the menu opened</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1048,6 +1199,11 @@ the user.</p>
 <dt id="gui.Application.Application.validatePort">
 <code class="sig-name descname">validatePort</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">portNum</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.Application.Application.validatePort" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validates that the given portNum is a valid port number</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>portNum</strong> (<em>String</em><em> or </em><em>int</em>) – the port number to be validated</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
