@@ -8,6 +8,10 @@ from .Mock import MockSerial, MockNotificationsFrame, MockStatusBar
 from gui.SerialArmController import SerialArmController, Command, Position
 
 class TestSerialArmControllerHappy:
+    """
+    Tests for all the SerialArmController functions with good values
+
+    """
 
     mock_serial = None
     mock_notif_frame = None
@@ -15,6 +19,10 @@ class TestSerialArmControllerHappy:
     my_sar = None   #SerialArmController object for testing
 
     def reset_mocked_sar(self):
+        """
+        Resets all of the initializations
+
+        """
 
         self.mock_serial = MockSerial()
         self.mock_notif_frame = MockNotificationsFrame()
@@ -650,6 +658,10 @@ class TestSerialArmControllerHappy:
 
 
 class TestSerialArmControllerNegative:
+    """
+    Tests for all the SerialArmController functions with bad values
+
+    """
 
     mock_serial = None
     mock_notif_frame = None

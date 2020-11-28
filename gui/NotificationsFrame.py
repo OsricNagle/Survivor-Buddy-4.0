@@ -15,7 +15,9 @@ class NotificationFrame(tk.Frame):
         The constructor for NotificationsFrame
 
         :param master: The Tk parent widget
+        :type master: Tk
         :param _logFile: The file handle for the output log file
+        :type _logFile: file object
         '''
 
         super().__init__(master, **kwargs)
@@ -36,6 +38,9 @@ class NotificationFrame(tk.Frame):
         '''
         Prints a line to the notification box and 
         a timestamped line to the log file
+
+        :param line: The String appended to the notification frame and log file
+        :type line: String
         '''
 
         self.text.config(state=tk.NORMAL)

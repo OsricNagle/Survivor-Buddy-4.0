@@ -7,13 +7,17 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 class StatusBar(tk.Frame):
-    '''Displays the connection status of the GUI to the arm'''
+    '''
+    Displays the connection status of the GUI to the arm
+
+    '''
 
     def __init__(self, master, **kwargs):
         '''
         Constructor for StatusBar
 
         :param master: The Tk parent widget
+        :type master: Tk
         '''
 
         super().__init__(master, **kwargs)
@@ -37,6 +41,7 @@ class StatusBar(tk.Frame):
         Sets the status of the GUI to the arm
 
         :param status: The status to set to
+        :type status: String
         '''
 
         self.status_text.set(status)

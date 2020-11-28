@@ -139,7 +139,7 @@ class Application(Tk.Frame):
         #                          text="Move down")
         # down_button.pack(side="top")
         self.control_buttons = None
-        self.position_frame = PositionFrame(self, self.serial_arm_controller, self.logFile, top_frame, middle_frame, bottom_frame, self.theroot, self.host, self.video_url, self.notifications_frame)
+        self.position_frame = PositionFrame(self, self.serial_arm_controller, self.logFile, top_frame, middle_frame, bottom_frame, self.theroot, self.notifications_frame)
         self.position_frame.pack(fill="x")
         self.create_menu(self.menu_bar)
 

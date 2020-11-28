@@ -9,7 +9,7 @@ from gui.SerialArmController import Position
 
 class MockSerial:
     """
-    Mock of function used from Serial library
+    Class to mock a serial connection
     """
     def __init__(self):
         """

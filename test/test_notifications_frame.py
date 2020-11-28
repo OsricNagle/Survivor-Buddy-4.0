@@ -9,6 +9,10 @@ from gui.NotificationsFrame import NotificationFrame
 import tkinter as tk
 from datetime import datetime
 class TestNotificationsFrameHappy:
+    """
+    Tests for all the NotificationsFrame functions with good values
+
+    """
 
     mock_serial = None
     mock_notif_frame = None
@@ -16,6 +20,10 @@ class TestNotificationsFrameHappy:
     master = tk.Tk()
 
     def reset_mocked(self):
+        """
+        Resets all of the initializations
+
+        """
 
         self.mock_serial = MockSerial()
         self.log_file = MockLogFile()
