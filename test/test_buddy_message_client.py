@@ -3,16 +3,21 @@ Unit tests for BuddyMessageClient
 """
 import pytest
 from pytest_mock import mocker
-
 from gui.BuddyMessageClient import BuddyMessageClient
 
 class DefaultValues:
+    """
+    Contains default test values to init BuddyMessageClient with
+    """
     port = 5050
     ip = 'localhost'
     master = None
     format = 'utf-8'
 
 class TestBuddyMessageClientHappy():
+    """
+    Suite of happy path tests for BuddyMessageClient
+    """
 
     def test_connect_server_running(self, mocker):
         '''
@@ -101,6 +106,9 @@ class TestBuddyMessageClientHappy():
 
 
 class TestBuddyMessageClientNegative():
+    """
+    Suite of negative path test for BuddyMessageClient
+    """
 
     def test_wrong_ip_address_only(self, mocker):
         '''

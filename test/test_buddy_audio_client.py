@@ -9,10 +9,16 @@ import time
 from gui.BuddyAudioClient import BuddyAudioClient
 
 class DefaultValues:
+    """
+    Default values to run tests with. Used for initializing BuddyAudioClient
+    """
     ip = 'localhost'
     port = 8080
 
 class ValueHolder:
+    """
+    Class to hold some dicitonaries used for test inputs
+    """
 
     input_dicts = [
 
@@ -54,22 +60,51 @@ class ValueHolder:
          }
     ]
 
-    output_only = [input_dicts[2]]
-    input_only = input_dicts[0:2]
+    output_only = [input_dicts[2]]  #slice representing output only devices
+    input_only = input_dicts[0:2]   #slice representing input only devices
 
-    input_indicies = [0,1]
-    output_indicies = 2
+    input_indicies = [0,1]  #list of input device indicies
+    output_indicies = 2     #output device indicies, currently only 1
 
     def getDict(self, index):
+        """
+        Gets dictionary from a given index in self.input_dicts
+
+        :param index: index of wanted dict
+        :type index: int
+        :return: the dictionary at the index of self.input_dicts
+        :rtype: dict
+        """
         return self.input_dicts[index]
 
 def getNames(in_list):
+    """
+    Helper funtion for testing getDeviceNames() function. Gets the value of the name
+    key from each dict
+
+    :param in_list: the list of dictionaries to pull names from
+    :type in_list: list[dict]
+    :return:list of values from "name" keyword if input dicts
+    :rtype: list[String]
+    """
     name_list = []
     for d in in_list:
         name_list.append(d['name'])
     return name_list
 
 def getIndexFromName(in_list, name):
+    """
+    Helper function for testing setInputDevice() function. Retunrns the index of
+    the entered name if found. None otherwise
+
+    :param in_list: the list of dictionaries to check
+    :type in_list: list[dict]
+    :param name: the name to search for in each dict of in_list
+    :type name: String
+    :return: the value of the index keyword in the dict which contains the given name value
+    :rtype: int or None
+
+    """
     for d in in_list:
         if d['name'] == name:
             return d['index']
@@ -79,17 +114,16 @@ def getIndexFromName(in_list, name):
 
 
 class TestBuddyAudioClientHappy:
-
-
-    def test_foo(self):
-        assert True
+    """
+    Suite of Happy Path tests for BuddyAudioClient
+    """
 
     def test_connect_successful(self, mocker):
-        '''
+        """
         Tests that the connect methos returns True when 
         it successfully connects and that it sends the chunk size
         to the server
-        '''
+        """
         
         #setup
         bac = BuddyAudioClient(DefaultValues.ip, DefaultValues.port)
@@ -110,6 +144,9 @@ class TestBuddyAudioClientHappy:
 
     @pytest.mark.parametrize("input_val", [bytes((1,2,3)), bytes(0), bytearray([2]*1024)])
     def test_stream_loop(self, mocker, input_val):
+        """
+        Tests that the bytes are properly read/decoded and sent unmodified to the socket
+        """
 
         read_val = input_val
 
@@ -135,9 +172,9 @@ class TestBuddyAudioClientHappy:
 
     @pytest.mark.parametrize('input_val', ValueHolder.input_only)
     def test_get_input_device_dicts_input_devices(self, mocker, input_val):
-        '''
-        Tests that getInputDeviceDicts properly filter and returns only input devices
-        '''
+        """
+        Tests that getInputDeviceDicts properly filters and returns only input devices
+        """
 
         #setup
         bac = BuddyAudioClient(DefaultValues.ip, DefaultValues.port)
