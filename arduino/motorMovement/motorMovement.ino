@@ -1,4 +1,4 @@
-#include "C:\Users\Connor\Documents\GitHub\Survivor-Buddy-4.0\arduino\motorMovement\VarSpeedServo.h"
+#include "C:\Users\osric\Documents\GitHub\Survivor-Buddy-4.0\arduino\motorMovement\VarSpeedServo.h"
 
 //Control and Feedback Pins
 //regular 180 servos
