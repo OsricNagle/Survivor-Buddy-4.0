@@ -115,28 +115,28 @@ static inline void handle_interrupts(timer16_Sequence_t timer, volatile uint16_t
   Channel[timer]++;    // increment to the next channel
   if( SERVO_INDEX(timer,Channel[timer]) < ServoCount && Channel[timer] < SERVOS_PER_TIMER) {
 
-	// Extension for slowmove
-	if (SERVO(timer,Channel[timer]).speed) {
-		// Increment ticks by speed until we reach the target.
-		// When the target is reached, speed is set to 0 to disable that code.
-		if (SERVO(timer,Channel[timer]).target > SERVO(timer,Channel[timer]).ticks) {
-			SERVO(timer,Channel[timer]).ticks += SERVO(timer,Channel[timer]).speed;
-			if (SERVO(timer,Channel[timer]).target <= SERVO(timer,Channel[timer]).ticks) {
-				SERVO(timer,Channel[timer]).ticks = SERVO(timer,Channel[timer]).target;
-				SERVO(timer,Channel[timer]).speed = 0;
-			}
-		}
-		else {
-			SERVO(timer,Channel[timer]).ticks -= SERVO(timer,Channel[timer]).speed;
-			if (SERVO(timer,Channel[timer]).target >= SERVO(timer,Channel[timer]).ticks) {
-				SERVO(timer,Channel[timer]).ticks = SERVO(timer,Channel[timer]).target;
-				SERVO(timer,Channel[timer]).speed = 0;
-			}
-		}
-	}
-	// End of Extension for slowmove
+  // Extension for slowmove
+  if (SERVO(timer,Channel[timer]).speed) {
+    // Increment ticks by speed until we reach the target.
+    // When the target is reached, speed is set to 0 to disable that code.
+    if (SERVO(timer,Channel[timer]).target > SERVO(timer,Channel[timer]).ticks) {
+      SERVO(timer,Channel[timer]).ticks += SERVO(timer,Channel[timer]).speed;
+      if (SERVO(timer,Channel[timer]).target <= SERVO(timer,Channel[timer]).ticks) {
+        SERVO(timer,Channel[timer]).ticks = SERVO(timer,Channel[timer]).target;
+        SERVO(timer,Channel[timer]).speed = 0;
+      }
+    }
+    else {
+      SERVO(timer,Channel[timer]).ticks -= SERVO(timer,Channel[timer]).speed;
+      if (SERVO(timer,Channel[timer]).target >= SERVO(timer,Channel[timer]).ticks) {
+        SERVO(timer,Channel[timer]).ticks = SERVO(timer,Channel[timer]).target;
+        SERVO(timer,Channel[timer]).speed = 0;
+      }
+    }
+  }
+  // End of Extension for slowmove
 
-	// Todo
+  // Todo
 
     *OCRnA = *TCNTn + SERVO(timer,Channel[timer]).ticks;
     if(SERVO(timer,Channel[timer]).Pin.isActive == true)     // check if activated
@@ -227,7 +227,7 @@ static void initISR(timer16_Sequence_t timer)
     TCNT3 = 0;              // clear the timer count
 #if defined(__AVR_ATmega128__)
     TIFR |= _BV(OCF3A);     // clear any pending interrupts;
-	ETIMSK |= _BV(OCIE3A);  // enable the output compare interrupt
+  ETIMSK |= _BV(OCIE3A);  // enable the output compare interrupt
 #else
     TIFR3 = _BV(OCF3A);     // clear any pending interrupts;
     TIMSK3 =  _BV(OCIE3A) ; // enable the output compare interrupt
@@ -301,7 +301,7 @@ VarSpeedServo::VarSpeedServo()
 {
   if( ServoCount < MAX_SERVOS) {
     this->servoIndex = ServoCount++;                    // assign a servo index to this instance
-	  servos[this->servoIndex].ticks = usToTicks(DEFAULT_PULSE_WIDTH);   // store default values  - 12 Aug 2009
+    servos[this->servoIndex].ticks = usToTicks(DEFAULT_PULSE_WIDTH);   // store default values  - 12 Aug 2009
     this->curSeqPosition = 0;
     this->curSequence = initSeq;
   }
@@ -368,7 +368,7 @@ void VarSpeedServo::writeMicroseconds(int value)
     else if( value > SERVO_MAX() )
       value = SERVO_MAX();
 
-  	value -= TRIM_DURATION;
+    value -= TRIM_DURATION;
     value = usToTicks(value);  // convert to ticks after compensating for interrupt overhead - 12 Aug 2009
 
     uint8_t oldSREG = SREG;
@@ -376,10 +376,10 @@ void VarSpeedServo::writeMicroseconds(int value)
     servos[channel].ticks = value;
     SREG = oldSREG;
 
-	// Extension for slowmove
-	// Disable slowmove logic.
-	servos[channel].speed = 0;
-	// End of Extension for slowmove
+  // Extension for slowmove
+  // Disable slowmove logic.
+  servos[channel].speed = 0;
+  // End of Extension for slowmove
   }
 }
 
@@ -394,41 +394,41 @@ void VarSpeedServo::writeMicroseconds(int value)
           speed=255 - Maximum speed
 */
 void VarSpeedServo::write(int value, uint8_t speed) {
-	// This fuction is a copy of write and writeMicroseconds but value will be saved
-	// in target instead of in ticks in the servo structure and speed will be save
-	// there too.
+  // This fuction is a copy of write and writeMicroseconds but value will be saved
+  // in target instead of in ticks in the servo structure and speed will be save
+  // there too.
 
   byte channel = this->servoIndex;
   servos[channel].value = value;
 
-	if (speed) {
+  if (speed) {
 
-		if (value < MIN_PULSE_WIDTH) {
-			// treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds)
-			// updated to use constrain instead of if, pva
-			value = constrain(value, 0, 180);
-			value = map(value, 0, 180, SERVO_MIN(),  SERVO_MAX());
-		}
+    if (value < MIN_PULSE_WIDTH) {
+      // treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds)
+      // updated to use constrain instead of if, pva
+      value = constrain(value, 0, 180);
+      value = map(value, 0, 180, SERVO_MIN(),  SERVO_MAX());
+    }
 
-		// calculate and store the values for the given channel
-		if( (channel >= 0) && (channel < MAX_SERVOS) ) {   // ensure channel is valid
-			// updated to use constrain instead of if, pva
-			value = constrain(value, SERVO_MIN(), SERVO_MAX());
+    // calculate and store the values for the given channel
+    if( (channel >= 0) && (channel < MAX_SERVOS) ) {   // ensure channel is valid
+      // updated to use constrain instead of if, pva
+      value = constrain(value, SERVO_MIN(), SERVO_MAX());
 
-			value = value - TRIM_DURATION;
-			value = usToTicks(value);  // convert to ticks after compensating for interrupt overhead - 12 Aug 2009
+      value = value - TRIM_DURATION;
+      value = usToTicks(value);  // convert to ticks after compensating for interrupt overhead - 12 Aug 2009
 
-			// Set speed and direction
-			uint8_t oldSREG = SREG;
-			cli();
-			servos[channel].target = value;
-			servos[channel].speed = speed;
-			SREG = oldSREG;
-		}
-	}
-	else {
-		write (value);
-	}
+      // Set speed and direction
+      uint8_t oldSREG = SREG;
+      cli();
+      servos[channel].target = value;
+      servos[channel].speed = speed;
+      SREG = oldSREG;
+    }
+  }
+  else {
+    write (value);
+  }
 }
 
 void VarSpeedServo::write(int value, uint8_t speed, bool wait) {
@@ -538,6 +538,70 @@ void VarSpeedServo::wait() {
   }
 }
 
+// to be used only with "write(value, speed)"
+// will have to add analogFeedback pin input parameter to pass to impairmentCheck()
+bool VarSpeedServo::wait(int analogFeedbackPin) {
+  byte channel = this->servoIndex;
+  int value = servos[channel].value;
+
+  // wait until is done
+  int timeCounter = 0;
+  int timeThreshold = 40;   // in milliseconds
+  bool impaired = false;
+  if (value < MIN_PULSE_WIDTH) {
+    // value = desired angle of servo
+    // read() = measured pulse width sent to servo, returned as an angle
+    while (read() != value && !impaired) {
+      delay(5);
+      timeCounter += 5;
+      if (timeCounter > timeThreshold){
+        // if appropriate amount of time has passed and wait() hasn't ended, call impairmentCheck()
+        impaired = impairmentCheck(analogFeedbackPin, value);
+      }
+    }
+  } else {
+    while (readMicroseconds() != value && !impaired) {
+      delay(5);
+      timeCounter += 5;
+      if (timeCounter > timeThreshold){
+        // if appropriate amount of time has passed and wait() hasn't ended, call impairmentCheck()
+        
+      }
+    }
+  }
+  return impaired;
+}
+// Osric: add an input parameter (analog pin) to gather feedback.
+// Use this pin to perform an analogRead on the input servo
+// If analogRead val != value (w/in a margin of error) after a slight delay,  
+// Potential issues/concerns/notes:
+//   will have to add a feedback detection
+//   there may be an issue having enough analog pins, maybe not though.
+//   the 360 analog servo's feedback in motorMovement.ino is treated differently, it's not an analog pin.
+//   worst case, for that servo, I can just copy+paste the turnTableFeedback code.
+// Inputs:
+//   analogFeedbackPin = analog feedback pin for the desired servo (not the same as the servo's actual pin) 
+//   ideal_value = desired angle value the servo should be at, ideally.
+// Output:
+//   boolean value that indicates whether servo movement is impaired or not
+
+// Next steps: to test this out, implement a new test class w/ just one servo, manually test impairment
+// and see if the right results are returned.
+bool VarSpeedServo::impairmentCheck(int analogFeedbackPin, int ideal_value) {
+  double threshold = 0.1;         //can be changed to adjust sensitivity of the impairment check
+  delay(5);
+  double actual_value = analogRead(analogFeedbackPin);
+  double difference = abs(ideal_value - actual_value);
+  if (difference > threshold){
+    //difference is too large, servo movement likely impaired. 
+    stop();
+    return false;
+  } else {
+    // actual_value is good enough, carry on
+    return true;
+  }
+}
+
 bool VarSpeedServo::isMoving() {
   byte channel = this->servoIndex;
   int value = servos[channel].value;
@@ -555,15 +619,15 @@ bool VarSpeedServo::isMoving() {
 }
 
 /*
-	To do
+  To do
 int VarSpeedServo::targetPosition() {
-	byte channel = this->servoIndex;
-	return map( servos[channel].target+1, SERVO_MIN(), SERVO_MAX(), 0, 180);
+  byte channel = this->servoIndex;
+  return map( servos[channel].target+1, SERVO_MIN(), SERVO_MAX(), 0, 180);
 }
 
 int VarSpeedServo::targetPositionMicroseconds() {
-	byte channel = this->servoIndex;
-	return servos[channel].target;
+  byte channel = this->servoIndex;
+  return servos[channel].target;
 }
 
 */
