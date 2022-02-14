@@ -166,11 +166,13 @@ public:
   int readMicroseconds();            // returns current pulse width in microseconds for this servo (was read_us() in first release)
   bool attached();                   // return true if this servo is attached, otherwise false
 
+  bool impairmentCheck(int analogFeedbackPin, int ideal_value);   // Checks whether or not the servo movement is obstructed
   uint8_t sequencePlay(servoSequencePoint sequenceIn[], uint8_t numPositions, bool loop, uint8_t startPos);
   uint8_t sequencePlay(servoSequencePoint sequenceIn[], uint8_t numPositions); // play a looping sequence starting at position 0
-  void sequenceStop(); // stop movement
-  void wait(); // wait for movement to finish
-  bool isMoving(); // return true if servo is still moving
+  void sequenceStop();              // stop movement
+  void wait();                      // wait for movement to finish
+  bool wait(int analogFeedbackPin); // wait for movement to finish based on impairmentCheck function
+  bool isMoving();                  // return true if servo is still moving
 private:
    uint8_t servoIndex;               // index into the channel data for this servo
    int8_t min;                       // minimum is this value times 4 added to MIN_PULSE_WIDTH
