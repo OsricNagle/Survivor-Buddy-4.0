@@ -546,9 +546,10 @@ bool VarSpeedServo::wait(int analogFeedbackPin) {
 
   // wait until is done
   int timeCounter = 0;
-  int timeThreshold = 40;   // in milliseconds
+  int timeThreshold = 15;   // in milliseconds
   bool impaired = false;
   if (value < MIN_PULSE_WIDTH) {
+    
     // value = desired angle of servo
     // read() = measured pulse width sent to servo, returned as an angle
     while (read() != value && !impaired) {
@@ -556,11 +557,13 @@ bool VarSpeedServo::wait(int analogFeedbackPin) {
       timeCounter += 5;
       if (timeCounter > timeThreshold){
         // if appropriate amount of time has passed and wait() hasn't ended, call impairmentCheck()
-        impaired = impairmentCheck(analogFeedbackPin, value);
+        
       }
     }
   } else {
-    while (readMicroseconds() != value && !impaired) {
+    // Serial.print("microseconds = " + String(readMicroseconds()));
+    // Serial.println("value = " + String(value));
+    while (readMicroseconds() != value) {
       delay(5);
       timeCounter += 5;
       if (timeCounter > timeThreshold){
@@ -569,6 +572,8 @@ bool VarSpeedServo::wait(int analogFeedbackPin) {
       }
     }
   }
+  // Serial.println("Impaired == " + String(impaired));
+  impaired = impairmentCheck(analogFeedbackPin, value);
   return impaired;
 }
 // Osric: add an input parameter (analog pin) to gather feedback.
@@ -589,16 +594,19 @@ bool VarSpeedServo::wait(int analogFeedbackPin) {
 // and see if the right results are returned.
 bool VarSpeedServo::impairmentCheck(int analogFeedbackPin, int ideal_value) {
   double threshold = 0.1;         //can be changed to adjust sensitivity of the impairment check
-  delay(5);
+  delay(1500);
   double actual_value = analogRead(analogFeedbackPin);
   double difference = abs(ideal_value - actual_value);
+  Serial.print("actual_value = " + String(actual_value));
+  Serial.print("ideal_value = " + String(ideal_value));
+  
   if (difference > threshold){
     //difference is too large, servo movement likely impaired. 
-    stop();
-    return false;
+    // stop();
+    return true;
   } else {
     // actual_value is good enough, carry on
-    return true;
+    return false;
   }
 }
 
