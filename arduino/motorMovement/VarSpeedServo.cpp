@@ -101,6 +101,8 @@ servoSequencePoint initSeq[] = {{0,100},{45,100}};
 #define SERVO_MIN() (MIN_PULSE_WIDTH - this->min * 4)  // minimum value in uS for this servo
 #define SERVO_MAX() (MAX_PULSE_WIDTH - this->max * 4)  // maximum value in uS for this servo
 
+// feedback pin
+int feedbackPin = A0;
 /************ static functions common to all instances ***********************/
 
 static inline void handle_interrupts(timer16_Sequence_t timer, volatile uint16_t *TCNTn, volatile uint16_t* OCRnA)
@@ -314,6 +316,11 @@ uint8_t VarSpeedServo::attach(int pin)
   return this->attach(pin, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
 }
 
+uint8_t VarSpeedServo::attachFeedback(int analogFeedbackPin)
+{
+  return this->attach(analogFeedbackPin);
+}
+
 uint8_t VarSpeedServo::attach(int pin, int min, int max)
 {
   if(this->servoIndex < MAX_SERVOS ) {
@@ -447,6 +454,10 @@ void VarSpeedServo::write(int value, uint8_t speed, bool wait) {
   }
 }
 
+void VarSpeedServo::stopImmediately(){
+  write(analogRead(feedbackPin));
+}
+
 void VarSpeedServo::stop() {
   write(read());
 }
@@ -544,34 +555,21 @@ bool VarSpeedServo::wait(int analogFeedbackPin) {
   byte channel = this->servoIndex;
   int value = servos[channel].value;
 
-  // wait until is done
-  int timeCounter = 0;
-  int timeThreshold = 15;   // in milliseconds
+  // wait until it is done
   bool impaired = false;
   if (value < MIN_PULSE_WIDTH) {
-    
     // value = desired angle of servo
     // read() = measured pulse width sent to servo, returned as an angle
     while (read() != value && !impaired) {
       delay(5);
-      timeCounter += 5;
-      if (timeCounter > timeThreshold){
-        // if appropriate amount of time has passed and wait() hasn't ended, call impairmentCheck()
-        
       }
-    }
   } else {
     // Serial.print("microseconds = " + String(readMicroseconds()));
     // Serial.println("value = " + String(value));
     while (readMicroseconds() != value) {
       delay(5);
-      timeCounter += 5;
-      if (timeCounter > timeThreshold){
-        // if appropriate amount of time has passed and wait() hasn't ended, call impairmentCheck()
-        
       }
     }
-  }
   // Serial.println("Impaired == " + String(impaired));
   impaired = impairmentCheck(analogFeedbackPin, value);
   return impaired;
@@ -592,17 +590,36 @@ bool VarSpeedServo::wait(int analogFeedbackPin) {
 
 // Next steps: to test this out, implement a new test class w/ just one servo, manually test impairment
 // and see if the right results are returned.
+// Add a calibration function to check the 0 degree and 180 degree mapping values upon each startup,
+// pass those in instead of hard coded values for the reflexive function to work every time.
+// With the delay, it's not really doing anything. Change func as such:
+//   - if actual_value != ideal_value AND
+//   - actual_value doesn't change over a short period of time (25 ms?)
+//   this is a better and faster metric for checking impairment.
+// THIS FUNCTION NEEDS TO BE BLOCKING - until servo reaches its desired position.
+// (perhaps the blocking should occur in the wait() function, since it's supposed
+// to be blocking anyways.
+// If this function (or the wait function) is truly blocking based on time it takes
+// to get a servo into position, then enabling multi servo movement will be difficult.
 bool VarSpeedServo::impairmentCheck(int analogFeedbackPin, int ideal_value) {
-  double threshold = 0.1;         //can be changed to adjust sensitivity of the impairment check
+  double threshold = 10;         //can be changed to adjust sensitivity of the impairment check
   delay(1500);
-  double actual_value = analogRead(analogFeedbackPin);
-  double difference = abs(ideal_value - actual_value);
-  Serial.print("actual_value = " + String(actual_value));
+  double actual_value1 = analogRead(analogFeedbackPin);
+  delay(25);
+  double actual_value2 = analogRead(analogFeedbackPin);
+  // hard-coded values were determined experimentally
+  actual_value1 = map(actual_value1, 75, 607, SERVO_MAX(), SERVO_MIN());
+  actual_value2 = map(actual_value2, 75, 607, SERVO_MAX(), SERVO_MIN());
+  double difference = abs(ideal_value - actual_value1);
+  double actualMovement = abs(actual_value1 - actual_value2);
   Serial.print("ideal_value = " + String(ideal_value));
+  Serial.print(" actual_value1 = " + String(actual_value1));
+  Serial.print(" actual_value2 = " + String(actual_value2));
   
-  if (difference > threshold){
-    //difference is too large, servo movement likely impaired. 
-    // stop();
+  if (difference > threshold and actualMovement < threshold){
+    // servo is not at position and does not 
+    stopImmediately();
+    Serial.print("onii-chan yamete kudasai");
     return true;
   } else {
     // actual_value is good enough, carry on
