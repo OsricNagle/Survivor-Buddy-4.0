@@ -151,6 +151,7 @@ public:
   VarSpeedServo();
   uint8_t attach(int pin);           // attach the given pin to the next free channel, sets pinMode, returns channel number or 0 if failure
   uint8_t attach(int pin, int min, int max); // as above but also sets min and max values for writes.
+  uint8_t attachFeedback(int analogFeedbackPin);
   void detach();
   void write(int value);             // if value is < 544 its treated as an angle, otherwise as pulse width in microseconds
   void write(int value, uint8_t speed); // Move to given position at reduced speed.
@@ -161,7 +162,7 @@ public:
   void writeMicroseconds(int value); // Write pulse width in microseconds
   void slowmove(int value, uint8_t speed);
   void stop(); // stop the servo where it is
-
+  void stopImmediately();            //stop the servo immediately based on analog feedback pos values
   int read();                        // returns current pulse width as an angle between 0 and 180 degrees
   int readMicroseconds();            // returns current pulse width in microseconds for this servo (was read_us() in first release)
   bool attached();                   // return true if this servo is attached, otherwise false
