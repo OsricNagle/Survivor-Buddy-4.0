@@ -26,15 +26,16 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-//  test.write(0);
-//  bool impaired = test.wait(feedback);
-//  Serial.println("Impaired = " + String(impaired));
-//  test.wait();
-//  test.write(90);
-//  impaired = test.wait(feedback);
-//  Serial.println("Impaired = " + String(impaired));
-//  test.wait();
+  test.write(0);
+  bool impaired = test.wait(feedback);
+  Serial.println("Impaired = " + String(impaired));
+  test.wait();
+  test.write(90);
+  impaired = test.wait(feedback);
+  Serial.println("Impaired = " + String(impaired));
+  test.wait();
 
-  Serial.println("Position: " + String(analogRead(feedback)));
-  delay(1000);
+//  test.write(180);
+//  Serial.println("Position: " + String(analogRead(feedback)));
+//  delay(1000);
 }
