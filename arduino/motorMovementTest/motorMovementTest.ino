@@ -29,9 +29,11 @@ void loop() {
   test.write(0);
   bool impaired = test.wait(feedback);
   Serial.println("Impaired = " + String(impaired));
+  delay(500);
   test.write(90);
   impaired = test.wait(feedback);
   Serial.println("Impaired = " + String(impaired));
+  delay(500);
 
 //  test.write(180);
 //  Serial.println("Position: " + String(analogRead(feedback)));

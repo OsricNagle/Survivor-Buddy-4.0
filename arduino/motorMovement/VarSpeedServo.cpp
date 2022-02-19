@@ -602,29 +602,42 @@ bool VarSpeedServo::wait(int analogFeedbackPin) {
 // If this function (or the wait function) is truly blocking based on time it takes
 // to get a servo into position, then enabling multi servo movement will be difficult.
 bool VarSpeedServo::impairmentCheck(int analogFeedbackPin, int ideal_value) {
-  double threshold = 10;         //can be changed to adjust sensitivity of the impairment check
-  delay(1500);
+  double threshold = 15;         //can be changed to adjust sensitivity of the impairment check
+  // this value determined experimentally with delay(100). May need to be decreased
+  double actualMovementThreshold = 130;
   double actual_value1 = analogRead(analogFeedbackPin);
-  delay(25);
+  // slight delay before measuring next val, to see if there's any difference
+  // this number can be tuned. Warning: the actualMovement threshold changes with this
+  // delay, it may need to be decreased if this delay decreases.
+  delay(100);
   double actual_value2 = analogRead(analogFeedbackPin);
   // hard-coded values were determined experimentally
   actual_value1 = map(actual_value1, 75, 607, SERVO_MAX(), SERVO_MIN());
   actual_value2 = map(actual_value2, 75, 607, SERVO_MAX(), SERVO_MIN());
   double difference = abs(ideal_value - actual_value1);
   double actualMovement = abs(actual_value1 - actual_value2);
-  Serial.print("ideal_value = " + String(ideal_value));
-  Serial.print(" actual_value1 = " + String(actual_value1));
-  Serial.print(" actual_value2 = " + String(actual_value2));
-  
-  if (difference > threshold and actualMovement < threshold){
-    // servo is not at position and does not 
-    stopImmediately();
-    Serial.print("onii-chan yamete kudasai");
-    return true;
+  Serial.print("difference = " + String(difference));
+  Serial.println(" actualMovement = " + String(actualMovement));
+  // Serial.println(" actual_value2 = " + String(actual_value2));
+
+  // until servo has reached final position, continuously check
+  // whether feedback detects a lack of movement
+  while (difference > threshold){
+    if (actualMovement < actualMovementThreshold){
+      // servo is not at position and is not moving
+      // this indicates an obstacle 
+      stopImmediately();
+      // Serial.print("onii-chan yamete kudasai");
+      return true;
   } else {
-    // actual_value is good enough, carry on
-    return false;
+      Serial.print(" ideal_value = " + String(ideal_value));
+      Serial.print(" actual_value1 = " + String(actual_value1));
+      Serial.println(" actual_value2 = " + String(actual_value2));
+      // actual_value is good enough, carry on
+      return false;
+    }
   }
+  
 }
 
 bool VarSpeedServo::isMoving() {
