@@ -579,7 +579,7 @@ void VarSpeedServo::sequenceStop() {
 void VarSpeedServo::wait() {
   byte channel = this->servoIndex;
   int value = servos[channel].value;
-  double difference = 5;      // difference between actual value and ideal value
+  double difference, prevActualMvmt = 0;      // difference between actual value and ideal value
   bool impaired = false;
   double threshold = 15;         //can be changed to adjust sensitivity of the impairment check
 
@@ -599,10 +599,10 @@ void VarSpeedServo::wait() {
   }
   // Check if the servo's movement is being blocked until it has reached 
   // the destination position or is stalled
-  impaired = impairmentCheck(value, threshold, &difference);
+  impaired = impairmentCheck(value, threshold, &difference, &prevActualMvmt);
   // Serial.println("loop difference = " + String(difference) + " ");
   while (!impaired and difference > threshold){
-    impaired = impairmentCheck(value, threshold, &difference);
+    impaired = impairmentCheck(value, threshold, &difference, &prevActualMvmt);
     // Serial.println(" Impairment: " + String(impaired));
     // Serial.print("loop difference = " + String(difference) + " ");
   }
@@ -611,12 +611,6 @@ void VarSpeedServo::wait() {
 
 // Osric: add an input parameter (analog pin) to gather feedback.
 // Use this pin to perform an analogRead on the input servo
-// If analogRead val != value (w/in a margin of error) after a slight delay,  
-// Potential issues/concerns/notes:
-//   will have to add a feedback detection
-//   there may be an issue having enough analog pins, maybe not though.
-//   the 360 analog servo's feedback in motorMovement.ino is treated differently, it's not an analog pin.
-//   worst case, for that servo, I can just copy+paste the turnTableFeedback code.
 // Inputs:
 //   analogFeedbackPin = analog feedback pin for the desired servo (not the same as the servo's actual pin) 
 //   ideal_value = desired angle value the servo should be at, ideally.
@@ -625,18 +619,12 @@ void VarSpeedServo::wait() {
 
 // Next steps: to test this out, implement a new test class w/ just one servo, manually test impairment
 // and see if the right results are returned.
-// Add a calibration function to check the 0 degree and 180 degree mapping values upon each startup,
-// pass those in instead of hard coded values for the reflexive function to work every time.
-// With the delay, it's not really doing anything. Change func as such:
-//   - if actual_value != ideal_value AND
-//   - actual_value doesn't change over a short period of time (25 ms?)
-//   this is a better and faster metric for checking impairment.
-// THIS FUNCTION NEEDS TO BE BLOCKING - until servo reaches its desired position.
-// (perhaps the blocking should occur in the wait() function, since it's supposed
-// to be blocking anyways.
 // If this function (or the wait function) is truly blocking based on time it takes
 // to get a servo into position, then enabling multi servo movement will be difficult.
-bool VarSpeedServo::impairmentCheck(int ideal_value, double threshold, double *difference) {
+// To fix issues with the variance of the actualMovement parameter, implement either:
+// 1. more readings, averaged out, with every impairmentCheck() call.
+// 2. smoothing function to average out actualMovement parameter between calls. 
+bool VarSpeedServo::impairmentCheck(int ideal_value, double threshold, double *difference, double *prevActualMvmt) {
   // this value determined experimentally with delay(100). May need to be decreased
   double actualMovementThreshold = 20;
   double actual_value1 = analogRead(feedbackPin);
@@ -657,6 +645,9 @@ bool VarSpeedServo::impairmentCheck(int ideal_value, double threshold, double *d
   actual_value2 = map(actual_value2, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
   *difference = abs(ideal_value - actual_value1);
   double actualMovement = abs(actual_value1 - actual_value2);
+  double temp = (actualMovement + *prevActualMvmt) / 2;
+  *prevActualMvmt = actualMovement;
+  actualMovement = temp;
   Serial.print(" difference = " + String(*difference));
   Serial.println(" actualMovement = " + String(actualMovement));
   // Serial.println(" actual_value2 = " + String(actual_value2));
