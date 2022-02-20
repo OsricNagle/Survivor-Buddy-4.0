@@ -151,7 +151,8 @@ public:
   VarSpeedServo();
   uint8_t attach(int pin);           // attach the given pin to the next free channel, sets pinMode, returns channel number or 0 if failure
   uint8_t attach(int pin, int min, int max); // as above but also sets min and max values for writes.
-  uint8_t attachFeedback(int analogFeedbackPin);
+  void attachFeedback(int analogFeedbackPin); // define feedback pin for a servo
+  void calibrate();                  // Store servo position values for mapping in the impairmentCheck function
   void detach();
   void write(int value);             // if value is < 544 its treated as an angle, otherwise as pulse width in microseconds
   void write(int value, uint8_t speed); // Move to given position at reduced speed.
@@ -167,12 +168,12 @@ public:
   int readMicroseconds();            // returns current pulse width in microseconds for this servo (was read_us() in first release)
   bool attached();                   // return true if this servo is attached, otherwise false
 
-  bool impairmentCheck(int analogFeedbackPin, int ideal_value);   // Checks whether or not the servo movement is obstructed
+  bool impairmentCheck(int ideal_value);   // Checks whether or not the servo movement is obstructed
   uint8_t sequencePlay(servoSequencePoint sequenceIn[], uint8_t numPositions, bool loop, uint8_t startPos);
   uint8_t sequencePlay(servoSequencePoint sequenceIn[], uint8_t numPositions); // play a looping sequence starting at position 0
   void sequenceStop();              // stop movement
-  void wait();                      // wait for movement to finish
-  bool wait(int analogFeedbackPin); // wait for movement to finish based on impairmentCheck function
+  // void wait();                   // wait for movement to finish
+  void wait();                      // wait for movement to finish based on impairmentCheck function
   bool isMoving();                  // return true if servo is still moving
 private:
    uint8_t servoIndex;               // index into the channel data for this servo

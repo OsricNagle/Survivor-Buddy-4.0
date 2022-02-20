@@ -20,20 +20,22 @@ void setup() {
   pinMode(base_2, OUTPUT);
 
   test.attach(servo);
+  test.attachFeedback(A0);
   base1.attach(base_1);
   base2.attach(base_2);
+  test.calibrate();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   test.write(0);
-  bool impaired = test.wait(feedback);
-  Serial.println("Impaired = " + String(impaired));
-  delay(500);
+  // test.wait();
+   delay(1000);
+   Serial.println("Position: " + String(analogRead(feedback)));
   test.write(90);
-  impaired = test.wait(feedback);
-  Serial.println("Impaired = " + String(impaired));
-  delay(500);
+  // test.wait();
+   delay(1000);
+   Serial.println("Position: " + String(analogRead(feedback)));
 
 //  test.write(180);
 //  Serial.println("Position: " + String(analogRead(feedback)));

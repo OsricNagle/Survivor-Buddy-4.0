@@ -103,6 +103,10 @@ servoSequencePoint initSeq[] = {{0,100},{45,100}};
 
 // feedback pin
 int feedbackPin = A0;
+
+// Use these values to perform accurate mapping when checking for collisions
+int zeroDegreePosValue = 0;
+int oneeightyDegreePosValue = 0;
 /************ static functions common to all instances ***********************/
 
 static inline void handle_interrupts(timer16_Sequence_t timer, volatile uint16_t *TCNTn, volatile uint16_t* OCRnA)
@@ -316,9 +320,9 @@ uint8_t VarSpeedServo::attach(int pin)
   return this->attach(pin, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
 }
 
-uint8_t VarSpeedServo::attachFeedback(int analogFeedbackPin)
+void VarSpeedServo::attachFeedback(int analogFeedbackPin)
 {
-  return this->attach(analogFeedbackPin);
+  feedbackPin = analogFeedbackPin;
 }
 
 uint8_t VarSpeedServo::attach(int pin, int min, int max)
@@ -336,6 +340,25 @@ uint8_t VarSpeedServo::attach(int pin, int min, int max)
     servos[this->servoIndex].Pin.isActive = true;  // this must be set after the check for isTimerActive
   }
   return this->servoIndex ;
+}
+
+// Set pos variables for each servo to ensure movement impairment check
+// works correctly.
+// Set servo to 0 degrees, read feedback val and store, repeat for 180 deg.
+void VarSpeedServo::calibrate()
+{
+  if (feedbackPin != -1){
+    write(0);
+    delay(1000);
+    zeroDegreePosValue = analogRead(feedbackPin);
+    Serial.print("zeroDegreePosValue = " + String(zeroDegreePosValue));
+    write(180);
+    delay(1000);
+    oneeightyDegreePosValue = analogRead(feedbackPin);
+    Serial.println("180DegreePosValue = " + String(oneeightyDegreePosValue));
+  } else {
+    Serial.println("feedbackPin value has not been set. Use attachFeedback(feedbackPin).");
+  }
 }
 
 void VarSpeedServo::detach()
@@ -533,34 +556,33 @@ void VarSpeedServo::sequenceStop() {
 }
 
 // to be used only with "write(value, speed)"
+//void VarSpeedServo::wait() {
+//  byte channel = this->servoIndex;
+//  int value = servos[channel].value;
+//
+//  // wait until is done
+//  if (value < MIN_PULSE_WIDTH) {
+//    while (read() != value) {
+//      delay(5);
+//    }
+//  } else {
+//    while (readMicroseconds() != value) {
+//      delay(5);
+//    }
+//  }
+//}
+
+// to be used only with "write(value, speed)"
+// will have to add analogFeedback pin input parameter to pass to impairmentCheck()
 void VarSpeedServo::wait() {
   byte channel = this->servoIndex;
   int value = servos[channel].value;
 
-  // wait until is done
-  if (value < MIN_PULSE_WIDTH) {
-    while (read() != value) {
-      delay(5);
-    }
-  } else {
-    while (readMicroseconds() != value) {
-      delay(5);
-    }
-  }
-}
-
-// to be used only with "write(value, speed)"
-// will have to add analogFeedback pin input parameter to pass to impairmentCheck()
-bool VarSpeedServo::wait(int analogFeedbackPin) {
-  byte channel = this->servoIndex;
-  int value = servos[channel].value;
-
   // wait until it is done
-  bool impaired = false;
   if (value < MIN_PULSE_WIDTH) {
     // value = desired angle of servo
     // read() = measured pulse width sent to servo, returned as an angle
-    while (read() != value && !impaired) {
+    while (read() != value) {
       delay(5);
       }
   } else {
@@ -570,10 +592,11 @@ bool VarSpeedServo::wait(int analogFeedbackPin) {
       delay(5);
       }
     }
-  // Serial.println("Impaired == " + String(impaired));
-  impaired = impairmentCheck(analogFeedbackPin, value);
-  return impaired;
+  // Check if the servo's movement is being blocked
+  bool impaired = impairmentCheck(value);
+  Serial.println(" Impairment: " + String(impaired));
 }
+
 // Osric: add an input parameter (analog pin) to gather feedback.
 // Use this pin to perform an analogRead on the input servo
 // If analogRead val != value (w/in a margin of error) after a slight delay,  
@@ -601,16 +624,16 @@ bool VarSpeedServo::wait(int analogFeedbackPin) {
 // to be blocking anyways.
 // If this function (or the wait function) is truly blocking based on time it takes
 // to get a servo into position, then enabling multi servo movement will be difficult.
-bool VarSpeedServo::impairmentCheck(int analogFeedbackPin, int ideal_value) {
+bool VarSpeedServo::impairmentCheck(int ideal_value) {
   double threshold = 15;         //can be changed to adjust sensitivity of the impairment check
   // this value determined experimentally with delay(100). May need to be decreased
   double actualMovementThreshold = 130;
-  double actual_value1 = analogRead(analogFeedbackPin);
+  double actual_value1 = analogRead(feedbackPin);
   // slight delay before measuring next val, to see if there's any difference
   // this number can be tuned. Warning: the actualMovement threshold changes with this
   // delay, it may need to be decreased if this delay decreases.
   delay(100);
-  double actual_value2 = analogRead(analogFeedbackPin);
+  double actual_value2 = analogRead(feedbackPin);
   // hard-coded values were determined experimentally
   actual_value1 = map(actual_value1, 75, 607, SERVO_MAX(), SERVO_MIN());
   actual_value2 = map(actual_value2, 75, 607, SERVO_MAX(), SERVO_MIN());
@@ -622,22 +645,20 @@ bool VarSpeedServo::impairmentCheck(int analogFeedbackPin, int ideal_value) {
 
   // until servo has reached final position, continuously check
   // whether feedback detects a lack of movement
-  while (difference > threshold){
-    if (actualMovement < actualMovementThreshold){
-      // servo is not at position and is not moving
-      // this indicates an obstacle 
-      stopImmediately();
-      // Serial.print("onii-chan yamete kudasai");
-      return true;
+  if (actualMovement < actualMovementThreshold){
+    // servo is not at position and is not moving
+    // this indicates an obstacle 
+    stopImmediately();
+    // Serial.print("onii-chan yamete kudasai");
+    Serial.println("servo movement interrupted, servo stopped");
+    return true;
   } else {
-      Serial.print(" ideal_value = " + String(ideal_value));
-      Serial.print(" actual_value1 = " + String(actual_value1));
-      Serial.println(" actual_value2 = " + String(actual_value2));
-      // actual_value is good enough, carry on
-      return false;
-    }
+    Serial.print(" ideal_value = " + String(ideal_value));
+    Serial.print(" actual_value1 = " + String(actual_value1));
+    Serial.println(" actual_value2 = " + String(actual_value2));
+    // actual_value is good enough, carry on
+    return false;
   }
-  
 }
 
 bool VarSpeedServo::isMoving() {
