@@ -626,7 +626,7 @@ void VarSpeedServo::wait() {
 // 2. smoothing function to average out actualMovement parameter between calls. 
 bool VarSpeedServo::impairmentCheck(int ideal_value, double threshold, double *difference, double *prevActualMvmt) {
   // this value determined experimentally with delay(100). May need to be decreased
-  double actualMovementThreshold = 20;
+  double actualMovementThreshold = 10;
   double actual_value1 = analogRead(feedbackPin);
   delay(25);
   // slight delay before measuring next val, to see if there's any difference
@@ -645,9 +645,8 @@ bool VarSpeedServo::impairmentCheck(int ideal_value, double threshold, double *d
   actual_value2 = map(actual_value2, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
   *difference = abs(ideal_value - actual_value1);
   double actualMovement = abs(actual_value1 - actual_value2);
-  double temp = (actualMovement + *prevActualMvmt) / 2;
+  actualMovement = (actualMovement + *prevActualMvmt) / 2;
   *prevActualMvmt = actualMovement;
-  actualMovement = temp;
   Serial.print(" difference = " + String(*difference));
   Serial.println(" actualMovement = " + String(actualMovement));
   // Serial.println(" actual_value2 = " + String(actual_value2));
