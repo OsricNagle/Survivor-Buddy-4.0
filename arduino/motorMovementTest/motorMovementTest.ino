@@ -21,21 +21,21 @@ void setup() {
 
   test.attach(servo);
   test.attachFeedback(A0);
+  test.calibrate();
   base1.attach(base_1);
   base2.attach(base_2);
-  test.calibrate();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   test.write(0);
-  // test.wait();
-   delay(1000);
-   Serial.println("Position: " + String(analogRead(feedback)));
+  test.wait();
+  // delay(1000);
+  // Serial.println("Position: " + String(analogRead(feedback)));
   test.write(90);
-  // test.wait();
-   delay(1000);
-   Serial.println("Position: " + String(analogRead(feedback)));
+  test.wait();
+  // delay(1000);
+  // Serial.println("Position: " + String(analogRead(feedback)));
 
 //  test.write(180);
 //  Serial.println("Position: " + String(analogRead(feedback)));

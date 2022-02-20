@@ -102,11 +102,13 @@ servoSequencePoint initSeq[] = {{0,100},{45,100}};
 #define SERVO_MAX() (MAX_PULSE_WIDTH - this->max * 4)  // maximum value in uS for this servo
 
 // feedback pin
-int feedbackPin = A0;
+int feedbackPin = -1;
 
 // Use these values to perform accurate mapping when checking for collisions
-int zeroDegreePosValue = 0;
-int oneeightyDegreePosValue = 0;
+// minPositionValue = feedback value from servo after writing 0 degrees to it.
+// maxPositionValue = feedback value from servo after writing 180 degrees to it.
+int minPositionValue = 0;
+int maxPositionValue = 0;
 /************ static functions common to all instances ***********************/
 
 static inline void handle_interrupts(timer16_Sequence_t timer, volatile uint16_t *TCNTn, volatile uint16_t* OCRnA)
@@ -350,12 +352,12 @@ void VarSpeedServo::calibrate()
   if (feedbackPin != -1){
     write(0);
     delay(1000);
-    zeroDegreePosValue = analogRead(feedbackPin);
-    Serial.print("zeroDegreePosValue = " + String(zeroDegreePosValue));
+    minPositionValue = analogRead(feedbackPin);
+    Serial.print("minPositionValue = " + String(minPositionValue));
     write(180);
     delay(1000);
-    oneeightyDegreePosValue = analogRead(feedbackPin);
-    Serial.println("180DegreePosValue = " + String(oneeightyDegreePosValue));
+    maxPositionValue = analogRead(feedbackPin);
+    Serial.println("maxPositionValue = " + String(maxPositionValue));
   } else {
     Serial.println("feedbackPin value has not been set. Use attachFeedback(feedbackPin).");
   }
@@ -577,6 +579,9 @@ void VarSpeedServo::sequenceStop() {
 void VarSpeedServo::wait() {
   byte channel = this->servoIndex;
   int value = servos[channel].value;
+  double difference = 0;      // difference between actual value and ideal value
+  bool impaired = false;
+  double threshold = 10;         //can be changed to adjust sensitivity of the impairment check
 
   // wait until it is done
   if (value < MIN_PULSE_WIDTH) {
@@ -592,9 +597,16 @@ void VarSpeedServo::wait() {
       delay(5);
       }
     }
-  // Check if the servo's movement is being blocked
-  bool impaired = impairmentCheck(value);
-  Serial.println(" Impairment: " + String(impaired));
+  // Check if the servo's movement is being blocked until it has reached 
+  // the destination position or is stalled
+  impaired = impairmentCheck(value, threshold, &difference);
+  // Serial.println("loop difference = " + String(difference) + " ");
+  while (!impaired and difference > threshold){
+    impaired = impairmentCheck(value, threshold, &difference);
+    // Serial.println(" Impairment: " + String(impaired));
+    Serial.print("loop difference = " + String(difference) + " ");
+  }
+  Serial.println("Wait function completed");
 }
 
 // Osric: add an input parameter (analog pin) to gather feedback.
@@ -624,10 +636,9 @@ void VarSpeedServo::wait() {
 // to be blocking anyways.
 // If this function (or the wait function) is truly blocking based on time it takes
 // to get a servo into position, then enabling multi servo movement will be difficult.
-bool VarSpeedServo::impairmentCheck(int ideal_value) {
-  double threshold = 15;         //can be changed to adjust sensitivity of the impairment check
+bool VarSpeedServo::impairmentCheck(int ideal_value, double threshold, double *difference) {
   // this value determined experimentally with delay(100). May need to be decreased
-  double actualMovementThreshold = 130;
+  double actualMovementThreshold = 3;
   double actual_value1 = analogRead(feedbackPin);
   // slight delay before measuring next val, to see if there's any difference
   // this number can be tuned. Warning: the actualMovement threshold changes with this
@@ -635,17 +646,17 @@ bool VarSpeedServo::impairmentCheck(int ideal_value) {
   delay(100);
   double actual_value2 = analogRead(feedbackPin);
   // hard-coded values were determined experimentally
-  actual_value1 = map(actual_value1, 75, 607, SERVO_MAX(), SERVO_MIN());
-  actual_value2 = map(actual_value2, 75, 607, SERVO_MAX(), SERVO_MIN());
-  double difference = abs(ideal_value - actual_value1);
+  actual_value1 = map(actual_value1, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
+  actual_value2 = map(actual_value2, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
+  *difference = abs(ideal_value - actual_value1);
   double actualMovement = abs(actual_value1 - actual_value2);
-  Serial.print("difference = " + String(difference));
+  Serial.print("difference = " + String(*difference));
   Serial.println(" actualMovement = " + String(actualMovement));
   // Serial.println(" actual_value2 = " + String(actual_value2));
 
   // until servo has reached final position, continuously check
   // whether feedback detects a lack of movement
-  if (actualMovement < actualMovementThreshold){
+  if (*difference > threshold and actualMovement < actualMovementThreshold){
     // servo is not at position and is not moving
     // this indicates an obstacle 
     stopImmediately();
