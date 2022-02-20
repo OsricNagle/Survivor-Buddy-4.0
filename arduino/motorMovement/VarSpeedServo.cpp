@@ -582,7 +582,8 @@ void VarSpeedServo::wait() {
   double difference, prevActualMvmt = 0;      // difference between actual value and ideal value
   bool impaired = false;
   double threshold = 15;         //can be changed to adjust sensitivity of the impairment check
-
+  int counter = 0;
+  
   // wait until it is done
   if (value < MIN_PULSE_WIDTH) {
     // value = desired angle of servo
@@ -601,10 +602,15 @@ void VarSpeedServo::wait() {
   // the destination position or is stalled
   impaired = impairmentCheck(value, threshold, &difference, &prevActualMvmt);
   // Serial.println("loop difference = " + String(difference) + " ");
-  while (!impaired and difference > threshold){
+  // if there has been an impairment detected twice in a row and the servo is not
+  // at its intended destination, then an obstacle has been detected. 
+  while (counter < 2 and difference > threshold){
     impaired = impairmentCheck(value, threshold, &difference, &prevActualMvmt);
     // Serial.println(" Impairment: " + String(impaired));
     // Serial.print("loop difference = " + String(difference) + " ");
+    if (impaired){
+      counter += 1;
+    }
   }
   Serial.println("Wait function completed");
 }
