@@ -30,11 +30,11 @@ void loop() {
   // put your main code here, to run repeatedly:
   test.write(0);
   test.wait();
-  // delay(1000);
+  // delay(500);
   // Serial.println("Position: " + String(analogRead(feedback)));
   test.write(90);
   test.wait();
-  // delay(1000);
+  // delay(500);
   // Serial.println("Position: " + String(analogRead(feedback)));
 
 //  test.write(180);

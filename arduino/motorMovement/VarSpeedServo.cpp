@@ -579,9 +579,9 @@ void VarSpeedServo::sequenceStop() {
 void VarSpeedServo::wait() {
   byte channel = this->servoIndex;
   int value = servos[channel].value;
-  double difference = 0;      // difference between actual value and ideal value
+  double difference = 5;      // difference between actual value and ideal value
   bool impaired = false;
-  double threshold = 10;         //can be changed to adjust sensitivity of the impairment check
+  double threshold = 15;         //can be changed to adjust sensitivity of the impairment check
 
   // wait until it is done
   if (value < MIN_PULSE_WIDTH) {
@@ -589,14 +589,14 @@ void VarSpeedServo::wait() {
     // read() = measured pulse width sent to servo, returned as an angle
     while (read() != value) {
       delay(5);
-      }
+    }
   } else {
     // Serial.print("microseconds = " + String(readMicroseconds()));
     // Serial.println("value = " + String(value));
     while (readMicroseconds() != value) {
       delay(5);
-      }
     }
+  }
   // Check if the servo's movement is being blocked until it has reached 
   // the destination position or is stalled
   impaired = impairmentCheck(value, threshold, &difference);
@@ -604,7 +604,7 @@ void VarSpeedServo::wait() {
   while (!impaired and difference > threshold){
     impaired = impairmentCheck(value, threshold, &difference);
     // Serial.println(" Impairment: " + String(impaired));
-    Serial.print("loop difference = " + String(difference) + " ");
+    // Serial.print("loop difference = " + String(difference) + " ");
   }
   Serial.println("Wait function completed");
 }
@@ -638,19 +638,26 @@ void VarSpeedServo::wait() {
 // to get a servo into position, then enabling multi servo movement will be difficult.
 bool VarSpeedServo::impairmentCheck(int ideal_value, double threshold, double *difference) {
   // this value determined experimentally with delay(100). May need to be decreased
-  double actualMovementThreshold = 3;
+  double actualMovementThreshold = 20;
   double actual_value1 = analogRead(feedbackPin);
+  delay(25);
   // slight delay before measuring next val, to see if there's any difference
   // this number can be tuned. Warning: the actualMovement threshold changes with this
   // delay, it may need to be decreased if this delay decreases.
-  delay(100);
   double actual_value2 = analogRead(feedbackPin);
+  delay(25);
+  double actual_value3 = analogRead(feedbackPin);
+  delay(25);
+  double actual_value4 = analogRead(feedbackPin);
+  //average out pairs of values
+  actual_value1 = (actual_value1 + actual_value2) / 2;
+  actual_value2 = (actual_value3 + actual_value4) / 2;
   // hard-coded values were determined experimentally
   actual_value1 = map(actual_value1, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
   actual_value2 = map(actual_value2, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
   *difference = abs(ideal_value - actual_value1);
   double actualMovement = abs(actual_value1 - actual_value2);
-  Serial.print("difference = " + String(*difference));
+  Serial.print(" difference = " + String(*difference));
   Serial.println(" actualMovement = " + String(actualMovement));
   // Serial.println(" actual_value2 = " + String(actual_value2));
 
