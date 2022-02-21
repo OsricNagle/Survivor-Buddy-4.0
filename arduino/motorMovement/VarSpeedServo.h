@@ -168,7 +168,10 @@ public:
   int readMicroseconds();            // returns current pulse width in microseconds for this servo (was read_us() in first release)
   bool attached();                   // return true if this servo is attached, otherwise false
 
-  bool impairmentCheck(int ideal_value, double threshold, double *difference, double *prevActualMvmt);   // Checks whether or not the servo movement is obstructed
+  //implementation of STL map() function but avoid integer rounding problems
+  double mapping(double x, double in_min, double in_max, double out_min, double out_max);
+  // Checks whether or not the servo movement is obstructed                 
+  bool impairmentCheck(int ideal_value, double threshold, double *difference, double *prevActualMvmt);   
   uint8_t sequencePlay(servoSequencePoint sequenceIn[], uint8_t numPositions, bool loop, uint8_t startPos);
   uint8_t sequencePlay(servoSequencePoint sequenceIn[], uint8_t numPositions); // play a looping sequence starting at position 0
   void sequenceStop();              // stop movement

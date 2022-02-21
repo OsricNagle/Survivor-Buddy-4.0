@@ -351,12 +351,18 @@ void VarSpeedServo::calibrate()
 {
   if (feedbackPin != -1){
     write(0);
-    delay(1000);
-    minPositionValue = analogRead(feedbackPin);
+    delay(1500);
+    int minPositionValue1 = analogRead(feedbackPin);
+    delay(25);
+    int minPositionValue2 = analogRead(feedbackPin);
+    minPositionValue = (minPositionValue1 + minPositionValue2) / 2;
     Serial.print("minPositionValue = " + String(minPositionValue));
     write(180);
-    delay(1000);
-    maxPositionValue = analogRead(feedbackPin);
+    delay(1500);
+    int maxPositionValue1 = analogRead(feedbackPin);
+    delay(25);
+    int maxPositionValue2 = analogRead(feedbackPin);
+    maxPositionValue = (maxPositionValue1 + maxPositionValue2) / 2;
     Serial.println("maxPositionValue = " + String(maxPositionValue));
   } else {
     Serial.println("feedbackPin value has not been set. Use attachFeedback(feedbackPin).");
@@ -582,7 +588,7 @@ void VarSpeedServo::wait() {
   int value = servos[channel].value;
   double difference, prevActualMvmt = 0;      // difference between actual value and ideal value
   bool impaired = false;
-  double threshold = 15;         //can be changed to adjust sensitivity of the impairment check
+  double threshold = 50;         //can be changed to adjust sensitivity of the impairment check
   int counter = 0;
   
   // wait until it is done
@@ -601,7 +607,7 @@ void VarSpeedServo::wait() {
   }
   // Check if the servo's movement is being blocked until it has reached 
   // the destination position or is stalled
-  impaired = impairmentCheck(value, threshold, &difference, &prevActualMvmt);
+ impaired = impairmentCheck(value, threshold, &difference, &prevActualMvmt);
   // Serial.println("loop difference = " + String(difference) + " ");
   // if there has been an impairment detected twice in a row and the servo is not
   // at its intended destination, then an obstacle has been detected. 
@@ -619,6 +625,11 @@ void VarSpeedServo::wait() {
     stopImmediately();
   }
   Serial.println("Wait function completed");
+}
+
+// implement STL map() func but with decimal places to avoid integer rounding
+double VarSpeedServo::mapping(double x, double in_min, double in_max, double out_min, double out_max) {
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
 // Osric: add an input parameter (analog pin) to gather feedback.
@@ -640,20 +651,19 @@ bool VarSpeedServo::impairmentCheck(int ideal_value, double threshold, double *d
   // this value determined experimentally with delay(100). May need to be decreased
   double actualMovementThreshold = 10;
   double actual_value1 = analogRead(feedbackPin);
-  delay(25);
+  delay(200);
   // slight delay before measuring next val, to see if there's any difference
   // this number can be tuned. Warning: the actualMovement threshold changes with this
   // delay, it may need to be decreased if this delay decreases.
   double actual_value2 = analogRead(feedbackPin);
-  delay(25);
-  double actual_value3 = analogRead(feedbackPin);
-  delay(25);
-  double actual_value4 = analogRead(feedbackPin);
-  //average out pairs of values
-  actual_value1 = (actual_value1 + actual_value2) / 2;
-  actual_value2 = (actual_value3 + actual_value4) / 2;
-  actual_value1 = map(actual_value1, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
-  actual_value2 = map(actual_value2, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
+//  delay(25);
+//  double actual_value3 = analogRead(feedbackPin);
+//  delay(25);
+//  double actual_value4 = analogRead(feedbackPin);
+//  actual_value1 = (actual_value1 + actual_value2) / 2;
+//  actual_value2 = (actual_value3 + actual_value4) / 2;
+  actual_value1 = mapping(actual_value1, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
+  actual_value2 = mapping(actual_value2, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
   *difference = abs(ideal_value - actual_value1);
   double actualMovement = abs(actual_value1 - actual_value2);
   actualMovement = (actualMovement + *prevActualMvmt) / 2;
