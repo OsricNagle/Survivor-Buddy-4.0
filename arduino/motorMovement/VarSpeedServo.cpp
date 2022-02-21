@@ -481,6 +481,7 @@ void VarSpeedServo::write(int value, uint8_t speed, bool wait) {
 
 void VarSpeedServo::stopImmediately(){
   write(analogRead(feedbackPin));
+  Serial.println("Servo stopped");
 }
 
 void VarSpeedServo::stop() {
@@ -605,12 +606,17 @@ void VarSpeedServo::wait() {
   // if there has been an impairment detected twice in a row and the servo is not
   // at its intended destination, then an obstacle has been detected. 
   while (counter < 2 and difference > threshold){
+    // delay(250);     //give time in between checks to allow actualMvmt vals to differentiate
     impaired = impairmentCheck(value, threshold, &difference, &prevActualMvmt);
     // Serial.println(" Impairment: " + String(impaired));
     // Serial.print("loop difference = " + String(difference) + " ");
     if (impaired){
       counter += 1;
     }
+  }
+  if (counter >= 2){
+    // only call stopImmediately() after movement impairment is confirmed
+    stopImmediately();
   }
   Serial.println("Wait function completed");
 }
@@ -646,7 +652,6 @@ bool VarSpeedServo::impairmentCheck(int ideal_value, double threshold, double *d
   //average out pairs of values
   actual_value1 = (actual_value1 + actual_value2) / 2;
   actual_value2 = (actual_value3 + actual_value4) / 2;
-  // hard-coded values were determined experimentally
   actual_value1 = map(actual_value1, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
   actual_value2 = map(actual_value2, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
   *difference = abs(ideal_value - actual_value1);
@@ -662,9 +667,9 @@ bool VarSpeedServo::impairmentCheck(int ideal_value, double threshold, double *d
   if (*difference > threshold and actualMovement < actualMovementThreshold){
     // servo is not at position and is not moving
     // this indicates an obstacle 
-    stopImmediately();
+    // stopImmediately();
     // Serial.print("onii-chan yamete kudasai");
-    Serial.println("servo movement interrupted, servo stopped");
+    Serial.println("Possible servo movement interruption detected");
     return true;
   } else {
     Serial.print(" ideal_value = " + String(ideal_value));

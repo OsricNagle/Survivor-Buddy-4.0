@@ -28,10 +28,12 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  Serial.println("Move to 0");
   test.write(0);
   test.wait();
   // delay(500);
   // Serial.println("Position: " + String(analogRead(feedback)));
+  Serial.println("Move to 90");
   test.write(90);
   test.wait();
   // delay(500);
