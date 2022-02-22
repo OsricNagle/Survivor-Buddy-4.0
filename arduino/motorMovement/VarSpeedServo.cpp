@@ -369,6 +369,33 @@ void VarSpeedServo::calibrate()
   }
 }
 
+// calibrate the base pairs of servos
+void VarSpeedServo::calibratePair(VarSpeedServo *base2)
+{
+  if (feedbackPin != -1){
+    write(0);
+    base2->write(180-0);
+    delay(1500);
+    int minPositionValue1 = analogRead(feedbackPin);
+    delay(25);
+    int minPositionValue2 = analogRead(feedbackPin);
+    minPositionValue = (minPositionValue1 + minPositionValue2) / 2;
+    *base2->minPositionValue = minPositionValue;
+    Serial.print("minPositionValue = " + String(minPositionValue));
+    write(180);
+    base2->write(0);
+    delay(1500);
+    int maxPositionValue1 = analogRead(feedbackPin);
+    delay(25);
+    int maxPositionValue2 = analogRead(feedbackPin);
+    maxPositionValue = (maxPositionValue1 + maxPositionValue2) / 2;
+    *base2->maxPositionValue = maxPositionValue;
+    Serial.println("maxPositionValue = " + String(maxPositionValue));
+  } else {
+    Serial.println("feedbackPin value has not been set. Use attachFeedback(feedbackPin).");
+  }
+}
+
 void VarSpeedServo::detach()
 {
   servos[this->servoIndex].Pin.isActive = false;

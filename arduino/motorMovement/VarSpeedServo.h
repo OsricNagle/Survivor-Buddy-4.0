@@ -153,6 +153,7 @@ public:
   uint8_t attach(int pin, int min, int max); // as above but also sets min and max values for writes.
   void attachFeedback(int analogFeedbackPin); // define feedback pin for a servo
   void calibrate();                  // Store servo position values for mapping in the impairmentCheck function
+  void calibratePair(VarSpeedServo *base2);
   void detach();
   void write(int value);             // if value is < 544 its treated as an angle, otherwise as pulse width in microseconds
   void write(int value, uint8_t speed); // Move to given position at reduced speed.
