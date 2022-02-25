@@ -148,6 +148,16 @@ typedef struct {
 class VarSpeedServo
 {
 public:
+  int feedbackPin = -1;             // feedback pin
+  bool isBasePair = false;          // is this servo part of the base pair?
+  VarSpeedServo* basePairServo;     // pointer to other servo, if this one is in the base pair
+    
+  // Use these values to perform accurate mapping when checking for collisions
+  // minPositionValue = feedback value from servo after writing 0 degrees to it.
+  // maxPositionValue = feedback value from servo after writing 180 degrees to it.
+  int minPositionValue = 0;
+  int maxPositionValue = 0;
+  
   VarSpeedServo();
   uint8_t attach(int pin);           // attach the given pin to the next free channel, sets pinMode, returns channel number or 0 if failure
   uint8_t attach(int pin, int min, int max); // as above but also sets min and max values for writes.

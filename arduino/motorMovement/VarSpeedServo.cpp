@@ -103,12 +103,15 @@ servoSequencePoint initSeq[] = {{0,100},{45,100}};
 
 // feedback pin
 int feedbackPin = -1;
+bool isBasePair = false;
+VarSpeedServo* basePairServo;
 
 // Use these values to perform accurate mapping when checking for collisions
 // minPositionValue = feedback value from servo after writing 0 degrees to it.
 // maxPositionValue = feedback value from servo after writing 180 degrees to it.
 int minPositionValue = 0;
 int maxPositionValue = 0;
+
 /************ static functions common to all instances ***********************/
 
 static inline void handle_interrupts(timer16_Sequence_t timer, volatile uint16_t *TCNTn, volatile uint16_t* OCRnA)
@@ -373,6 +376,10 @@ void VarSpeedServo::calibrate()
 void VarSpeedServo::calibratePair(VarSpeedServo *base2)
 {
   if (feedbackPin != -1){
+    isBasePair = true;
+    base2->isBasePair = true;
+    basePairServo = base2;
+    base2->basePairServo = this;
     write(0);
     base2->write(180-0);
     delay(1500);
@@ -380,7 +387,7 @@ void VarSpeedServo::calibratePair(VarSpeedServo *base2)
     delay(25);
     int minPositionValue2 = analogRead(feedbackPin);
     minPositionValue = (minPositionValue1 + minPositionValue2) / 2;
-    *base2->minPositionValue = minPositionValue;
+    base2->minPositionValue = minPositionValue;
     Serial.print("minPositionValue = " + String(minPositionValue));
     write(180);
     base2->write(0);
@@ -389,7 +396,7 @@ void VarSpeedServo::calibratePair(VarSpeedServo *base2)
     delay(25);
     int maxPositionValue2 = analogRead(feedbackPin);
     maxPositionValue = (maxPositionValue1 + maxPositionValue2) / 2;
-    *base2->maxPositionValue = maxPositionValue;
+    base2->maxPositionValue = maxPositionValue;
     Serial.println("maxPositionValue = " + String(maxPositionValue));
   } else {
     Serial.println("feedbackPin value has not been set. Use attachFeedback(feedbackPin).");
@@ -649,6 +656,9 @@ void VarSpeedServo::wait() {
   }
   if (counter >= 2){
     // only call stopImmediately() after movement impairment is confirmed
+    if (isBasePair){
+      basePairServo->stopImmediately();
+    }
     stopImmediately();
   }
   Serial.println("Wait function completed");
