@@ -1,13 +1,15 @@
 #include "C:\Users\osric\Documents\GitHub\Survivor-Buddy-4.0\arduino\motorMovement\VarSpeedServo.cpp"
+// #include <Servo.h>
 
-int servo = 5;
-int feedback = A0;
+int servo = 4;
+int feedback = A2;
 int base_1 = 3;
 int base_2 = 4;
 
 VarSpeedServo test;
 VarSpeedServo base1;
 VarSpeedServo base2;
+// Servo myServo;
 
 void setup() {
   // put your setup code here, to run once:
@@ -20,11 +22,14 @@ void setup() {
   pinMode(base_2, OUTPUT);
 
   test.attach(servo);
-  test.attachFeedback(A0);
+  test.attachFeedback(feedback);
+  // myServo.attach(regularServo);
+  
   // test.calibrate();
-  base1.attach(base_1);
-  base2.attach(base_2);
-  base1.calibratePair(base2);
+  // base1.attach(base_1);
+  // base2.attach(base_2);
+  // base1.calibratePair(base2);
+  
 }
 
 
@@ -38,6 +43,7 @@ void loop() {
   // put your main code here, to run repeatedly:
   Serial.println("Move to 0");
   test.write(0);
+  // myServo.write(0);
   test.wait();
   // delay(500);
   // Serial.println("Position: " + String(analogRead(feedback)));
@@ -46,6 +52,7 @@ void loop() {
 //  test.wait();
   Serial.println("Move to 90");
   test.write(90);
+  // myServo.write(90);
   test.wait();
   // delay(500);
   // Serial.println("Position: " + String(analogRead(feedback)));
