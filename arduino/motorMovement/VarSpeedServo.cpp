@@ -686,7 +686,7 @@ double VarSpeedServo::mapping(double x, double in_min, double in_max, double out
 // 2. smoothing function to average out actualMovement parameter between calls. 
 bool VarSpeedServo::impairmentCheck(int ideal_value, double threshold, double *difference, double *prevActualMvmt) {
   // this value determined experimentally with delay(100). May need to be decreased
-  double actualMovementThreshold = 10;
+  double actualMovementThreshold = 50;
   double actual_value1 = analogRead(feedbackPin);
   delay(200);
   // slight delay before measuring next val, to see if there's any difference

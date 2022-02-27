@@ -25,7 +25,7 @@ void setup() {
   test.attachFeedback(feedback);
   // myServo.attach(regularServo);
   
-  // test.calibrate();
+  test.calibrate();
   // base1.attach(base_1);
   // base2.attach(base_2);
   // base1.calibratePair(base2);
