@@ -381,7 +381,7 @@ void VarSpeedServo::calibratePair(VarSpeedServo *base2)
     basePairServo = base2;
     base2->basePairServo = this;
     write(0);
-    base2->write(180-0);
+    base2->write(180);
     delay(1500);
     int minPositionValue1 = analogRead(feedbackPin);
     delay(25);
@@ -401,6 +401,7 @@ void VarSpeedServo::calibratePair(VarSpeedServo *base2)
   } else {
     Serial.println("feedbackPin value has not been set. Use attachFeedback(feedbackPin).");
   }
+  Serial.println("Calibration complete");
 }
 
 void VarSpeedServo::detach()
