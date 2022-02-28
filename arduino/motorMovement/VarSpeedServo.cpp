@@ -111,6 +111,8 @@ VarSpeedServo* basePairServo;
 // maxPositionValue = feedback value from servo after writing 180 degrees to it.
 int minPositionValue = 0;
 int maxPositionValue = 0;
+int minDegrees = 0;
+int maxDegrees = 180;
 
 /************ static functions common to all instances ***********************/
 
@@ -353,14 +355,14 @@ uint8_t VarSpeedServo::attach(int pin, int min, int max)
 void VarSpeedServo::calibrate()
 {
   if (feedbackPin != -1){
-    write(0);
+    write(minDegrees);
     delay(1500);
     int minPositionValue1 = analogRead(feedbackPin);
     delay(25);
     int minPositionValue2 = analogRead(feedbackPin);
     minPositionValue = (minPositionValue1 + minPositionValue2) / 2;
     Serial.print("minPositionValue = " + String(minPositionValue));
-    write(180);
+    write(maxDegrees);
     delay(1500);
     int maxPositionValue1 = analogRead(feedbackPin);
     delay(25);
@@ -370,18 +372,21 @@ void VarSpeedServo::calibrate()
   } else {
     Serial.println("feedbackPin value has not been set. Use attachFeedback(feedbackPin).");
   }
+  
 }
 
 // calibrate the base pairs of servos
 void VarSpeedServo::calibratePair(VarSpeedServo *base2)
 {
   if (feedbackPin != -1){
+    minDegrees = 0;
+    maxDegrees = 135;
     isBasePair = true;
     base2->isBasePair = true;
     basePairServo = base2;
     base2->basePairServo = this;
-    write(0);
-    base2->write(180);
+    write(minDegrees);
+    base2->write(180-minDegrees);
     delay(1500);
     int minPositionValue1 = analogRead(feedbackPin);
     delay(25);
@@ -389,8 +394,8 @@ void VarSpeedServo::calibratePair(VarSpeedServo *base2)
     minPositionValue = (minPositionValue1 + minPositionValue2) / 2;
     base2->minPositionValue = minPositionValue;
     Serial.print("minPositionValue = " + String(minPositionValue));
-    write(180);
-    base2->write(0);
+    write(maxDegrees);
+    base2->write(180-maxDegrees);
     delay(1500);
     int maxPositionValue1 = analogRead(feedbackPin);
     delay(25);
@@ -652,6 +657,7 @@ void VarSpeedServo::wait() {
     // Serial.println(" Impairment: " + String(impaired));
     // Serial.print("loop difference = " + String(difference) + " ");
     if (impaired){
+      threshold = 100;
       counter += 1;
     }
   }
@@ -662,7 +668,7 @@ void VarSpeedServo::wait() {
     }
     stopImmediately();
   }
-  Serial.println("Wait function completed");
+  // Serial.println("Wait function completed");
 }
 
 // implement STL map() func but with decimal places to avoid integer rounding
@@ -694,20 +700,26 @@ bool VarSpeedServo::impairmentCheck(int ideal_value, double threshold, double *d
   // this number can be tuned. Warning: the actualMovement threshold changes with this
   // delay, it may need to be decreased if this delay decreases.
   double actual_value2 = analogRead(feedbackPin);
-//  delay(25);
-//  double actual_value3 = analogRead(feedbackPin);
-//  delay(25);
-//  double actual_value4 = analogRead(feedbackPin);
-//  actual_value1 = (actual_value1 + actual_value2) / 2;
-//  actual_value2 = (actual_value3 + actual_value4) / 2;
-  actual_value1 = mapping(actual_value1, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
-  actual_value2 = mapping(actual_value2, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
+  // Serial.print("actual_value1 = " + String(actual_value1));
+  // Serial.println("actual_value2 = " + String(actual_value2));
+
+  // mapping from feedback position to servo signal
+  // This is done to compare ideal_value w/ actual_value
+  if (isBasePair){
+    // adjust difference threshold for base pair
+    // adjust SERVO_MAX() by actual free degrees of freedom over maximum possible degrees
+    actual_value1 = mapping(actual_value1, maxPositionValue, minPositionValue, SERVO_MAX() * 135/180, SERVO_MIN());
+    actual_value2 = mapping(actual_value2, maxPositionValue, minPositionValue, SERVO_MAX() * 135/180, SERVO_MIN());
+  } else {
+    actual_value1 = mapping(actual_value1, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
+    actual_value2 = mapping(actual_value2, maxPositionValue, minPositionValue, SERVO_MAX(), SERVO_MIN());
+  }
   *difference = abs(ideal_value - actual_value1);
   double actualMovement = abs(actual_value1 - actual_value2);
   actualMovement = (actualMovement + *prevActualMvmt) / 2;
   *prevActualMvmt = actualMovement;
-  Serial.print(" difference = " + String(*difference));
-  Serial.println(" actualMovement = " + String(actualMovement));
+  // Serial.print(" difference = " + String(*difference));
+  // Serial.println(" actualMovement = " + String(actualMovement));
   // Serial.println(" actual_value2 = " + String(actual_value2));
 
   // until servo has reached final position, continuously check
@@ -715,14 +727,13 @@ bool VarSpeedServo::impairmentCheck(int ideal_value, double threshold, double *d
   if (*difference > threshold and actualMovement < actualMovementThreshold){
     // servo is not at position and is not moving
     // this indicates an obstacle 
-    // stopImmediately();
     // Serial.print("onii-chan yamete kudasai");
-    Serial.println("Possible servo movement interruption detected");
+    // Serial.println("Possible servo movement interruption detected");
     return true;
   } else {
-    Serial.print(" ideal_value = " + String(ideal_value));
-    Serial.print(" actual_value1 = " + String(actual_value1));
-    Serial.println(" actual_value2 = " + String(actual_value2));
+    // Serial.print(" ideal_value = " + String(ideal_value));
+    // Serial.print(" actual_value1 = " + String(actual_value1));
+    // Serial.println(" actual_value2 = " + String(actual_value2));
     // actual_value is good enough, carry on
     return false;
   }

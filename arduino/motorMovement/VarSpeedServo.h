@@ -157,6 +157,8 @@ public:
   // maxPositionValue = feedback value from servo after writing 180 degrees to it.
   int minPositionValue = 0;
   int maxPositionValue = 0;
+  int minDegrees = 0;
+  int maxDegrees = 180;
   
   VarSpeedServo();
   uint8_t attach(int pin);           // attach the given pin to the next free channel, sets pinMode, returns channel number or 0 if failure
