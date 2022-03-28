@@ -586,3 +586,35 @@ class IpPortMenu(Tk.Menu):
             3,
             label=f"Set Phone IP: {self.app_frame.host}"
         )
+
+class BehaviorTrackingMenu(Tk.Menu):
+    """
+    Behavior tracking menu on main GIU. Contains run function to trigger behavior mode.
+
+    :param parent: the tkinter parent menu
+    :type parent: Tkinter Menu
+    :param tearoff: if true the menu can be pulled from it location on gui an dragged around. Defaults to False.
+    :type tearoff: boolean, optional
+    :param frame: the tkinter frame on which GUI functions can be called. Defaults to None
+    :type: Tkinter Frame, optional
+    """
+    def __init__(self, parent, tearoff=False, frame=None):
+        """
+        Constructor for FileMenu
+        """
+        Tk.Menu.__init__(self, parent, tearoff=tearoff)
+        self.add_command(label="Begin", command=self.begin)
+        self.app_frame = frame
+        self.open = False
+
+    def updateMenu(self):
+        """
+        Called whenever menu is opened. Currenty unused but required.
+        """
+        print(f"updateMenu: {self.__class__}")
+
+    def begin(self):
+        """
+        TESTING: print out hello world
+        """
+        print("hello world!")

@@ -471,6 +471,10 @@ class Application(Tk.Frame):
 
         root_menu.bind("<<MenuSelect>>", self.updateMenuOptions)
 
+        #Create extra menu for the SB behavior tracking/mimicking feature
+        self.behavior_tracking = BehaviorTrackingMenu(root_menu, tearoff=False, frame=self)
+        root_menu.add_cascade(label="Behavior Tracking", menu=self.behavior_tracking)
+
 
 if __name__ == "__main__":
     root = Tk.Tk()
