@@ -1,8 +1,8 @@
 #include "C:\Users\osric\Documents\GitHub\Survivor-Buddy-4.0\arduino\motorMovement\VarSpeedServo.cpp"
 // #include <Servo.h>
 
-int servo = 5;
-int feedback = A3;
+int servo = 4;
+int feedback = A2;
 int base_1 = 3;
 int baseFeedback = A1;
 int base_2 = 2;
@@ -31,7 +31,11 @@ void setup() {
   base1.attach(base_1);
   base1.attachFeedback(baseFeedback);
   base2.attach(base_2);
-  // base1.calibratePair(&base2);
+  base1.calibratePair(&base2);
+
+  base1.write(0);
+  base2.write(180);
+  base1.wait();
 }
 
 
@@ -45,25 +49,28 @@ void loop() {
   // put your main code here, to run repeatedly:
   Serial.println("Move to 30");
   test.write(30);
-//  base1.write(30);
-//  base2.write(150);
-  // myServo.write(0);
-  // base1.wait();
   test.wait();
   // delay(500);
   // Serial.println("Position: " + String(analogRead(feedback)));
 //  Serial.println("Move to 45");
 //  test.write(45);
 //  test.wait();
-  Serial.println("Move to 90");
-//  base1.write(90);
-//  base2.write(90);
-  test.write(90);
+  Serial.println("Move to 225");
+  test.write(180);
   // myServo.write(90);
-  // base1.wait();
+  
   test.wait();
   // delay(500);
   // Serial.println("Position: " + String(analogRead(feedback)));
+
+//  base1.write(30);
+//  base2.write(150);
+//  //myServo.write(0);
+//  base1.wait();
+//
+//  base1.write(90);
+//  base2.write(90);
+//  base1.wait();
 
 //  test.write(180);
 //  Serial.println("Position: " + String(analogRead(feedback)));

@@ -2,18 +2,18 @@
 
 //Control and Feedback Pins
 //regular 180 servos
-int leftBasePin = 9; 
-int rightBasePin = 10; 
-int leftBaseFeedback = A0; 
-int rightBaseFeedback = A1; 
+int leftBasePin = 3; 
+int rightBasePin = 2; 
+int leftBaseFeedback = A1; 
+int rightBaseFeedback = A0; 
 
 //360 servo
-int turnTablePin = 3;
-int turnTableFeedback  = 11;
+int turnTablePin = 4;
+int turnTableFeedback  = A2;
 
 //180 mini servo
-int phoneMountPin =6;
-int phoneMountFeedback = A4;
+int phoneMountPin = 5;
+int phoneMountFeedback = A3;
 
 int ledPin = 2;
 
@@ -275,18 +275,32 @@ void setup() {
   pinMode(rightBaseFeedback, INPUT);
   pinMode(turnTableFeedback, INPUT);
   pinMode(phoneMountFeedback, INPUT);
+
   
   // attaches the servo on pin to the servo object
   tabletopServo.attach(turnTablePin);
-  setYaw(TABLETOP_FRONT);
+  tabletopServo.attachFeedback(turnTableFeedback);
+  // setYaw(TABLETOP_FRONT);
   leftBaseServo.attach(leftBasePin);  
-  leftBaseServo.write(LEFT_BASE_DOWN, 60, true);
+  leftBaseServo.attachFeedback(leftBaseFeedback);
+  // leftBaseServo.write(LEFT_BASE_DOWN, 60, true);
   rightBaseServo.attach(rightBasePin);
-  rightBaseServo.write(RIGHT_BASE_DOWN, 60, true);
-//  rightBaseServo.write(RIGHT_BASE_UP, 60, true);
+  // rightBaseServo.write(RIGHT_BASE_DOWN, 60, true);
+  // rightBaseServo.write(RIGHT_BASE_UP, 60, true);
   phoneMountServo.attach(phoneMountPin);
+  phoneMountServo.attachFeedback(phoneMountFeedback);
   phoneMountServo.write(PHONEMOUNT_PORTRAIT);
+
+  Serial.println("made it here!");
+  // run calibration functions for updated wait() to work correctly
+  leftBaseServo.calibratePair(&rightBaseServo);
+  tabletopServo.calibrate();
+  phoneMountServo.calibrate();
+
+  Serial.println("Made it here!");
 }
+
+
 
 //Serial Data
 unsigned char serialData[128];

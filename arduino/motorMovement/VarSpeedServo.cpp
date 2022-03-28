@@ -718,8 +718,8 @@ bool VarSpeedServo::impairmentCheck(int ideal_value, double threshold, double *d
   double actualMovement = abs(actual_value1 - actual_value2);
   actualMovement = (actualMovement + *prevActualMvmt) / 2;
   *prevActualMvmt = actualMovement;
-  // Serial.print(" difference = " + String(*difference));
-  // Serial.println(" actualMovement = " + String(actualMovement));
+  Serial.print(" difference = " + String(*difference));
+  Serial.println(" actualMovement = " + String(actualMovement));
   // Serial.println(" actual_value2 = " + String(actual_value2));
 
   // until servo has reached final position, continuously check
@@ -728,12 +728,12 @@ bool VarSpeedServo::impairmentCheck(int ideal_value, double threshold, double *d
     // servo is not at position and is not moving
     // this indicates an obstacle 
     // Serial.print("onii-chan yamete kudasai");
-    // Serial.println("Possible servo movement interruption detected");
+    Serial.println("Possible servo movement interruption detected");
     return true;
   } else {
-    // Serial.print(" ideal_value = " + String(ideal_value));
-    // Serial.print(" actual_value1 = " + String(actual_value1));
-    // Serial.println(" actual_value2 = " + String(actual_value2));
+    Serial.print(" ideal_value = " + String(ideal_value));
+    Serial.print(" actual_value1 = " + String(actual_value1));
+    Serial.println(" actual_value2 = " + String(actual_value2));
     // actual_value is good enough, carry on
     return false;
   }
