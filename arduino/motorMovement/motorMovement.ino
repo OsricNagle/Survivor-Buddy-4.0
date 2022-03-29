@@ -358,9 +358,7 @@ void loop() {
 //  test();
   
   numLoops++;
-  Serial.print("bruh");
   if (Serial.available() > 0) {//serial is reading stuff 
-    Serial.print("stuff being read");
     Serial.readBytes(serialData, 2); 
     if (serialData[0] == 0x00) { // set pitch
       if (0 <= serialData[1] && serialData[1] <= 90) {

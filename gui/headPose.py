@@ -48,7 +48,7 @@ def behaviorTracking(ser):
     headTiltRunning: list[int] = []
     torsoRotRunning: list[int] = []
 
-    ser.send(b'\x11\x00')
+    ser.send(b'x11\x00')
     while cap.isOpened(): 
         #if (ser.in_waiting > 0):
         #    print(ser.readline())
