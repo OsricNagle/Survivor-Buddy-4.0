@@ -134,7 +134,7 @@ class SerialArmController:
         '''
 
         if not self.is_connected:
-            self._device = serial.Serial(comport, timeout=1)
+            self._device = serial.Serial(comport, 9600, timeout=1)
             self.status_bar.set_status("CONNECTED")
             self.is_connected = True
         

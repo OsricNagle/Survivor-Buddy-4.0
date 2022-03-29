@@ -307,7 +307,7 @@ void test() {
 /*******************************************************************/
 void setup() {
   Serial.begin(9600);
-  Serial.setTimeout(100);
+  // Serial.setTimeout(5000);
 
   pinMode(ledPin, OUTPUT);
   digitalWrite(ledPin, LOW);
@@ -318,6 +318,7 @@ void setup() {
   pinMode(turnTableFeedback, INPUT);
   pinMode(phoneMountFeedback, INPUT);
 
+  Serial.println("Before attaching pins");
   
   // attaches the servo on pin to the servo object
   tabletopServo.attach(turnTablePin);
@@ -335,19 +336,21 @@ void setup() {
   phoneTiltServo.attach(phoneTiltPin);
   phoneTiltServo.attachFeedback(phoneTiltFeedback);
 
-  // run calibration functions for updated wait() to work correctly
-  leftBaseServo.calibratePair(&rightBaseServo);
-  tabletopServo.calibrate();
-  phoneMountServo.calibrate();
-  phoneTiltServo.calibrate();
+  Serial.println("After attaching pins, before calibration");
 
-  // Serial.println("Calibration complete");
+  // run calibration functions for updated wait() to work correctly
+//  leftBaseServo.calibratePair(&rightBaseServo);
+//  tabletopServo.calibrate();
+//  phoneMountServo.calibrate();
+//  phoneTiltServo.calibrate();
+
+  Serial.print("Calibration complete");
 }
 
 
 
 //Serial Data
-unsigned char serialData[128];
+char serialData[128];
 unsigned long numLoops = 0;
 int lastYaw = TABLETOP_FRONT;
 
@@ -358,8 +361,10 @@ void loop() {
 //  test();
   
   numLoops++;
-  if (Serial.available() > 0) {//serial is reading stuff 
+  // Serial.print(serialData[0]);
+  if (Serial.available()) {//serial is reading stuff 
     Serial.readBytes(serialData, 2); 
+    // Serial.write(serialData[0]);
     if (serialData[0] == 0x00) { // set pitch
       if (0 <= serialData[1] && serialData[1] <= 90) {
         setPitch(serialData[1]);
@@ -402,7 +407,7 @@ void loop() {
     else if (serialData[0] == 0x10) { // shutdown
       _shutdown();
     } else if (serialData[0] == 0x11) { // behavior tracking
-      Serial.println("Serial info passed in correctly");
+      Serial.write("Serial info passed correctly");
     }
   }
   if (numLoops % 100 == 0) {
