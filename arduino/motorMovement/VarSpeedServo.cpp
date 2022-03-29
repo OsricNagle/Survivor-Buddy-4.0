@@ -361,14 +361,14 @@ void VarSpeedServo::calibrate()
     delay(25);
     int minPositionValue2 = analogRead(feedbackPin);
     minPositionValue = (minPositionValue1 + minPositionValue2) / 2;
-    Serial.print("minPositionValue = " + String(minPositionValue));
+    // Serial.print("minPositionValue = " + String(minPositionValue));
     write(maxDegrees);
     delay(1500);
     int maxPositionValue1 = analogRead(feedbackPin);
     delay(25);
     int maxPositionValue2 = analogRead(feedbackPin);
     maxPositionValue = (maxPositionValue1 + maxPositionValue2) / 2;
-    Serial.println("maxPositionValue = " + String(maxPositionValue));
+    // Serial.println("maxPositionValue = " + String(maxPositionValue));
   } else {
     Serial.println("feedbackPin value has not been set. Use attachFeedback(feedbackPin).");
   }
@@ -393,7 +393,7 @@ void VarSpeedServo::calibratePair(VarSpeedServo *base2)
     int minPositionValue2 = analogRead(feedbackPin);
     minPositionValue = (minPositionValue1 + minPositionValue2) / 2;
     base2->minPositionValue = minPositionValue;
-    Serial.print("minPositionValue = " + String(minPositionValue));
+    // Serial.print("minPositionValue = " + String(minPositionValue));
     write(maxDegrees);
     base2->write(180-maxDegrees);
     delay(1500);
@@ -402,11 +402,11 @@ void VarSpeedServo::calibratePair(VarSpeedServo *base2)
     int maxPositionValue2 = analogRead(feedbackPin);
     maxPositionValue = (maxPositionValue1 + maxPositionValue2) / 2;
     base2->maxPositionValue = maxPositionValue;
-    Serial.println("maxPositionValue = " + String(maxPositionValue));
+    // Serial.println("maxPositionValue = " + String(maxPositionValue));
   } else {
     Serial.println("feedbackPin value has not been set. Use attachFeedback(feedbackPin).");
   }
-  Serial.println("Calibration complete");
+  // Serial.println("Calibration complete");
 }
 
 void VarSpeedServo::detach()

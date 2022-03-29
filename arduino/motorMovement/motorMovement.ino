@@ -15,6 +15,10 @@ int turnTableFeedback  = A2;
 int phoneMountPin = 5;
 int phoneMountFeedback = A3;
 
+//additional servo controlling phone tilt
+int phoneTiltPin = 6;
+int phoneTiltFeedback = A4;
+
 int ledPin = 2;
 
 // Position constants
@@ -42,6 +46,7 @@ VarSpeedServo leftBaseServo;
 VarSpeedServo rightBaseServo;
 VarSpeedServo tabletopServo;
 VarSpeedServo phoneMountServo; 
+VarSpeedServo phoneTiltServo;
 
 enum Command {PITCH, YAW, ROLL, CLOSE, OPEN, PORTRAIT, 
               LANDSCAPE, NOD, SHAKE, TILT, SHUTDOWN};
@@ -116,13 +121,13 @@ int getPositionTabletop(){
 
 void up(){
   leftBaseServo.write(LEFT_BASE_UP, 40);
-  rightBaseServo.write(RIGHT_BASE_UP, 40);
+  rightBaseServo.write(180-LEFT_BASE_UP, 40);
   leftBaseServo.wait();
   rightBaseServo.wait();
 }
 void down(){
   leftBaseServo.write(LEFT_BASE_DOWN, 40);
-  rightBaseServo.write(RIGHT_BASE_DOWN, 40);
+  rightBaseServo.write(180-LEFT_BASE_DOWN, 40);
   leftBaseServo.wait();
   rightBaseServo.wait();
 }
@@ -131,7 +136,7 @@ void nod(){
   int currAngleLeft = leftBaseServo.read();
   int currAngleRight = rightBaseServo.read();
   leftBaseServo.write(LEFT_BASE_UP, 60);
-  rightBaseServo.write(RIGHT_BASE_UP, 60);
+  rightBaseServo.write(180-LEFT_BASE_UP, 60);
   leftBaseServo.wait();
   rightBaseServo.wait();
   delay(100);
@@ -141,7 +146,7 @@ void nod(){
   rightBaseServo.wait();
   delay(100);
   leftBaseServo.write(LEFT_BASE_UP, 60);
-  rightBaseServo.write(RIGHT_BASE_UP, 60);
+  rightBaseServo.write(180-LEFT_BASE_UP, 60);
   leftBaseServo.wait();
   rightBaseServo.wait();
   delay(100);
@@ -151,13 +156,48 @@ void nod(){
   rightBaseServo.wait();
   delay(100);
   leftBaseServo.write(LEFT_BASE_UP, 60);
-  rightBaseServo.write(RIGHT_BASE_UP, 60);
+  rightBaseServo.write(180-LEFT_BASE_UP, 60);
   leftBaseServo.wait();
   rightBaseServo.wait();
   leftBaseServo.write(currAngleLeft, 60, true);
   rightBaseServo.write(currAngleRight, 60, true);
 }
 /*******************************************************************/
+void behaviorTracking() {
+  String in = "";
+  int basePos, torsoPos, headRotPos, headTiltPos = 0;
+  if (Serial.available())
+    in = Serial.readStringUntil('\n');
+  else
+    in = "";
+
+  
+  // 123124125126
+  if (in.equals("") == false){
+//    Serial.println(in);
+    if (in.length() == 12){
+      int basePos = in.substring(0,3).toInt();
+      int torsoPos = in.substring(3,6).toInt();
+      int headRotPos = in.substring(6,9).toInt();
+      int headTiltPos = in.substring(9,12).toInt();
+      // printAllServoPos();
+    }
+    else{
+      Serial.println("printing");
+      Serial.println(in);
+    }
+  }
+  writeAllServos(basePos, torsoPos, headRotPos, headTiltPos);
+}
+
+void writeAllServos(int basePos, int torsoPos, int headRotPos, int headTiltPos){
+  leftBaseServo.write(basePos);
+  rightBaseServo.write(180-basePos);
+  tabletopServo.write(torsoPos);
+  phoneMountServo.write(headRotPos);
+  phoneTiltServo.write(headTiltPos);
+}
+
 /*Turn Table Motor Functions*/
 void shake(){
   setYaw((TABLETOP_LEFT + TABLETOP_FRONT)/2);
@@ -190,6 +230,8 @@ void emergencyShutdown(){
   //stop all motor movement. will need to unplug and plug back in to move again
   while(true) {}
 }
+
+
 
 void setPitch(char val) {
   int leftVal = map(val, 0, 90, LEFT_BASE_DOWN, LEFT_BASE_UP);
@@ -290,14 +332,16 @@ void setup() {
   phoneMountServo.attach(phoneMountPin);
   phoneMountServo.attachFeedback(phoneMountFeedback);
   phoneMountServo.write(PHONEMOUNT_PORTRAIT);
+  phoneTiltServo.attach(phoneTiltPin);
+  phoneTiltServo.attachFeedback(phoneTiltFeedback);
 
-  Serial.println("made it here!");
   // run calibration functions for updated wait() to work correctly
   leftBaseServo.calibratePair(&rightBaseServo);
   tabletopServo.calibrate();
   phoneMountServo.calibrate();
+  phoneTiltServo.calibrate();
 
-  Serial.println("Made it here!");
+  // Serial.println("Calibration complete");
 }
 
 
@@ -314,7 +358,9 @@ void loop() {
 //  test();
   
   numLoops++;
+  Serial.print("bruh");
   if (Serial.available() > 0) {//serial is reading stuff 
+    Serial.print("stuff being read");
     Serial.readBytes(serialData, 2); 
     if (serialData[0] == 0x00) { // set pitch
       if (0 <= serialData[1] && serialData[1] <= 90) {
@@ -336,7 +382,8 @@ void loop() {
       down();
     }
     else if (serialData[0] == 0x04){ // open
-      up();
+      Serial.print("open button");
+      up(); 
     }
     else if(serialData[0] == 0x05){ // portrait
       portrait();
@@ -356,6 +403,8 @@ void loop() {
     }
     else if (serialData[0] == 0x10) { // shutdown
       _shutdown();
+    } else if (serialData[0] == 0x11) { // behavior tracking
+      Serial.println("Serial info passed in correctly");
     }
   }
   if (numLoops % 100 == 0) {

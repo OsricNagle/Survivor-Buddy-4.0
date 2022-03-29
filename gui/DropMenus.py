@@ -8,6 +8,7 @@ import subprocess
 import webbrowser
 #import tkinter.tkk as tkk
 #from PyQt5.QtWidgets import QApplication, QLabel
+from .headPose import behaviorTracking
 
 
 class FileMenu(Tk.Menu):
@@ -617,4 +618,6 @@ class BehaviorTrackingMenu(Tk.Menu):
         """
         TESTING: print out hello world
         """
-        print("hello world!")
+        print("beginning headPose functionality")
+        # self.app_frame.serial_arm_controller
+        behaviorTracking(self.app_frame.serial_arm_controller)

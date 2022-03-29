@@ -12,6 +12,8 @@ import time
 ARDUINO_VID  = 0x2341
 UNO_PID      = 0x0043
 LEONARDO_PID = 0x8036
+ELEGOO_VID   = 0x6790
+ELEGOO_PID   = 29987
 
 class Command():
     '''
@@ -119,6 +121,8 @@ class SerialArmController:
                 self.devs.append((dev.device, "Leonardo"))
             elif dev.vid == ARDUINO_VID and dev.pid == UNO_PID:
                 self.devs.append((dev.device, "Uno"))
+            elif dev.vid == ELEGOO_VID or dev.pid == ELEGOO_PID:
+                self.devs.append((dev.device, "Elegoo"))
            
 
     def connect(self, comport):
@@ -140,7 +144,7 @@ class SerialArmController:
         Closes the current connection from PC to arduino
 
         '''
-
+        print("Closing device")
         if self.is_connected:
             self._device.close()
             self.status_bar.set_status("DISCONNECTED")
