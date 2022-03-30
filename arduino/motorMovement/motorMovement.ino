@@ -306,7 +306,7 @@ void test() {
 
 /*******************************************************************/
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   // Serial.setTimeout(5000);
 
   pinMode(ledPin, OUTPUT);
@@ -317,8 +317,9 @@ void setup() {
   pinMode(rightBaseFeedback, INPUT);
   pinMode(turnTableFeedback, INPUT);
   pinMode(phoneMountFeedback, INPUT);
+  pinMode(phoneTiltFeedback, INPUT);
 
-  Serial.println("Before attaching pins");
+  // Serial.println("Before attaching pins");
   
   // attaches the servo on pin to the servo object
   tabletopServo.attach(turnTablePin);
@@ -336,7 +337,7 @@ void setup() {
   phoneTiltServo.attach(phoneTiltPin);
   phoneTiltServo.attachFeedback(phoneTiltFeedback);
 
-  Serial.println("After attaching pins, before calibration");
+  // Serial.println("After attaching pins, before calibration");
 
   // run calibration functions for updated wait() to work correctly
 //  leftBaseServo.calibratePair(&rightBaseServo);
@@ -344,13 +345,13 @@ void setup() {
 //  phoneMountServo.calibrate();
 //  phoneTiltServo.calibrate();
 
-  Serial.print("Calibration complete");
+  // Serial.print("Calibration complete");
 }
 
 
 
 //Serial Data
-char serialData[128];
+unsigned char serialData[128];
 unsigned long numLoops = 0;
 int lastYaw = TABLETOP_FRONT;
 
@@ -416,5 +417,5 @@ void loop() {
     numLoops = 0;
   }
   
-  delay(10);
+  delay(50);
 } //end loop

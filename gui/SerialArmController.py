@@ -53,7 +53,9 @@ class Command():
     SHUTDOWN = 0x10
 
     """SHUTDOWN variable set to 10 for future use"""
+    BEHAVTRACKING = 0x11
 
+    """BEHAVTRACKING variable set to 11 for future use"""
 
 class Position:
     """
@@ -134,7 +136,7 @@ class SerialArmController:
         '''
 
         if not self.is_connected:
-            self._device = serial.Serial(comport, 9600, timeout=1)
+            self._device = serial.Serial(comport, 115200, timeout=1)
             self.status_bar.set_status("CONNECTED")
             self.is_connected = True
         
@@ -318,7 +320,7 @@ class SerialArmController:
         Sends the SHUTDOWN command to the arm
 
         '''
-
+        print("Shutdown sequence initiated")
         if self.is_connected:
             self.send(bytes((Command.SHUTDOWN, 0)))
             time.sleep(4)

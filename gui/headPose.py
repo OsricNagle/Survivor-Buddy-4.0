@@ -4,7 +4,7 @@ import mediapipe as mp
 import time
 import serial
 import matplotlib.pyplot as plt
-from .SerialArmController import SerialArmController
+from .SerialArmController import SerialArmController, Command
 
 # Analog to the arduino map function, maps a value from one range to another
 def map_range(value, low1, high1, low2, high2):
@@ -48,12 +48,11 @@ def behaviorTracking(ser):
     headTiltRunning: list[int] = []
     torsoRotRunning: list[int] = []
 
-    ser.send(b'\x11\x00')
+    ser.send(bytes((Command.BEHAVTRACKING, 0)))
     while cap.isOpened(): 
-        #if (ser.in_waiting > 0):
-        #    print(ser.readline())
+        if (ser._device.in_waiting > 0):
+            print(ser.readline())
         #     # pass
-        # time.sleep(1)
         sucess, image = cap.read()
 
         start = time.time()
