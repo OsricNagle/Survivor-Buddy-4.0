@@ -169,7 +169,6 @@ class Application(Tk.Frame):
             self.mbac.stopStream()
             self.mbac.disconnect()
 
-
         self.quit()
 
 

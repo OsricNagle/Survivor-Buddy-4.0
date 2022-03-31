@@ -32,7 +32,7 @@ class Command():
     CLOSE = 3
 
     """CLOSE variable set to 3 for future use"""
-    OPEN = 4
+    OPEN = 0x4
 
     """OPEN variable set to 4 for future use"""
     PORTRAIT = 5
@@ -174,7 +174,7 @@ class SerialArmController:
         '''
 
         if self.is_connected:
-            data = self._device.read(3)
+            data = self._device.read(15)
             print("Received: \"{}\"".format(data))
             return data
 

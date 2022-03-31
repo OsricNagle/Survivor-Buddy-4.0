@@ -50,8 +50,8 @@ def behaviorTracking(ser):
 
     ser.send(bytes((Command.BEHAVTRACKING, 0)))
     while cap.isOpened(): 
-        if (ser._device.in_waiting > 0):
-            print(ser.readline())
+        # if (ser._device.in_waiting > 0):
+        #     print(ser.readline())
         #     # pass
         sucess, image = cap.read()
 

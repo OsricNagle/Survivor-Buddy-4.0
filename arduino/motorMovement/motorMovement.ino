@@ -120,14 +120,14 @@ int getPositionTabletop(){
 }
 
 void up(){
-  leftBaseServo.write(LEFT_BASE_UP, 40);
-  rightBaseServo.write(180-LEFT_BASE_UP, 40);
+  leftBaseServo.write(150, 40);
+  rightBaseServo.write(30, 40);
   leftBaseServo.wait();
   rightBaseServo.wait();
 }
 void down(){
-  leftBaseServo.write(LEFT_BASE_DOWN, 40);
-  rightBaseServo.write(180-LEFT_BASE_DOWN, 40);
+  leftBaseServo.write(70, 40);
+  rightBaseServo.write(110, 40);
   leftBaseServo.wait();
   rightBaseServo.wait();
 }
@@ -135,32 +135,32 @@ void nod(){
   //up down, arm nods twice
   int currAngleLeft = leftBaseServo.read();
   int currAngleRight = rightBaseServo.read();
-  leftBaseServo.write(LEFT_BASE_UP, 60);
-  rightBaseServo.write(180-LEFT_BASE_UP, 60);
+  leftBaseServo.write(150, 60);
+  rightBaseServo.write(30, 60);
   leftBaseServo.wait();
   rightBaseServo.wait();
   delay(100);
   leftBaseServo.write(70, 60);
-  rightBaseServo.write(70, 60);
+  rightBaseServo.write(110, 60);
   leftBaseServo.wait();
   rightBaseServo.wait();
   delay(100);
-  leftBaseServo.write(LEFT_BASE_UP, 60);
-  rightBaseServo.write(180-LEFT_BASE_UP, 60);
-  leftBaseServo.wait();
-  rightBaseServo.wait();
-  delay(100);
-  leftBaseServo.write(70, 60);
-  rightBaseServo.write(70, 60);
-  leftBaseServo.wait();
-  rightBaseServo.wait();
-  delay(100);
-  leftBaseServo.write(LEFT_BASE_UP, 60);
-  rightBaseServo.write(180-LEFT_BASE_UP, 60);
-  leftBaseServo.wait();
-  rightBaseServo.wait();
-  leftBaseServo.write(currAngleLeft, 60, true);
-  rightBaseServo.write(currAngleRight, 60, true);
+//  leftBaseServo.write(150, 60);
+//  rightBaseServo.write(30, 60);
+//  leftBaseServo.wait();
+//  rightBaseServo.wait();
+//  delay(100);
+//  leftBaseServo.write(70, 60);
+//  rightBaseServo.write(110, 60);
+//  leftBaseServo.wait();
+//  rightBaseServo.wait();
+//  delay(100);
+//  leftBaseServo.write(150, 60);
+//  rightBaseServo.write(30, 60);
+//  leftBaseServo.wait();
+//  rightBaseServo.wait();
+  // leftBaseServo.write(currAngleLeft, 60, true);
+  // rightBaseServo.write(currAngleRight, 60, true);
 }
 /*******************************************************************/
 void behaviorTracking() {
@@ -183,8 +183,8 @@ void behaviorTracking() {
       // printAllServoPos();
     }
     else{
-      Serial.println("printing");
-      Serial.println(in);
+      // Serial.println("printing");
+      // Serial.println(in);
     }
   }
   writeAllServos(basePos, torsoPos, headRotPos, headTiltPos);
@@ -348,10 +348,9 @@ void setup() {
   // Serial.print("Calibration complete");
 }
 
-
-
 //Serial Data
 unsigned char serialData[128];
+char data, throwaway;
 unsigned long numLoops = 0;
 int lastYaw = TABLETOP_FRONT;
 
@@ -362,60 +361,64 @@ void loop() {
 //  test();
   
   numLoops++;
-  // Serial.print(serialData[0]);
-  if (Serial.available()) {//serial is reading stuff 
-    Serial.readBytes(serialData, 2); 
-    // Serial.write(serialData[0]);
-    if (serialData[0] == 0x00) { // set pitch
+  // Serial.print(data);
+  if (Serial.available() > 0) {//serial is reading stuff 
+    // Serial.readBytes(serialData, 2); 
+    data = Serial.read();
+    throwaway = Serial.read();
+    // Serial.print("BufferSize = " + String(Serial.available()));
+    // Serial.write(data);
+    if (data == 0x00) { // set pitch
       if (0 <= serialData[1] && serialData[1] <= 90) {
         setPitch(serialData[1]);
       }
     }
-    else if (serialData[0] == 0x01) { // set yaw
+    else if (data == 0x01) { // set yaw
       if (0 <= serialData[1] && serialData[1] <= 180) {
         lastYaw = map(serialData[1], 0, 180, TABLETOP_LEFT, TABLETOP_RIGHT);
         setYaw(lastYaw);
       }
     }
-    else if (serialData[0] == 0x02) { // set roll
+    else if (data == 0x02) { // set roll
       if (0 <= serialData[1] && serialData[1] <= 90) {
         setRoll(serialData[1]);
       }
     }
-    else if(serialData[0] == 0x03){ // close 
+    else if(data == 0x03){ // close 
       down();
     }
-    else if (serialData[0] == 0x04){ // open
-      Serial.print("open button");
+    else if (data == 0x04){ // open
+      // Serial.print("open button");
       up(); 
     }
-    else if(serialData[0] == 0x05){ // portrait
+    else if(data == 0x05){ // portrait
       portrait();
     }
-    else if (serialData[0] == 0x06){ // landscape
+    else if (data == 0x06){ // landscape
       landscape();
     } 
-    else if(serialData[0] == 0x07){ // nod
+    else if(data == 0x07){ // nod
       nod();
     }
-    else if (serialData[0] == 0x08){ // shake
+    else if (data == 0x08){ // shake
       lastYaw = TABLETOP_FRONT;
       shake();
     }
-    else if(serialData[0] == 0x09){ // tilt
+    else if(data == 0x09){ // tilt
       tilt();
     }
-    else if (serialData[0] == 0x10) { // shutdown
+    else if (data == 0x10) { // shutdown
       _shutdown();
-    } else if (serialData[0] == 0x11) { // behavior tracking
-      Serial.write("Serial info passed correctly");
+    } else if (data == 0x11) { // behavior tracking
+      // Serial.write("Serial info passed correctly");
+      behaviorTracking();
     }
   }
-  if (numLoops % 100 == 0) {
-    setYaw(lastYaw);
-    sendPosition();
-    numLoops = 0;
-  }
+//  if (numLoops % 100 == 0) {
+//    setYaw(lastYaw);
+//    sendPosition();
+//    numLoops = 0;
+//  }
   
-  delay(50);
+  // delay(50);
 } //end loop

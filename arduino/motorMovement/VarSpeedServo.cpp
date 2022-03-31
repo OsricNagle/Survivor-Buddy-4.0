@@ -527,7 +527,7 @@ void VarSpeedServo::write(int value, uint8_t speed, bool wait) {
 
 void VarSpeedServo::stopImmediately(){
   write(analogRead(feedbackPin));
-  Serial.println("Servo stopped");
+  Serial.print("Servo stopped");
 }
 
 void VarSpeedServo::stop() {
@@ -605,71 +605,71 @@ void VarSpeedServo::sequenceStop() {
 }
 
 // to be used only with "write(value, speed)"
-//void VarSpeedServo::wait() {
-//  byte channel = this->servoIndex;
-//  int value = servos[channel].value;
-//
-//  // wait until is done
-//  if (value < MIN_PULSE_WIDTH) {
-//    while (read() != value) {
-//      delay(5);
-//    }
-//  } else {
-//    while (readMicroseconds() != value) {
-//      delay(5);
-//    }
-//  }
-//}
-
-// to be used only with "write(value, speed)"
-// will have to add analogFeedback pin input parameter to pass to impairmentCheck()
 void VarSpeedServo::wait() {
   byte channel = this->servoIndex;
   int value = servos[channel].value;
-  double difference, prevActualMvmt = 0;      // difference between actual value and ideal value
-  bool impaired = false;
-  double threshold = 50;         //can be changed to adjust sensitivity of the impairment check
-  int counter = 0;
-  
-  // wait until it is done
+
+  // wait until is done
   if (value < MIN_PULSE_WIDTH) {
-    // value = desired angle of servo
-    // read() = measured pulse width sent to servo, returned as an angle
     while (read() != value) {
       delay(5);
     }
   } else {
-    // Serial.print("microseconds = " + String(readMicroseconds()));
-    // Serial.println("value = " + String(value));
     while (readMicroseconds() != value) {
       delay(5);
     }
   }
-  // Check if the servo's movement is being blocked until it has reached 
-  // the destination position or is stalled
- impaired = impairmentCheck(value, threshold, &difference, &prevActualMvmt);
-  // Serial.println("loop difference = " + String(difference) + " ");
-  // if there has been an impairment detected twice in a row and the servo is not
-  // at its intended destination, then an obstacle has been detected. 
-  while (counter < 2 and difference > threshold){
-    // delay(250);     //give time in between checks to allow actualMvmt vals to differentiate
-    impaired = impairmentCheck(value, threshold, &difference, &prevActualMvmt);
-    // Serial.println(" Impairment: " + String(impaired));
-    // Serial.print("loop difference = " + String(difference) + " ");
-    if (impaired){
-      threshold = 100;
-      counter += 1;
-    }
-  }
-  if (counter >= 2){
-    // only call stopImmediately() after movement impairment is confirmed
-    if (isBasePair){
-      basePairServo->stopImmediately();
-    }
-    stopImmediately();
-  }
-  // Serial.println("Wait function completed");
 }
+
+// to be used only with "write(value, speed)"
+// will have to add analogFeedback pin input parameter to pass to impairmentCheck()
+//void VarSpeedServo::wait() {
+//  byte channel = this->servoIndex;
+//  int value = servos[channel].value;
+//  double difference, prevActualMvmt = 0;      // difference between actual value and ideal value
+//  bool impaired = false;
+//  double threshold = 50;         //can be changed to adjust sensitivity of the impairment check
+//  int counter = 0;
+//  
+//  // wait until it is done
+//  if (value < MIN_PULSE_WIDTH) {
+//    // value = desired angle of servo
+//    // read() = measured pulse width sent to servo, returned as an angle
+//    while (read() != value) {
+//      delay(5);
+//    }
+//  } else {
+//    // Serial.print("microseconds = " + String(readMicroseconds()));
+//    // Serial.println("value = " + String(value));
+//    while (readMicroseconds() != value) {
+//      delay(5);
+//    }
+//  }
+//  // Check if the servo's movement is being blocked until it has reached 
+//  // the destination position or is stalled
+// impaired = impairmentCheck(value, threshold, &difference, &prevActualMvmt);
+//  // Serial.println("loop difference = " + String(difference) + " ");
+//  // if there has been an impairment detected twice in a row and the servo is not
+//  // at its intended destination, then an obstacle has been detected. 
+//  while (counter < 2 and difference > threshold){
+//    // delay(250);     //give time in between checks to allow actualMvmt vals to differentiate
+//    impaired = impairmentCheck(value, threshold, &difference, &prevActualMvmt);
+//    // Serial.println(" Impairment: " + String(impaired));
+//    // Serial.print("loop difference = " + String(difference) + " ");
+//    if (impaired){
+//      threshold = 100;
+//      counter += 1;
+//    }
+//  }
+//  if (counter >= 2){
+//    // only call stopImmediately() after movement impairment is confirmed
+//    if (isBasePair){
+//      basePairServo->stopImmediately();
+//    }
+//    stopImmediately();
+//  }
+//  // Serial.println("Wait function completed");
+//}
 
 // implement STL map() func but with decimal places to avoid integer rounding
 double VarSpeedServo::mapping(double x, double in_min, double in_max, double out_min, double out_max) {
