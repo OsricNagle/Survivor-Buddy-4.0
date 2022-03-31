@@ -174,7 +174,7 @@ class SerialArmController:
         '''
 
         if self.is_connected:
-            data = self._device.read(15)
+            data = self._device.read(50)
             print("Received: \"{}\"".format(data))
             return data
 

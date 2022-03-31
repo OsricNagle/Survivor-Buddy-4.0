@@ -214,7 +214,11 @@ def behaviorTracking(ser):
         #     break
         if cv2.waitKey(5) == 27:
             print("bruh sound effect #2.wav")
+            ser.send(bytes('$', 'utf-8'))
             cv2.destroyAllWindows()
             break
 
+        # time.sleep(0.2)
+
     cap.release()
+    

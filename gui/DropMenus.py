@@ -621,3 +621,4 @@ class BehaviorTrackingMenu(Tk.Menu):
         print("beginning headPose functionality")
         # self.app_frame.serial_arm_controller
         behaviorTracking(self.app_frame.serial_arm_controller)
+        # self.app_frame.serial_arm_controller.send(bytes('$', 'utf-8'))

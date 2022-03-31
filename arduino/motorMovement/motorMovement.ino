@@ -165,37 +165,61 @@ void nod(){
 /*******************************************************************/
 void behaviorTracking() {
   String in = "";
+  writeAllServos(90, 90, 90, 90);
   int basePos, torsoPos, headRotPos, headTiltPos = 0;
-  if (Serial.available())
-    in = Serial.readStringUntil('\n');
-  else
-    in = "";
-
-  
-  // 123124125126
-  if (in.equals("") == false){
-//    Serial.println(in);
-    if (in.length() == 12){
-      int basePos = in.substring(0,3).toInt();
-      int torsoPos = in.substring(3,6).toInt();
-      int headRotPos = in.substring(6,9).toInt();
-      int headTiltPos = in.substring(9,12).toInt();
-      // printAllServoPos();
+  while (in.indexOf('$') == -1){
+    if (Serial.available())
+      in = Serial.readStringUntil('\n');
+    else
+      in = "";
+    // Serial.println("%" + in + "%");
+    // 123124125126
+    if (in.equals("") == false){
+      if (in.length() == 12){
+        Serial.print("%" + in + "%");
+        basePos = in.substring(0,3).toInt();
+        torsoPos = in.substring(3,6).toInt();
+        headRotPos = in.substring(6,9).toInt();
+        headTiltPos = in.substring(9,12).toInt();
+        // printAllServoPos(basePos, torsoPos, headRotPos, headTiltPos);
+        writeAllServos(basePos, torsoPos, headRotPos, headTiltPos);
+      }
+      else{
+        // Serial.println("printing");
+        // Serial.println(in);
+      }
     }
-    else{
-      // Serial.println("printing");
-      // Serial.println(in);
-    }
-  }
-  writeAllServos(basePos, torsoPos, headRotPos, headTiltPos);
+    
+  } 
+  // Remove extra byte sent over via Serial Arm Communicator
+  // char throwaway = Serial.read();
+  // Serial.print("SerBufSize = " + String(Serial.available()));
 }
 
 void writeAllServos(int basePos, int torsoPos, int headRotPos, int headTiltPos){
+  // Serial.print("Moving servos");
+  printAllServoPos(basePos, torsoPos, headRotPos, headTiltPos);
   leftBaseServo.write(basePos);
+  leftBaseServo.wait();
   rightBaseServo.write(180-basePos);
+  rightBaseServo.wait();
   tabletopServo.write(torsoPos);
+  tabletopServo.wait();
   phoneMountServo.write(headRotPos);
+  phoneMountServo.wait();
   phoneTiltServo.write(headTiltPos);
+  phoneTiltServo.wait();
+}
+
+void printAllServoPos(int basePos, int torsoPos, int headRotPos, int headTiltPos){
+  Serial.print("Base: ");
+  Serial.print(basePos);
+  Serial.print(", Torso: ");
+  Serial.print(torsoPos);
+  Serial.print(", Rot: ");
+  Serial.print(headRotPos);
+  Serial.print(", Tilt: ");
+  Serial.println(headTiltPos);
 }
 
 /*Turn Table Motor Functions*/
@@ -411,6 +435,7 @@ void loop() {
       _shutdown();
     } else if (data == 0x11) { // behavior tracking
       // Serial.write("Serial info passed correctly");
+      writeAllServos(90, 90, 90, 90);
       behaviorTracking();
     }
   }
