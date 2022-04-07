@@ -20,7 +20,7 @@ def tripleDigitInttoString(num):
 
 def process_running_average(running_vals: list, new_val: int):
     running_vals.append(new_val)
-    if len(running_vals) > 10:
+    if len(running_vals) > 15:
         running_vals.pop(0)
     return sum(running_vals) / len(running_vals)
 
